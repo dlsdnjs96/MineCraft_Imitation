@@ -133,5 +133,8 @@ void Camera::ControlMainCam(float scalar)
 	}
 	//휠키로 카메라 앞뒤조절
 	main->MoveWorldPos(main->GetForward() * INPUT->wheelMoveValue.z * DELTA);
+
+	if (main->GetWorldPos().y < 0.f)
+		main->SetWorldPosY(0.f);
 }
 

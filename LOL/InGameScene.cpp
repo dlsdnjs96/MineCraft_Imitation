@@ -4,10 +4,17 @@ InGameScene::InGameScene()
 {
     Cam = Camera::Create();
     Cam->LoadFile("Cam.xml");
-    Camera::main = Cam;
 
     Sphere = Actor::Create();
     Sphere->LoadFile("Sphere.xml");
+
+    Grid = Actor::Create();
+    Grid->LoadFile("Grid.xml");
+
+    player = new Player();
+    player->Init();
+    Camera::main = dynamic_cast<Camera*>(player->body->Find("camBody"));
+
 
     world.Init();
 }
@@ -17,6 +24,8 @@ InGameScene::~InGameScene()
     RESOURCE->ReleaseAll();
     Sphere->Release();
     Cam->Release();
+    Grid->Release();
+    player->Release();
 }
 
 void InGameScene::Init()
@@ -35,12 +44,16 @@ void InGameScene::Update()
     ImGui::Begin("Hierarchy");
     Sphere->RenderHierarchy();
     Cam->RenderHierarchy();
+    Grid->RenderHierarchy();
+    player->RenderHierarchy();
     world.RenderHierarchy();
     ImGui::End();
 
 
     Cam->Update();
     Sphere->Update();
+    Grid->Update();
+    player->Update();
 
     world.Update();
 }
@@ -51,16 +64,18 @@ void InGameScene::LateUpdate()
 
 void InGameScene::Render()
 {
-    Cam->Set();
+    Camera::main->Set();
     Sphere->Render();
+    Grid->Render();
+    player->Render();
 
     world.Render();
 }
 
 void InGameScene::ResizeScreen()
 {
-    Cam->width = App.GetWidth();
-    Cam->height = App.GetHeight();
-    Cam->viewport.width = App.GetWidth();
-    Cam->viewport.height = App.GetHeight();
+    Camera::main->width = App.GetWidth();
+    Camera::main->height = App.GetHeight();
+    Camera::main->viewport.width = App.GetWidth();
+    Camera::main->viewport.height = App.GetHeight();
 }

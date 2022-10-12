@@ -13,6 +13,25 @@ WPARAM Window::Run(Scene* main)
 	Skeleton::CreateStaticMember();
 	Terrain::CreateStaticMember();
 	MSG msg = { 0 };
+
+
+	static RECT rtRect;
+	//RECT rtRect;
+	POINT p1, p2;
+	GetClientRect(App.handle, &rtRect); // 마우스 못나가게 할 영역 reRect로 설정
+	p1.x = rtRect.left;
+	p1.y = rtRect.top;
+	p2.x = rtRect.right;
+	p2.y = rtRect.bottom;
+	ClientToScreen(App.handle, &p1);
+	ClientToScreen(App.handle, &p2);
+	rtRect.left = p1.x;
+	rtRect.top = p1.y;
+	rtRect.right = p2.x;
+	rtRect.bottom = p2.y;
+	ClipCursor(&rtRect);
+	printf("ClipCursor %f %f %f %f\r\n", rtRect.left, rtRect.top, rtRect.right, rtRect.bottom);
+
 	while (true)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -189,6 +208,8 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 			GUI->ResizeScreen();
 			if (main)
 				main->ResizeScreen();
+
+
 		}
 	}
 

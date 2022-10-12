@@ -17,7 +17,7 @@ struct Block
 
 struct Sector
 {
-	BlockType blocks[10][127][10];
+	BlockType blocks[10][130][10];
 };
 
 struct SectorCheck
@@ -30,13 +30,15 @@ class World
 private:
 	map<int, map<int, Sector>> sector;
 	map<int, map<int, SectorCheck>> sectorCheck;
+	map<int, map<int, set<int>>> check;
 
 	Actor* actor;
-	list<Block> visibleBlocks;
 	Block rangedBlocks[10000];
 	GameObject* Box;
 	GameObject* bPool[10000];
+
 	vector<Block> dectableBlocks;
+	int dectableBlockIndex = 0;
 
 	UINT rbIndex;
 	UINT idx;
@@ -45,14 +47,19 @@ public:
 	void Init();
 	void Update();
 	void UpdateSector(int iIdx, int jIdx, int kIdx);
-	void RenderHierarchy();
+	bool RenderHierarchy();
 	void Render();
 
-	void SelectVisibleBlocks();
+
+	void LoadWorld();
+	void SaveWorld();
+
+
 	void SelectDectableBlocks();
 	void BlockToObject();
 	
-	BlockType GetBlock(Vector3& pos);
+
+	BlockType GetBlock(Vector3 pos);
 	void SetBlock(Vector3 pos, BlockType bt);
 	void SetCheck(Vector3& pos, bool chk);
 	bool GetCheck(Vector3& pos);

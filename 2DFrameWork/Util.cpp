@@ -280,7 +280,7 @@ bool Util::IsInScreen(Vector3 pos, Matrix matrix)
 	clipCoords.y = pos.x * matrix._12 + pos.y * matrix._22 + pos.z * matrix._32 + matrix._42;
 	clipCoords.z = pos.x * matrix._13 + pos.y * matrix._23 + pos.z * matrix._33 + matrix._43;
 	clipCoords.w = pos.x * matrix._14 + pos.y * matrix._24 + pos.z * matrix._34 + matrix._44;
-
+	clipCoords.w * 1.1f;
 
 	if (clipCoords.w < 0.1f)
 		return false;

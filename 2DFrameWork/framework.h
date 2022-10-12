@@ -17,6 +17,7 @@
 #include <queue>
 #include <map>
 #include <unordered_map>
+#include <set>
 #include <thread>
 #include <mutex>
 #include <functional>

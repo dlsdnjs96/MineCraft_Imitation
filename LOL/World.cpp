@@ -2,26 +2,38 @@
 
 void World::Init()
 {
-
-	for (float i = -10; i < 10; i++)
+	int range = 100;
+	for (float i = -range; i < range; i++)
 	{
-		for (float j = -10; j < 10; j++)
+		for (float j = -range; j < range; j++)
 		{
 			for (float k = 0; k < 2; k++)
 				SetBlock({ i, k, j }, BlockType::GRASS);
-			for (float k = 2; k < 20; k++)
+			for (float k = 2; k < 9; k++)
+				SetBlock({ i, k, j }, BlockType::EMPTY);
+			for (float k = 9; k < 10; k++)
+				SetBlock({ i, k, j }, BlockType::GRASS);
+			for (float k = 10; k < 20; k++)
 				SetBlock({ i, k, j }, BlockType::EMPTY);
 		}
 	}
-	
+
+	float arr[10][2] = { {1, 3}, {11, 3}, {5, 2}, {3, 7}, {-6, 3}, {4, -3}, {-5, -5}, {-16, -4}, {-11, -22}, {-21, 13} };
+	for (int i = 0; i < 10; i++)
+	{
+		for (float j = 0;j <10;j++)
+			SetBlock({ arr[i][0], j, arr[i][1] }, BlockType::WOOD);
+	}
+
 
 	actor = Actor::Create();
 	actor->scale = { 3.f, 3.f, 3.f };
 	for (int i = 0; i < 10000; i++) {
 		bPool[i] = GameObject::Create(to_string(i));
-		bPool[i]->scale = { 3.f, 3.f, 3.f };
+		bPool[i]->scale = { 5.f, 5.f, 5.f };
 		bPool[i]->mesh = make_shared<Mesh>();
-		bPool[i]->mesh = RESOURCE->meshes.Load("1.BoxCollider.mesh");
+		//bPool[i]->mesh = RESOURCE->meshes.Load("1.BoxCollider.mesh");
+		bPool[i]->mesh = RESOURCE->meshes.Load("TestCube.mesh");
 		bPool[i]->shader = make_shared<Shader>();
 		bPool[i]->shader = RESOURCE->shaders.Load("block.hlsl");
 		bPool[i]->material = make_shared<Material>();
@@ -36,8 +48,9 @@ void World::Init()
 	Box->material = make_shared<Material>();
 	Box->material = RESOURCE->materials.Load("test.mtl");
 	actor->AddChild(Box);
+	actor->AddChild(Camera::main);
 
-	dectableBlocks.resize(10000);
+	dectableBlocks.resize(100000);
 }
 
 void World::Update()
@@ -45,20 +58,18 @@ void World::Update()
 	const float updateRange = 200.f;
 	Vector3 myPosition;
 
-	idx = 0;
 	rbIndex = 0;
-	//visibleBlocks.clear();
-	//for (int i = 0; i < 1; i++)
-	//{
-	//	for (int j = 0; j < 1; j++) {
-	//		for (int k = 0;k < 4;k++)
-	//			UpdateSector(i ,j , k);
-	//	}
-	//}
-	SelectDectableBlocks();
-	//SelectVisibleBlocks();
+
+	static Vector3 prev = { 100.f, 100.f, 100.f };
+
+	if (Vector3::Distance(prev, Camera::main->GetWorldPos()) > 5.f * BLOCK_LENGTH) {
+		printf("SelectDectableBlocks\r\n");
+		SelectDectableBlocks();
+		prev = Camera::main->GetWorldPos();
+	}
 	BlockToObject();
-	//actor->Update();
+	
+
 }
 
 void World::UpdateSector(int iIdx, int jIdx, int kIdx)
@@ -95,10 +106,75 @@ void World::UpdateSector(int iIdx, int jIdx, int kIdx)
 }
 
 
-void World::RenderHierarchy()
+bool World::RenderHierarchy()
 {
-	for (int i = 0; i < idx; i++)
-		bPool[i]->RenderHierarchy();
+	ImGui::PushID(this);
+	if (ImGui::TreeNode("World"))
+	{
+		if (ImGui::IsItemToggledOpen() or
+			ImGui::IsItemClicked())
+		{
+			GUI->target = actor;
+		}
+		if (ImGui::Button("addChild"))
+		{
+			ImGui::OpenPopup("childName");
+		}
+		if (ImGui::BeginPopup("childName"))
+		{
+			static char childName[32] = "None";
+			ImGui::InputText("childName", childName, 32);
+			if (ImGui::Button("G.O"))
+			{
+				actor->AddChild(GameObject::Create(childName));
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Actor"))
+			{
+				actor->AddChild(Actor::Create(childName));
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Camera"))
+			{
+				actor->AddChild(Camera::Create(childName));
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Terrain"))
+			{
+				actor->AddChild(Terrain::Create(childName));
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("UI"))
+			{
+				actor->AddChild(UI::CreateChild(childName));
+			}
+			ImGui::EndPopup();
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("delete"))
+		{
+			actor->root->DeleteObject(actor->name);
+			GUI->target = nullptr;
+			ImGui::TreePop();
+			ImGui::PopID();
+			return true; //하위자식까지는 접근하지 않기
+		}
+		// l->r
+		for (int i = 0; i < idx; i++)
+		{
+			if (bPool[i]->RenderHierarchy())
+			{
+				ImGui::TreePop();
+				ImGui::PopID();
+				GUI->target = nullptr;
+				return true;
+			}
+		}
+		ImGui::TreePop();
+	}
+	ImGui::PopID();
+	return false;
 }
 
 void World::Render()
@@ -107,35 +183,28 @@ void World::Render()
 		bPool[i]->Render();
 }
 
-
-void World::SelectVisibleBlocks()
+void World::LoadWorld()
 {
-	auto it = visibleBlocks.begin();
-	Vector3 HitPoint;
-	Ray ray;
-	while (it != visibleBlocks.end())
+}
+
+void World::SaveWorld()
+{
+}
+
+
+void World::BlockToObject()
+{
+	Matrix camMatrix = Camera::main->view * Camera::main->proj;
+
+	idx = 0;
+	for (int i = 0; i < dectableBlockIndex; i++)
 	{
-		auto it2 = it;
-		it2++;
-		while (it2 != visibleBlocks.end() and idx < 10000)
-		{
-			//Box->SetLocalPos((*it2)->position);
-			Box->Update();
-			ray.position = Camera::main->GetWorldPos();
-			ray.direction = Box->GetWorldPos() - Camera::main->GetWorldPos();
-			ray.direction.Normalize();
-			if (Util::RayIntersectTri(ray, Box, HitPoint))
-			{
-				if (Vector3::Distance(HitPoint, ray.position) > Vector3::Distance(Box->GetWorldPos(), ray.position))
-				{
-					//visibleBlocks.erase(it2++);
-					//(*it2)->blockType = BlockType::WOOD;
-					//continue;
-				}
-			}
-			it2++;
+		if (Util::IsInScreen(dectableBlocks[i].position, camMatrix)) {
+			bPool[idx]->SetLocalPos(dectableBlocks[i].position);
+			bPool[idx]->material = RESOURCE->materials.Load("Blocks/"+to_string(int(dectableBlocks[i].blockType)) + ".mtl");
+			bPool[idx]->Update();
+			idx++;
 		}
-		it++;
 	}
 }
 
@@ -146,30 +215,64 @@ void World::SelectDectableBlocks()
 	Block block;
 	BlockType blockType;
 	vector<Vector3> stack;
-	stack.resize(1000);
+	const float visibleRange = 20;
 
-	dectableBlocks.clear();
-	stack.push_back({float(int(startPosition.x)), float(int(startPosition.y)) , float(int(startPosition.z)) });
-	ImGui::Text((to_string(startPosition.x) + " " + to_string(startPosition.y) + " " + to_string(startPosition.z)).c_str());
+	ImGui::Text(("Cam : "+to_string(startPosition.x) + " " + to_string(startPosition.y) + " " + to_string(startPosition.z)).c_str());
+
+	startPosition.x = int(startPosition.x / BLOCK_LENGTH);
+	startPosition.y = int(startPosition.y / BLOCK_LENGTH);
+	startPosition.z = int(startPosition.z / BLOCK_LENGTH);
+
+	dectableBlockIndex = 0;
+
+
+	for (float i = startPosition.x - visibleRange; i < startPosition.x + visibleRange; i++)
+	{
+		currentPos.x = i;
+		for (float j = startPosition.z - visibleRange; j < startPosition.z + visibleRange; j++)
+		{
+			currentPos.z = j;
+			for (float k = 1; k < 53; k++)
+			{
+				currentPos.y = k;
+				if (GetBlock(currentPos) == BlockType::EMPTY)
+					continue;
+				//if (GetBlock({ i + 1, k, j }) == BlockType::EMPTY
+				//	or GetBlock({ i - 1, k, j }) == BlockType::EMPTY
+				//	or GetBlock({ i, k + 1, j }) == BlockType::EMPTY
+				//	or GetBlock({ i, k - 1, j }) == BlockType::EMPTY
+				//	or GetBlock({ i, k, j + 1 }) == BlockType::EMPTY
+				//	or GetBlock({ i, k, j - 1 }) == BlockType::EMPTY)
+				{
+					dectableBlocks[dectableBlockIndex].position = { currentPos.x * BLOCK_LENGTH, currentPos.y * BLOCK_LENGTH, currentPos.z * BLOCK_LENGTH };
+					dectableBlocks[dectableBlockIndex].blockType = GetBlock(currentPos);
+					dectableBlockIndex++;
+				}
+			}
+		}
+	}
+
+	return;
+
+	//dectableBlocks.clear();
+	stack.push_back(startPosition);
 
 	while (!stack.empty())
 	{
 		currentPos = stack.back();
 		stack.pop_back();
 
-		blockType = GetBlock(currentPos);
-
 		//ImGui::Text((to_string(currentPos.x) + " " + to_string(currentPos.y) + " " + to_string(currentPos.z) + " " + to_string(int(blockType))).c_str());
 
-		if (GetCheck(currentPos) || Vector3::Distance(currentPos, startPosition) > 10.f || currentPos.y > 100 || currentPos.y < 0)
-		{
+		if (GetCheck(currentPos) || abs(currentPos.x - startPosition.x) > 10.f || abs(currentPos.z - startPosition.z) > 10.f || currentPos.y > 12 || currentPos.y < 0)
 			continue;
-		} 
-		else if (blockType != BlockType::EMPTY)
+		
+		blockType = GetBlock(currentPos);
+		if (blockType != BlockType::EMPTY)
 		{
-			block.position = currentPos;
-			block.blockType = blockType;
-			dectableBlocks.push_back(block);
+			dectableBlocks[dectableBlockIndex].position = currentPos;
+			dectableBlocks[dectableBlockIndex].blockType = blockType;
+			dectableBlockIndex++;
 		}
 		else
 		{
@@ -184,53 +287,15 @@ void World::SelectDectableBlocks()
 		SetCheck(currentPos, true);
 	}
 
-	stack.push_back(startPosition);
-	while (!stack.empty())
-	{
-		currentPos = stack.back();
-		stack.pop_back();
-
-		if (GetCheck(currentPos))
-		{
-			stack.push_back({ currentPos.x + 1, currentPos.y, currentPos.z });
-			stack.push_back({ currentPos.x - 1, currentPos.y, currentPos.z });
-			stack.push_back({ currentPos.x, currentPos.y + 1, currentPos.z });
-			stack.push_back({ currentPos.x, currentPos.y - 1, currentPos.z });
-			stack.push_back({ currentPos.x, currentPos.y, currentPos.z + 1 });
-			stack.push_back({ currentPos.x, currentPos.y, currentPos.z - 1 });
-		}
-
-		SetCheck(currentPos, false);
-	}
-	printf("%d\r\n", dectableBlocks.size());
+	check.clear();
+	return;
 }
 
-void World::BlockToObject()
-{
-	idx = 0;
-	//auto it = visibleBlocks.begin();
 
-	//while (it != visibleBlocks.end() and idx < 10000)
-	//{
-	//	if ((*it)->blockType == BlockType::GRASS)
-	//		bPool[idx]->shader = RESOURCE->shaders.Load("Block.hlsl");
-	//	else
-	//		bPool[idx]->shader = RESOURCE->shaders.Load("Block2.hlsl");
-	//	bPool[idx]->SetLocalPos((*it)->position);
-	//	bPool[idx]->Update();
-	//	idx++;
-	//	it++;
-	//}
 
-	for (int i = 0; i < dectableBlocks.size();i++)
-	{
-		bPool[idx]->SetLocalPos({ dectableBlocks[i].position.x * BLOCK_LENGTH, dectableBlocks[i].position.y * BLOCK_LENGTH, dectableBlocks[i].position.z * BLOCK_LENGTH});
-		bPool[idx]->Update();
-		idx++;
-	}
-}
 
-BlockType World::GetBlock(Vector3& pos)
+
+BlockType World::GetBlock(Vector3 pos)
 {
 	return sector[int(pos.x / 10)][int(pos.z / 10)].blocks[abs((int)(pos.x) % 10)][(int)pos.y][abs((int)pos.z % 10)];
 }
@@ -240,12 +305,22 @@ void World::SetBlock(Vector3 pos, BlockType bt)
 	sector[int(pos.x / 10)][int(pos.z / 10)].blocks[abs((int)(pos.x) % 10)][(int)pos.y][abs((int)pos.z % 10)] = bt;
 }
 
+//void World::SetCheck(Vector3& pos, bool chk)
+//{
+//	sectorCheck[int(pos.x / 10)][int(pos.z / 10)].isVisited[abs((int)(pos.x) % 10)][(int)pos.y][abs((int)pos.z % 10)] = chk;
+//}
+//
+//bool World::GetCheck(Vector3& pos)
+//{
+//	return sectorCheck[int(pos.x / 10)][int(pos.z / 10)].isVisited[abs((int)(pos.x) % 10)][(int)pos.y][abs((int)pos.z % 10)];
+//}
+
 void World::SetCheck(Vector3& pos, bool chk)
 {
-	sectorCheck[int(pos.x / 10)][int(pos.z / 10)].isVisited[abs((int)(pos.x) % 10)][(int)pos.y][abs((int)pos.z % 10)] = chk;
+	check[int(pos.x)][int(pos.z)].insert(int(pos.y));
 }
 
 bool World::GetCheck(Vector3& pos)
 {
-	return sectorCheck[int(pos.x / 10)][int(pos.z / 10)].isVisited[abs((int)(pos.x) % 10)][(int)pos.y][abs((int)pos.z % 10)];
+	return check[int(pos.x)][int(pos.z)].find(int(pos.y)) != check[int(pos.x)][int(pos.z)].end();
 }
