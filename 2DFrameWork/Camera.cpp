@@ -95,6 +95,7 @@ void Camera::DeleteStaticMember()
 
 void Camera::ControlMainCam(float scalar)
 {
+	return;
     if (not main) return;
 
 	if (INPUT->KeyPress('W'))

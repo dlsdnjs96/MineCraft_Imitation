@@ -311,3 +311,10 @@ Ray Util::MouseToRay(Vector3 Mouse, Camera* Cam)
 	CamToMouse.direction.Normalize();
 	return CamToMouse;
 }
+
+float Util::SmoothNoise(int x, int y)
+{
+	return (noise2(x - 1, y - 1) + noise2(x + 1, y - 1) + noise2(x - 1, y + 1) + noise2(x + 1, y + 1));
+	+((noise2(x - 1, y) + noise2(x + 1, y) + noise2(x, y + 1) + noise2(x, y - 1)) / 8.f)
+		+ (noise2(x, y) / 4.f);
+}

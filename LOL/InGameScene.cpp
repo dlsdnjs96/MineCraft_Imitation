@@ -2,28 +2,22 @@
 
 InGameScene::InGameScene()
 {
-    Cam = Camera::Create();
-    Cam->LoadFile("Cam.xml");
-
-    Sphere = Actor::Create();
-    Sphere->LoadFile("Sphere.xml");
 
     Grid = Actor::Create();
     Grid->LoadFile("Grid.xml");
 
     player = new Player();
     player->Init();
-    Camera::main = dynamic_cast<Camera*>(player->body->Find("camBody"));
+    Camera::main = dynamic_cast<Camera*>(player->Find("camHead"));
 
 
-    world.Init();
+   // WORLD->Init();
+    //WORLD->SaveWorld();
 }
 
 InGameScene::~InGameScene()
 {
     RESOURCE->ReleaseAll();
-    Sphere->Release();
-    Cam->Release();
     Grid->Release();
     player->Release();
 }
@@ -42,20 +36,16 @@ void InGameScene::Update()
 
     ImGui::Text("FPS: %d", TIMER->GetFramePerSecond());
     ImGui::Begin("Hierarchy");
-    Sphere->RenderHierarchy();
-    Cam->RenderHierarchy();
     Grid->RenderHierarchy();
     player->RenderHierarchy();
-    world.RenderHierarchy();
+    WORLD->RenderHierarchy();
     ImGui::End();
 
 
-    Cam->Update();
-    Sphere->Update();
     Grid->Update();
-    player->Update();
 
-    world.Update();
+    WORLD->Update();
+    player->Update();
 }
 
 void InGameScene::LateUpdate()
@@ -65,11 +55,10 @@ void InGameScene::LateUpdate()
 void InGameScene::Render()
 {
     Camera::main->Set();
-    Sphere->Render();
     Grid->Render();
-    player->Render();
 
-    world.Render();
+    WORLD->Render();
+    player->Render();
 }
 
 void InGameScene::ResizeScreen()

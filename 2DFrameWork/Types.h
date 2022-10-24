@@ -109,4 +109,94 @@ struct Int2
 		return (x != dest.x || y != dest.y);
 		//return !(*this == dest);
 	}
+	const Int2 operator * (const int rv)
+	{
+		x *= rv;
+		y *= rv;
+		return *this;
+	}
+	const Int2 operator / (const int rv)
+	{
+		x /= rv;
+		y /= rv;
+		return *this;
+	}
+};
+
+struct Int3
+{
+	int x, y, z;
+	Int3() { x = 0; y = 0; z = 0; }
+	Int3(int _x, int _y, int _z) { x = _x; y = _y; z = _z; }
+	Int3(Vector3 pos) { 
+		x = static_cast<int>(roundf(pos.x));
+		y = static_cast<int>((pos.y));
+		z = static_cast<int>(roundf(pos.z));
+	}
+	Vector3 GetVector3()
+	{
+		return { static_cast<float>(x), static_cast<float>(y), static_cast<float>(z) };
+	}
+	Int3 operator *= (int divide)
+	{
+		return { x * divide , y * divide , z * divide };
+	}
+	Int3& operator *= (float rv)
+	{
+		x *= rv;
+		y *= rv;
+		z *= rv;
+		return *this;
+	}
+	Int3& operator /= (int rv)
+	{
+		x /= rv;
+		y /= rv;
+		z /= rv;
+		return *this;
+	}
+	Int3& operator /= (float rv)
+	{
+		x /= rv;
+		y /= rv;
+		z /= rv;
+		return *this;
+	}
+	bool operator == (const Int3& rv)
+	{
+		return x == rv.x and y == rv.y and z == rv.z;
+	}
+	bool operator != (const Int3& rv)
+	{
+		return x != rv.x or y == rv.y or z != rv.z;
+	}
+
+	const Int3 operator * (const int rv)
+	{
+		x *= rv;
+		y *= rv;
+		z *= rv;
+		return *this;
+	}
+	const Int3 operator / (const int rv)
+	{
+		x /= rv;
+		y /= rv;
+		z /= rv;
+		return *this;
+	}
+	const Int3 operator * (const float rv)
+	{
+		x *= rv;
+		y *= rv;
+		z *= rv;
+		return *this;
+	}
+	const Int3 operator / (const float rv)
+	{
+		x /= rv;
+		y /= rv;
+		z /= rv;
+		return *this;
+	}
 };

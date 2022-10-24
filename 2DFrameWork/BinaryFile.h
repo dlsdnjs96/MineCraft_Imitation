@@ -12,9 +12,11 @@ public:
 	void Bool(bool data);
 	void Word(WORD data);
 	void Int(int data);
+	void Int_2(Int2 data);
 	void UInt(UINT data);
 	void Float(float data);
 	void Double(double data);
+	void Char(char data);
 
 	void vector2(const Vector2& data);
 	void vector3(const Vector3& data);
@@ -45,9 +47,11 @@ public:
 	bool Bool();
 	WORD Word();
 	int Int();
+	Int2 Int_2();
 	UINT UInt();
 	float Float();
 	double Double();
+	char Char();
 
 	Vector2 vector2();
 	Vector3 vector3();

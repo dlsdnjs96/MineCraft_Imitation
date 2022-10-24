@@ -62,6 +62,7 @@ using namespace SimpleMath;
 #include "../Libs/ImGui/ImGuiFileDialogConfig.h"
 
 //File
+#include "Types.h"
 #include "BinaryFile.h"
 #include "Xml.h"
 
@@ -84,7 +85,6 @@ using namespace SimpleMath;
 #define	FORWARD				Vector3(0.0f,0.0f,1.0f)
 
 //2DFramework Header
-#include "Types.h"
 #include "Window.h"
 extern Application App;//Extern Global
 #include "Direct3D11.h"

@@ -5,13 +5,10 @@
 class InGameScene : public Scene
 {
 private:
-	Camera* Cam;
-	Actor* Sphere;
 	Actor* Grid;
 
 	Player* player;
-
-	World world;
+	Actor* player2;
 
 public:
 	InGameScene();

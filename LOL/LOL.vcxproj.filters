@@ -35,6 +35,15 @@
     <ClCompile Include="Block.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="WorldGenerator.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Sector2.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureData.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -53,6 +62,15 @@
     </ClInclude>
     <ClInclude Include="Block.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldGenerator.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Sector2.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureData.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

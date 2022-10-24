@@ -56,6 +56,11 @@ void BinaryWriter::Int(int data)
 	WriteFile(fileHandle, &data, sizeof(int), &size, NULL);
 }
 
+void BinaryWriter::Int_2(Int2 data)
+{
+	WriteFile(fileHandle, &data, sizeof(Int2), &size, NULL);
+}
+
 void BinaryWriter::UInt(UINT data)
 {
 	WriteFile(fileHandle, &data, sizeof(UINT), &size, NULL);
@@ -69,6 +74,11 @@ void BinaryWriter::Float(float data)
 void BinaryWriter::Double(double data)
 {
 	WriteFile(fileHandle, &data, sizeof(double), &size, NULL);
+}
+
+void BinaryWriter::Char(char data)
+{
+	WriteFile(fileHandle, &data, sizeof(char), &size, NULL);
 }
 
 void BinaryWriter::vector2(const Vector2& data)
@@ -187,6 +197,14 @@ UINT BinaryReader::UInt()
 	return temp;
 }
 
+Int2 BinaryReader::Int_2()
+{
+	Int2 temp = {0,0};
+	ReadFile(fileHandle, &temp, sizeof(Int2), &size, NULL);
+
+	return temp;
+}
+
 float BinaryReader::Float()
 {
 	float temp = 0.0f;
@@ -199,6 +217,14 @@ double BinaryReader::Double()
 {
 	double temp = 0.0f;
 	ReadFile(fileHandle, &temp, sizeof(double), &size, NULL);
+
+	return temp;
+}
+
+char BinaryReader::Char()
+{
+	char temp = 0;
+	ReadFile(fileHandle, &temp, sizeof(char), &size, NULL);
 
 	return temp;
 }
