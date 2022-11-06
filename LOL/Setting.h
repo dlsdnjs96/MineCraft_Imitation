@@ -1,0 +1,21 @@
+#pragma once
+
+class Setting : public Singleton<Setting>
+{
+private:
+	bool*	verticalSync = nullptr;
+	float	visualRange = 1000.f;
+
+public:
+	Setting();
+	~Setting();
+
+	void Init();
+	void Release();
+
+	float GetVisualRange();
+
+	void Load();
+	void Save();
+};
+

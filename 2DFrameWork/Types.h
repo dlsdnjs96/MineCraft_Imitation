@@ -25,6 +25,7 @@ public:
 	Application() :instance(nullptr), handle(nullptr), vSync(false), fullScreen(false)
 		, appName(L" "), width(1280.0f), height(720.0f), background(Color(0.7f, 0.7f, 0.7f, 1.0f))
 		, fixFrame(400), deltaScale(1.0f), soundScale(1.0f),x(0.0f),y(0.0f) {}
+	HWND	GetHandle() { return handle; }
 	float	GetWidth() { return width; }
 	float	GetHeight() { return height; }
 	float	GetHalfWidth() { return width / 2.0f; }
@@ -69,9 +70,18 @@ template <typename T>
 T* Singleton<T>::instance = nullptr;
 
 //씬타입으로는 객체를만들수 없다.
+
+enum class SceneState
+{
+	NONE,
+	FADEIN,
+	FADEOUT
+};
 class Scene
 {
 public:
+	SceneState	state = SceneState::NONE;
+	float		time;
 	virtual ~Scene() {};
 	//초기화
 	virtual void Init() = 0;
@@ -80,9 +90,11 @@ public:
 	//Loop
 	virtual void Update() = 0;
 	virtual void LateUpdate() = 0;
+	virtual void PreRender() = 0;
 	virtual void Render() = 0;
 	//Window Resize
 	virtual void ResizeScreen() = 0;
+
 };
 
 
@@ -128,7 +140,7 @@ struct Int3
 	int x, y, z;
 	Int3() { x = 0; y = 0; z = 0; }
 	Int3(int _x, int _y, int _z) { x = _x; y = _y; z = _z; }
-	Int3(Vector3 pos) { 
+	Int3(Vector3 pos) {
 		x = static_cast<int>(roundf(pos.x));
 		y = static_cast<int>((pos.y));
 		z = static_cast<int>(roundf(pos.z));

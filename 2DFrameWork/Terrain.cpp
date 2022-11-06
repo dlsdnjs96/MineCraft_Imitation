@@ -405,10 +405,10 @@ bool Terrain::PathFinding(deque<Vector3>& Way, int Start, int End)
     return temp;
 }
 
-void Terrain::Render()
+void Terrain::Render(class Shader* otherShader)
 {
-    Actor::Render();
-    Vector3 Up = Vector3(0, 2, 0);
+    Actor::Render(otherShader);
+    Vector3 Up = Vector3(0, 1, 0);
     if (showNode)
     {
         DEPTH->Set(false);
@@ -419,6 +419,8 @@ void Terrain::Render()
             //L    *   W
             Node->W *= W;
             Node->W = S.Invert() * Node->W;
+            for (auto it2 : Node->children) it2.second->Update();
+            if (Node->collider) Node->collider->Update(Node);
 
             Node->Render();
             for (auto it2 = it->second.linkedWay.begin();

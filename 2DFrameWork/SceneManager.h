@@ -20,11 +20,12 @@ public:
     //현재 씬 가져오기
     Scene* GetCurrentScene();
 
-    void SetCurrentScene(Scene* newScene);
+    void    SetCurrentScene(Scene* newScene);
 
     void    Release();
     void    Update();
     void    LateUpdate();
+    void    PreRender();
     void    Render();
     void    ResizeScreen();
 

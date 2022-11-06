@@ -58,8 +58,6 @@ LRESULT Input::InputProc(UINT message, WPARAM wParam, LPARAM lParam)
 void Input::Update()
 {
 
-
-
     //메모리복사 keyOldState = keyState 
     memcpy(keyOldState, keyState, sizeof(keyOldState));
 
@@ -98,6 +96,10 @@ void Input::Update()
     POINT point;
     GetCursorPos(&point);
     ScreenToClient(App.handle, &point);
+    if (fixedMousePos.x != -1) {
+        SetCursorPos(fixedMousePos.x, fixedMousePos.y);
+        printf("point %ld %ld %ld\r\n", point.x, fixedMousePos.x, point.x - fixedMousePos.x);
+    }
 
     wheelOldStatus.x = wheelStatus.x;
     wheelOldStatus.y = wheelStatus.y;
@@ -108,14 +110,19 @@ void Input::Update()
     wheelMoveValue = wheelStatus - wheelOldStatus;
     wheelOldStatus.z = wheelStatus.z;
 
+
+
     currentPostion = position;
     movePosition = currentPostion - oldPostion;
 
     oldPostion = currentPostion;
 
     // NDC
-    oldNDCPosition = NDCPosition;
+    oldNDCPosition.x = prevPosition.x / App.GetHalfWidth() - 1.0f;
+    oldNDCPosition.y = prevPosition.y / -App.GetHalfHeight() + 1.0f;
     NDCPosition.x = position.x / App.GetHalfWidth() - 1.0f;
     NDCPosition.y = position.y / -App.GetHalfHeight() + 1.0f;
-    moveNDCPosition = NDCPosition - oldNDCPosition;
+    moveNDCPos = NDCPosition - oldNDCPosition;
+
+
 }

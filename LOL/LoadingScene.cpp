@@ -7,13 +7,8 @@ LoadingScene::LoadingScene()
     //Camera::main = Cam;
 
 
-    t1 = new thread([=]()
-        { WORLD_GENERATOR->GenerateWorld(); });
 
-    t1->join();
-    //WORLD->SaveWorld();
-
-    SCENE->SetCurrentScene(SCENE->GetScene("INGAME"));
+    //SCENE->SetCurrentScene(SCENE->GetScene("INGAME"));
     return;
 }
 
@@ -26,6 +21,8 @@ LoadingScene::~LoadingScene()
 
 void LoadingScene::Init()
 {
+    Camera::main = Cam;
+    WORLD_GENERATOR->Init();
 }
 
 void LoadingScene::Release()
@@ -34,7 +31,6 @@ void LoadingScene::Release()
 
 void LoadingScene::Update()
 {
-    printf("LoadingScene Update\r\n");
     Camera::ControlMainCam();
 
     ImGui::Text("FPS: %d", TIMER->GetFramePerSecond());
@@ -45,24 +41,21 @@ void LoadingScene::Update()
 
 
     Cam->Update();
+
     WORLD_GENERATOR->Update();
-    static int st = 0;
-    st++;
-    if (st >= 7) {
-        WORLD->CreateDumpBlocks();
-        WORLD->distinguishBlocks(Int3{0,0,0}, 1024);
-        WORLD->UpdateMesh();
-        SCENE->SetCurrentScene(SCENE->GetScene("INGAME"));
-    }
 }
 
 void LoadingScene::LateUpdate()
 {
 }
 
+void LoadingScene::PreRender()
+{
+}
+
 void LoadingScene::Render()
 {
-    Camera::main->Set();
+    Cam->Set();
     WORLD_GENERATOR->Render();
 }
 

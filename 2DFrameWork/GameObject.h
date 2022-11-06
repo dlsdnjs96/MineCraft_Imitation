@@ -6,7 +6,8 @@ enum class ObType
 	Actor,
 	Camera,
 	Terrain,
-	UI
+	UI,
+	Billboard
 };
 
 class GameObject : public Transform
@@ -34,20 +35,20 @@ public:
 	shared_ptr<Material>		material;
 	Collider*					collider;
 	//Method
-	GameObject();
 protected:
+	GameObject();
 	virtual	~GameObject();
 	void	SaveObject(Xml::XMLElement* This, Xml::XMLDocument* doc);
 	void	LoadObject(Xml::XMLElement* This);
 public:
-	void			Release();
+	virtual void	Release();
 	virtual void	Update();
-	virtual void	Render();
+	virtual void	Render(class Shader* otherShader = nullptr);
 	void			AddChild(GameObject* child);
 	void			AddBone(GameObject* child);
 	bool			RenderHierarchy();
 	virtual void	RenderDetail();
-	ObType			GetObType();
+	void			DeleteChildren();
 
 	//Getter Setter
 };
@@ -60,7 +61,7 @@ private:
 	
 public:
 	unordered_map<string, GameObject*> obList;
-	int             boneIndexCount = 0;
+	int             boneIndexCount = 1;
 	string			file;
 	Skeleton*		skeleton;
 	Animations*		anim;
@@ -68,7 +69,7 @@ protected:
 	Actor();
 	virtual	~Actor();
 public:
-	void			Release();
+	virtual void	Release();
 	void			ReleaseMember();
 	static Actor*	Create(string name = "Actor");
 	GameObject*		Find(string name);
@@ -77,6 +78,6 @@ public:
 	void			LoadFile(string file);
 	virtual void	RenderDetail();
 	virtual void	Update();
-	virtual void    Render();
+	virtual void    Render(class Shader* otherShader = nullptr);
 };
 

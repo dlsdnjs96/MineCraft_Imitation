@@ -9,38 +9,45 @@
 #define BLOCK_FACE_FORWARD	0b010000
 #define BLOCK_FACE_BEHIND	0b100000
 
-#define BLOCK_UV_STONE		{ 1.f / 32.f, 0.f / 32.f }
+//#define BLOCK_UV_STONE		{ 1.f / 32.f, 0.f / 32.f }
 
 #define BLOCK_LENGTH 10.f
 #define SECTOR_SIZE 16
 #define WORLD_HEIGHT 64
+#define WATER_HEIGHT 15
+
 
 enum class BlockType
 {
-	EMPTY = 0,
-	GRASS = 1,
-	WOOD_OAK = 2,
-	WATER = 3,
-	STONE = 4,
-	DIRT = 5,
-	SAND = 6,
-	COAL_ORE = 7,
-	IRON_ORE = 8,
-	LEAF = 9,
+	EMPTY		= 0,
+	WATER		= 1,
+	LEAF		= 2,
+	GRASS		= 1000,
+	STONE		= 1001,
+	DIRT		= 1002,
+	SAND		= 1003,
+	WOOD_OAK	= 2000,
+	COAL_ORE	= 3000,
+	IRON_ORE	= 3001,
 
 };
 
 #include "Block.h"
 #include "TextureData.h"
-#include "Sector2.h"
+#include "Sector.h"
 #include "World.h"
 #include "Player.h"
 #include "WorldGenerator.h"
+#include "WorldList.h"
+#include "Setting.h"
 
 
 #include "LoadingScene.h"
 #include "InGameScene.h"
+#include "MenuScene.h"
+
 
 #define WORLD World::GetInstance()
 #define WORLD_GENERATOR WorldGenerator::GetInstance()
 #define TEXTURE_DATA TextureData::GetInstance()
+#define SETTING Setting::GetInstance()

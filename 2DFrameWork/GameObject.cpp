@@ -13,12 +13,6 @@ GameObject::GameObject()
 	//mesh = make_shared<Mesh>();
 	//material = make_shared<Material>();
 }
-
-ObType GameObject::GetObType()
-{
-	return type;
-}
-
 Actor::Actor()
 {
 	type = ObType::Actor;
@@ -121,14 +115,22 @@ void GameObject::Update()
 		it->second->Update();
 }
 
-void GameObject::Render()
+void GameObject::Render(class Shader* otherShader)
 {
 	if (visible)
 	{
 		if (mesh and shader)
 		{
 			Transform::Set();
-			shader->Set();
+			//prerender같은곳에서만 다른 쉐이더 사용할경우
+			if (otherShader)
+			{
+				otherShader->Set();
+			}
+			else
+			{
+				shader->Set();
+			}
 			mesh->Set();
 
 			if (material)
@@ -139,9 +141,13 @@ void GameObject::Render()
 			D3D->GetDC()->DrawIndexed(mesh->indexCount, 0, 0);
 		}
 
+
 		for (auto it = children.begin(); it != children.end(); it++)
 		{
-			it->second->Render();
+			if(it->second->type == ObType::GameObject)
+				it->second->Render(otherShader);
+			else
+				it->second->Render();
 		}
 	}
 
@@ -159,6 +165,7 @@ void GameObject::Render()
 
 		axis->Render();
 	}
+
 }
 
 
@@ -192,7 +199,9 @@ void GameObject::AddBone(GameObject* child)
 {
 	if (root->Find(child->name))
 		return;
-	child->boneIndex = ++root->boneIndexCount;
+	child->boneIndex = root->boneIndexCount;
+	root->boneIndexCount++;
+
 	root->obList[child->name] = child;
 	children[child->name] = child;
 	child->parent = this;
@@ -236,3 +245,25 @@ bool Actor::DeleteObject(string Name)
 	obList.erase(temp);
 	return true;
 }
+
+void Actor::Update()
+{
+	if (anim)
+	{
+		anim->Update();
+	}
+
+	GameObject::Update();
+}
+
+void Actor::Render(class Shader* otherShader)
+{
+	if (skeleton)
+	{
+		//if (anim)anim->Update();
+		skeleton->Set();
+	}
+	GameObject::Render(otherShader);
+}
+
+

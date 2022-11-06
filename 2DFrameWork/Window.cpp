@@ -12,6 +12,8 @@ WPARAM Window::Run(Scene* main)
 	Material::CreateStaticMember();
 	Skeleton::CreateStaticMember();
 	Terrain::CreateStaticMember();
+	CubeMap::CreateStaticMember();
+	BLEND->Set(false);
 	MSG msg = { 0 };
 
 
@@ -32,6 +34,7 @@ WPARAM Window::Run(Scene* main)
 	//ClipCursor(&rtRect);
 	//printf("ClipCursor %f %f %f %f\r\n", rtRect.left, rtRect.top, rtRect.right, rtRect.bottom);
 
+
 	while (true)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -47,8 +50,12 @@ WPARAM Window::Run(Scene* main)
 			TIMER->Chronometry(App.fixFrame);
 			INPUT->Update();
 			GUI->Update();
+			SOUND->Update();
+
 			main->Update();
 			main->LateUpdate();
+			main->PreRender();
+
 			D3D->SetRenderTarget();
 			DWRITE->GetDC()->BeginDraw();
 			D3D->Clear(App.background);
@@ -68,6 +75,7 @@ WPARAM Window::Run(Scene* main)
 	Material::DeleteStaticMember();
 	Skeleton::DeleteStaticMember();
 	Terrain::DeleteStaticMember();
+	CubeMap::DeleteStaticMember();
 	TIMER->DeleteSingleton();
 	INPUT->DeleteSingleton();
 	GUI->DeleteSingleton();
@@ -75,6 +83,7 @@ WPARAM Window::Run(Scene* main)
 	RESOURCE->DeleteSingleton();
 	DEPTH->DeleteSingleton();
 	DWRITE->DeleteSingleton();
+	SOUND->DeleteSingleton();
 	Destroy();
 
 	return msg.wParam;
@@ -103,6 +112,7 @@ void Window::Load()
 		, rect.right - rect.left, rect.bottom - rect.top
 		, TRUE
 	);
+
 }
 
 void Window::Save()
@@ -121,6 +131,7 @@ void Window::Save()
 		fout.close();
 	}
 }
+
 
 void Window::Create()
 {
@@ -208,8 +219,6 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 			GUI->ResizeScreen();
 			if (main)
 				main->ResizeScreen();
-
-
 		}
 	}
 

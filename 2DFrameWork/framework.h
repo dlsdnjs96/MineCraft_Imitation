@@ -17,7 +17,6 @@
 #include <queue>
 #include <map>
 #include <unordered_map>
-#include <set>
 #include <thread>
 #include <mutex>
 #include <functional>
@@ -60,6 +59,12 @@ using namespace SimpleMath;
 #include "../Libs/ImGui/dirent.h"
 #include "../Libs/ImGui/ImGuiFileDialog.h"
 #include "../Libs/ImGui/ImGuiFileDialogConfig.h"
+
+
+//Fmod
+#include "../Libs/Fmod/fmod.hpp"
+#include "../Libs/Fmod/fmod.hpp"
+#pragma comment(lib, "../Libs/Fmod/fmodL_vc.lib")
 
 //File
 #include "Types.h"
@@ -106,14 +111,22 @@ extern Application App;//Extern Global
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "Dwrite.h"
+#include "Sound.h"
 
 #include "GameObject.h"
 //#include "ObRect.h"
 #include "Camera.h"
 #include "Dijkstra.h"
 #include "Terrain.h"
+#include "Light.h"
 #include "UI.h"
+#include "Sky.h"
+#include "Billboard.h"
 #include "DepthState.h"
+#include "BlendState.h"
+#include "RasterState.h"
+#include "RenderTarget.h"
+#include "CubeMap.h"
 
 #include "Util.h"
 
@@ -129,3 +142,7 @@ extern Application App;//Extern Global
 #define DWRITE		Dwrite::GetInstance()
 #define SCENE		SceneManager::GetInstance()
 #define DEPTH		DepthState::GetInstance()
+#define BLEND		BlendState::GetInstance()
+#define RASTER		RasterState::GetInstance()
+#define SOUND		Sound::GetInstance()
+#define LIGHT		LightManager::GetInstance()

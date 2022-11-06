@@ -52,6 +52,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameObject", "GameObject", 
 		Contents\GameObject\Cam.xml = Contents\GameObject\Cam.xml
 		Contents\GameObject\Character.xml = Contents\GameObject\Character.xml
 		Contents\GameObject\Character2.xml = Contents\GameObject\Character2.xml
+		Contents\GameObject\Menu\CreateWorld.xml = Contents\GameObject\Menu\CreateWorld.xml
+		Contents\GameObject\Ingame\Exit.xml = Contents\GameObject\Ingame\Exit.xml
+		Contents\GameObject\Menu\Exit.xml = Contents\GameObject\Menu\Exit.xml
 		Contents\GameObject\Grid.xml = Contents\GameObject\Grid.xml
 		Contents\GameObject\Inven.xml = Contents\GameObject\Inven.xml
 		Contents\GameObject\Line.xml = Contents\GameObject\Line.xml
@@ -60,18 +63,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameObject", "GameObject", 
 		Contents\GameObject\Model.xml = Contents\GameObject\Model.xml
 		Contents\GameObject\Pick_Champion.xml = Contents\GameObject\Pick_Champion.xml
 		Contents\GameObject\Player.xml = Contents\GameObject\Player.xml
+		Contents\GameObject\Menu\Prev.xml = Contents\GameObject\Menu\Prev.xml
+		Contents\GameObject\Ingame\Resume.xml = Contents\GameObject\Ingame\Resume.xml
+		Contents\GameObject\Ingame\Setting.xml = Contents\GameObject\Ingame\Setting.xml
+		Contents\GameObject\Menu\Setting.xml = Contents\GameObject\Menu\Setting.xml
 		Contents\GameObject\Shop.xml = Contents\GameObject\Shop.xml
+		Contents\GameObject\Menu\SinglePlay.xml = Contents\GameObject\Menu\SinglePlay.xml
 		Contents\GameObject\Sphere.xml = Contents\GameObject\Sphere.xml
 		Contents\GameObject\Sun.xml = Contents\GameObject\Sun.xml
 		Contents\GameObject\Terrain.xml = Contents\GameObject\Terrain.xml
 		Contents\GameObject\testCube.xml = Contents\GameObject\testCube.xml
 		Contents\GameObject\TestPlayer.xml = Contents\GameObject\TestPlayer.xml
+		Contents\GameObject\Menu\Title.xml = Contents\GameObject\Menu\Title.xml
 		Contents\GameObject\Window.xml = Contents\GameObject\Window.xml
+		Contents\GameObject\Menu\WorldList.xml = Contents\GameObject\Menu\WorldList.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{6498BC6D-79F3-44EF-806D-3CB449E9F69E}"
 	ProjectSection(SolutionItems) = preProject
 		Shaders\0.Exam.hlsl = Shaders\0.Exam.hlsl
+		Shaders\0.ExamCubeMap.hlsl = Shaders\0.ExamCubeMap.hlsl
+		Shaders\0.Sky.hlsl = Shaders\0.Sky.hlsl
 		Shaders\1.Collider.hlsl = Shaders\1.Collider.hlsl
 		Shaders\1.Cube.hlsl = Shaders\1.Cube.hlsl
 		Shaders\2.Cube.hlsl = Shaders\2.Cube.hlsl
@@ -85,6 +97,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{6498
 		Shaders\Common.hlsl = Shaders\Common.hlsl
 		Shaders\ComputeShader.hlsl = Shaders\ComputeShader.hlsl
 		Shaders\MapGraph.hlsl = Shaders\MapGraph.hlsl
+		Shaders\Water.hlsl = Shaders\Water.hlsl
 		Contents\GameObject\Window.xml = Contents\GameObject\Window.xml
 	EndProjectSection
 EndProject

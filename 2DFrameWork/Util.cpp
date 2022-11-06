@@ -233,6 +233,30 @@ bool Util::RayIntersectMap(IN Ray WRay, IN GameObject* Terrain, OUT Vector3& Hit
 	return false;
 }
 
+Ray Util::MouseToRay(Vector3 Mouse, Camera* Cam)
+{
+	Mouse.x -= Cam->viewport.x;
+	Mouse.y -= Cam->viewport.y;
+	Vector2 MousePos;
+
+	//ndc로의 변환
+	MousePos.x = ((2.0f * Mouse.x) / Cam->viewport.width - 1.0f);
+	MousePos.y = ((-2.0f * Mouse.y) / Cam->viewport.height + 1.0f);
+
+	// view로의 변환
+	MousePos.x /= Cam->proj._11;
+	MousePos.y /= Cam->proj._22;
+
+	Ray CamToMouse;
+	CamToMouse.position = Cam->GetWorldPos();
+	CamToMouse.direction = Vector3(MousePos.x, MousePos.y, 1.0f);
+	Matrix inverse = Cam->view.Invert();
+	CamToMouse.direction = Vector3::TransformNormal(CamToMouse.direction, inverse);
+	CamToMouse.direction.Normalize();
+	return CamToMouse;
+}
+
+
 void Util::NdcToScreen(Vector3& pos)
 {
 	pos.x = (pos.x + 1.f) * App.GetHalfWidth();
@@ -289,28 +313,22 @@ bool Util::IsInScreen(Vector3 pos, Matrix matrix)
 	return true;
 }
 
-Ray Util::MouseToRay(Vector3 Mouse, Camera* Cam)
+void Util::ClipWindow(bool on)
 {
-	Mouse.x -= Cam->viewport.x;
-	Mouse.y -= Cam->viewport.y;
-	Vector2 MousePos;
-
-	//ndc로의 변환
-	MousePos.x = ((2.0f * Mouse.x) / Cam->viewport.width - 1.0f);
-	MousePos.y = ((-2.0f * Mouse.y) / Cam->viewport.height + 1.0f);
-
-	// view로의 변환
-	MousePos.x /= Cam->proj._11;
-	MousePos.y /= Cam->proj._22;
-
-	Ray CamToMouse;
-	CamToMouse.position = Cam->GetWorldPos();
-	CamToMouse.direction = Vector3(MousePos.x, MousePos.y, 1.0f);
-	Matrix inverse = Cam->view.Invert();
-	CamToMouse.direction = Vector3::TransformNormal(CamToMouse.direction, inverse);
-	CamToMouse.direction.Normalize();
-	return CamToMouse;
+	if (on) {
+		RECT rtRect;
+		POINT p1, p2;
+		GetClientRect(App.GetHandle(), &rtRect);
+		p1.x = rtRect.left; p1.y = rtRect.top; p2.x = rtRect.right; p2.y = rtRect.bottom;
+		ClientToScreen(App.GetHandle(), &p1);
+		ClientToScreen(App.GetHandle(), &p2); rtRect.left = p1.x; rtRect.top = p1.y; rtRect.right = p2.x; rtRect.bottom = p2.y;
+		ClipCursor(&rtRect);
+	} else
+		ClipCursor(nullptr);
 }
+
+
+
 
 float Util::SmoothNoise(int x, int y)
 {

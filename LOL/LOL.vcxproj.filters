@@ -38,10 +38,19 @@
     <ClCompile Include="WorldGenerator.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="Sector2.cpp">
+    <ClCompile Include="Sector.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="TextureData.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Setting.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldList.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
@@ -66,10 +75,19 @@
     <ClInclude Include="WorldGenerator.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="Sector2.h">
+    <ClInclude Include="Sector.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="TextureData.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Setting.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldList.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

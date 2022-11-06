@@ -41,16 +41,21 @@ bool SceneManager::DeleteScene(string key)
 
 Scene* SceneManager::ChangeScene(string key, float changingTime)
 {
+    printf("ChangeScene\r\n");
     Scene* temp = GetScene(key);
     if (temp)
     {
         nextScene = temp;
+        nextScene->state = SceneState::FADEIN;
         this->changingTime = changingTime;
+        if (currentScene)
+        currentScene->state = SceneState::FADEOUT;
         if (changingTime <= 0.0f)
         {
             isChanging = true;
-            if(currentScene) currentScene->Release();
-            nextScene->Init();
+            if(currentScene)
+            currentScene->Release();
+            //nextScene->Init();
         }
     }
     return temp;
@@ -71,12 +76,6 @@ Scene* SceneManager::GetCurrentScene()
     return currentScene;
 }
 
-void SceneManager::SetCurrentScene(Scene* newScene)
-{
-    Release();
-    currentScene = newScene;
-}
-
 void SceneManager::Release()
 {
     if (currentScene)currentScene->Release();
@@ -91,7 +90,9 @@ void SceneManager::Update()
         {
             isChanging = true;
             if (currentScene)
-            currentScene->Release();
+            {
+                currentScene->Release();
+            }
             //nextScene->Init();
         }
     }
@@ -100,14 +101,27 @@ void SceneManager::Update()
     {
         currentScene = nextScene;
         isChanging = false;
+        changingTime = 0.f;
     }
     currentScene->Update();
+}
+
+void SceneManager::SetCurrentScene(Scene* newScene)
+{
+    Release();
+    currentScene = newScene;
 }
 
 void SceneManager::LateUpdate()
 {
     if (isChanging)return;
     currentScene->LateUpdate();
+}
+
+void SceneManager::PreRender()
+{
+    if (isChanging)return;
+    currentScene->PreRender();
 }
 
 void SceneManager::Render()

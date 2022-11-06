@@ -14,20 +14,21 @@ Main::~Main()
 
 void Main::Init()
 {
-    printf("Block2 %d\r\n", sizeof(Block2));
-
     SCENE->AddScene("INGAME", new InGameScene());
-//    SCENE->SetCurrentScene(SCENE->GetScene("INGAME"));
-
     SCENE->AddScene("LOADING", new LoadingScene());
-    SCENE->SetCurrentScene(SCENE->GetScene("LOADING"));
+    SCENE->AddScene("MENU", new MenuScene());
+
+    SCENE->SetCurrentScene(SCENE->GetScene("MENU"));
 
     ResizeScreen();
+    SETTING->Init();
 }
 
 void Main::Release()
 {
     SCENE->Release();
+    WORLD->Release();
+    SETTING->Release();
 }
 
 
@@ -39,6 +40,11 @@ void Main::Update()
 void Main::LateUpdate()
 {
     SCENE->LateUpdate();
+}
+
+void Main::PreRender()
+{
+    SCENE->PreRender();
 }
 
 void Main::Render()

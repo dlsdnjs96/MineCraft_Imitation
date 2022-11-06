@@ -145,23 +145,29 @@
     <ClInclude Include="InGameScene.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="MenuScene.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Sector2.h" />
+    <ClInclude Include="Sector.h" />
+    <ClInclude Include="Setting.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TextureData.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldGenerator.h" />
+    <ClInclude Include="WorldList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="InGameScene.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Sector2.cpp" />
+    <ClCompile Include="Sector.cpp" />
+    <ClCompile Include="Setting.cpp" />
     <ClCompile Include="TextureData.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldGenerator.cpp" />
+    <ClCompile Include="WorldList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

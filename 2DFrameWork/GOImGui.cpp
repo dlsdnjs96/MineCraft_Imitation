@@ -64,7 +64,12 @@ bool GameObject::RenderHierarchy()
 			ImGui::SameLine();
 			if (ImGui::Button("UI"))
 			{
-				AddChild(UI::CreateChild(childName));
+				AddChild(UI::Create(childName));
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Billboard"))
+			{
+				AddChild(Billboard::Create(childName));
 			}
 			ImGui::EndPopup();
 		}
@@ -271,6 +276,15 @@ void GameObject::RenderDetail()
 		ImGui::EndTabBar();
 	}
 }
+
+void GameObject::DeleteChildren()
+{
+	for (auto& iter : children) {
+		iter.second->DeleteChildren();
+		root->DeleteObject(iter.second->name);
+	}
+}
+
 void Actor::RenderDetail()
 {
 	GameObject::RenderDetail();
@@ -362,26 +376,6 @@ void Actor::RenderDetail()
 	}
 }
 
-void Actor::Update()
-{
-	if (anim)
-	{
-		anim->Update();
-	}
-
-	GameObject::Update();
-}
-
-void Actor::Render()
-{
-	if (skeleton)
-	{
-		//if (anim)anim->Update();
-		skeleton->Set();
-	}
-	GameObject::Render();
-}
-
 
 
 void Camera::RenderDetail()
@@ -407,6 +401,32 @@ void Camera::RenderDetail()
 		ImGui::EndTabBar();
 	}
 }
+
+void Light::RenderDetail()
+{
+	Actor::RenderDetail();
+	if (ImGui::BeginTabBar("MyTabBar3"))
+	{
+		if (ImGui::BeginTabItem("Light"))
+		{
+			ImGui::SliderInt("Type", &light->lightType, 0, 1);
+			ImGui::ColorEdit3("Color", (float*)(&light->color));
+			ImGui::SliderFloat("Range", &light->range,0,200);
+			
+			if (light->lightType == (int)LightType::SPOT)
+			{
+				ImGui::SliderFloat3("Dir", (float*)(&light->direction),-1,1);
+				ImGui::SliderFloat("Outer", &light->outer,0.0f,90.0f);
+				ImGui::SliderFloat("Inner", &light->inner,0.0f, 90.0f);
+			}
+
+			ImGui::EndTabItem();
+		}
+		ImGui::EndTabBar();
+	}
+}
+
+
 void Terrain::RenderDetail()
 {
 	Actor::RenderDetail();

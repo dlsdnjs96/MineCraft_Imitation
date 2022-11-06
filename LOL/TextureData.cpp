@@ -10,12 +10,12 @@ TextureData::TextureData()
 	blockUV[BlockType::GRASS][BLOCK_FACE_BEHIND]	= { 3.f / 16.f, 0.f / 16.f };
 
 
-	blockUV[BlockType::DIRT][BLOCK_FACE_UP]			= { 4.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::DIRT][BLOCK_FACE_DOWN]		= { 4.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::DIRT][BLOCK_FACE_RIGHT]		= { 4.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::DIRT][BLOCK_FACE_LEFT]		= { 4.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::DIRT][BLOCK_FACE_FORWARD]	= { 4.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::DIRT][BLOCK_FACE_BEHIND]		= { 4.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::DIRT][BLOCK_FACE_UP]			= { 2.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::DIRT][BLOCK_FACE_DOWN]		= { 2.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::DIRT][BLOCK_FACE_RIGHT]		= { 2.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::DIRT][BLOCK_FACE_LEFT]		= { 2.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::DIRT][BLOCK_FACE_FORWARD]	= { 2.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::DIRT][BLOCK_FACE_BEHIND]		= { 2.f / 16.f, 0.f / 16.f };
 
 
 	blockUV[BlockType::WATER][BLOCK_FACE_UP]		= { 14.f / 16.f, 0.f / 16.f };

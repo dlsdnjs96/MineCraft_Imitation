@@ -6,10 +6,14 @@ class InGameScene : public Scene
 {
 private:
 	Actor* Grid;
-
+	Camera* Cam;
 	Player* player;
-	Actor* player2;
 
+	UI* resume;
+	UI* setting;
+	UI* exit;
+
+	bool menuTab = false;
 public:
 	InGameScene();
 	~InGameScene();
@@ -17,7 +21,9 @@ public:
 	virtual void Release() override;
 	virtual void Update() override;
 	virtual void LateUpdate() override;
+	virtual void PreRender() override;
 	virtual void Render() override;
 	virtual void ResizeScreen() override;
+	
 };
 

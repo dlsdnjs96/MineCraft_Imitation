@@ -23,40 +23,35 @@ Main::~Main()
 
 void Main::Init()
 {
-    VertexPTN* vertices;
+    VertexPT* vertices;
     UINT vertexCount = 4;
     UINT* indices;
     UINT indexCount = 6;
-    VertexType type = VertexType::PTN;
+    VertexType type = VertexType::PT;
 
-    vertices = new VertexPTN[vertexCount];
+    vertices = new VertexPT[vertexCount];
     indices = new UINT[indexCount];
 
-    vertices[0].position = { 5.0f, -5.0f, 5.0f };
-    vertices[1].position = { 5.0f, 5.0f, 5.0f };
-    vertices[2].position = { -5.0f, 5.0f, 5.0f };
-    vertices[3].position = { -5.0f, -5.0f, 5.0f };
+    vertices[0].position = { 1.0f, -1.0f, 0.f };
+    vertices[1].position = { 1.0f, 1.0f, 0.f };
+    vertices[2].position = { -1.0f, 1.0f, 0.f };
+    vertices[3].position = { -1.0f, -1.0f, 0.f };
+
+    vertices[0].uv = { 1.f, 1.f };
+    vertices[1].uv = { 1.f, 0.f };
+    vertices[2].uv = { 0.f, 0.f };
+    vertices[3].uv = { 0.f, 1.f };
 
 
-
-
-    float _x = 3.f / 6.f, _y = 0.f;
-
-    float arr[4][2] = { { 0.f, 0.f }, { 0.f, 1.f }, { 1.f / 6.f, 1.f }, { 1.f / 6.f, 0.f } };
-    for (int j = 0; j < 4; j++)
-        vertices[j].uv = { _x + arr[j][0], _y + arr[j][1] };
-    
-
-    //int arr2[6] = { 2, 1, 0, 2, 0, 3 };
-    int arr2[6] = { 0, 1, 2, 0, 2, 3 };
+    int arr[6] = { 0, 1, 2, 0, 2, 3 };
     for (int j = 0; j < 6; j++)
-        indices[j] = arr2[j] + 0;
+        indices[j] = arr[j] + 0;
 
     
 
 
     Mesh* newMesh = new Mesh(vertices, vertexCount, indices, indexCount, type);
-    newMesh->SaveFile("Block/"+to_string(int(BLOCK_FACE_BEHIND)) + ".mesh");
+    newMesh->SaveFile("6.button0.mesh");
 
     printf("Saved mesh\r\n");
 }
@@ -75,6 +70,11 @@ void Main::Update()
 void Main::LateUpdate()
 {
     SCENE->LateUpdate();
+}
+
+void Main::PreRender()
+{
+    SCENE->PreRender();
 }
 
 void Main::Render()

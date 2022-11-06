@@ -23,12 +23,15 @@ private:
     };
 public:
     Vector3 position;       //마우스 위치
+    Vector3 prevPosition;       //마우스 위치
     Vector3 movePosition;   //마우스 이동벡터
     Vector3 wheelMoveValue;
 
     Vector3 NDCPosition;
     Vector3 oldNDCPosition;
-    Vector3 moveNDCPosition;
+    Vector3 moveNDCPos;
+
+    POINT fixedMousePos = { -1, -1 };
 public:
     Input();
     ~Input();

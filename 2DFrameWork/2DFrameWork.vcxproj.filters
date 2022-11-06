@@ -86,6 +86,30 @@
     <ClInclude Include="Dwrite.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Billboard.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BlendState.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Sky.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="RasterState.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTarget.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeMap.h">
+      <Filter>Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">
@@ -191,6 +215,30 @@
     </ClCompile>
     <ClCompile Include="Dwrite.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Billboard.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BlendState.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Sky.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="RasterState.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTarget.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeMap.cpp">
+      <Filter>Render</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

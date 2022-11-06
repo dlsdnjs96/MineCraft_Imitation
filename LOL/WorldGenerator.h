@@ -16,28 +16,40 @@ class WorldGenerator : public Singleton<WorldGenerator>
 private:
 	//Int2 mapSize = { 4096, 4096 };
 	//Int2 mapSize = { 512, 512 };
-	//Int2 mapSize = { 32, 32 };
-	Int2 mapSize = { 1024, 1024 };
+	Int2 mapSize = { 32, 32 };
+	//Int2 mapSize = { 1024, 1024 };
 	//Int2 mapSize = { 2048, 2048 };
+	vector<vector<char>> heightMap[2];
+	vector<vector<bool>> riverMap[2];
+	vector<vector<char>> treeMap;
+
+	int loadingStage = 0;
+	function<void(WorldGenerator&)> loadingFunction = nullptr;
+public:
 	UI* ui;
 
-public:
 	WorldGenerator();
 
+	void Init();
 	void Update();
 	void Render();
 	void RenderHierarchy();
 	void Release();
 
 	void GenerateWorld();
-	void HeightMap(int stage);
-	void DecideClimate();
+	void HeightMap();
+	void TreeMap();
+	void RiverMap();
+
+	void MapToWorld();
+
+	void HeightToMesh(vector<vector<char>>& map);
+	void RiverToMesh(vector<vector<bool>>& map);
 
 	template<typename T>
 	vector<vector<T>> LerpMap(vector<vector<T>>& map);
 
-	template<typename T>
-	shared_ptr<Mesh> MapToMesh(vector<vector<T>>& map, T maxV);
+	shared_ptr<Mesh> MapToMesh();
 
 };
 
