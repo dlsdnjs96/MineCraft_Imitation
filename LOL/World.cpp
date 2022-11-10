@@ -3,7 +3,7 @@
 void World::Init()
 {
 	CreateDumpBlocks();
-	distinguishBlocks({ 0, 0, 0 }, 1024);
+	distinguishBlocks({ 0, 0, 0 }, 64);
 }
 
 void World::Update()
@@ -98,6 +98,7 @@ void World::SaveWorld()
 {
 	BinaryWriter out;
 	wstring path = L"../Contents/Map/" + Util::ToWString(name) + L"/map";
+	filesystem::create_directory("../Contents/Map/" + name);
 	out.Open(path);
 
 	UINT sectorSize = 0;
@@ -129,9 +130,37 @@ void World::UpdateMesh()
 	}
 }
 
+void World::UpdateMesh(Int3 _pos)
+{
+	int sectorX, sectorZ;
+
+	if (_pos.x >= 0.f)
+		sectorX = int(_pos.x / SECTOR_SIZE);
+	else 
+		sectorX = int((_pos.x - SECTOR_SIZE + 0.00001f) / SECTOR_SIZE);
+
+	if (_pos.z >= 0.f)
+		sectorZ = int(_pos.z / SECTOR_SIZE);
+	else 
+		sectorZ = int((_pos.z - SECTOR_SIZE + 0.00001f) / SECTOR_SIZE);
+
+	//distinguishBlocks(pos, 5);
+	//distinguishBlocks({ 0, 0, 0 }, 64);
+	distinguishBlock(_pos);
+	distinguishBlock(_pos + Int3{ 1, 0, 0 });
+	distinguishBlock(_pos + Int3{ -1, 0, 0 });
+	distinguishBlock(_pos + Int3{ 0, 1, 0 });
+	distinguishBlock(_pos + Int3{ 0, -1, 0 });
+	distinguishBlock(_pos + Int3{ 0, 0, 1 });
+	distinguishBlock(_pos + Int3{ 0, 0, -1 });
+
+	sector[sectorX][sectorZ].UpdateBlockMesh();
+	sector[sectorX][sectorZ].UpdateWaterMesh();
+
+}
+
 void World::CreateDumpBlocks()
 {
-	name = "testWorld";
 
 
 	actor = Actor::Create();
@@ -168,52 +197,42 @@ void World::distinguishBlocks(Int3 from, int range)
 		{
 			for (int k = 1; k < WORLD_HEIGHT; k++)
 			{
-				//printf("%d %d %d : %d\r\n", i, k, j, GetBlock(Int3{ i, k, j }).blockType);
-
 				if (GetBlock(Int3{ i, k, j }).blockType == BlockType::EMPTY)
 					continue;
 
-				if (GetBlock(Int3{ i, k, j }).blockType == BlockType::WATER)
-				{
-					int renderFace = 0;
-					if (int(GetBlock(Int3{ i + 1, k, j }).blockType) >= 1000 || GetBlock(Int3{ i + 1, k, j }).blockType == BlockType::EMPTY)
-						renderFace |= BLOCK_FACE_RIGHT;
-					if (int(GetBlock(Int3{ i - 1, k, j }).blockType) >= 1000 || GetBlock(Int3{ i - 1, k, j }).blockType == BlockType::EMPTY)
-						renderFace |= BLOCK_FACE_LEFT;
-					if (int(GetBlock(Int3{ i, k + 1, j }).blockType) >= 1000 || GetBlock(Int3{ i, k + 1, j }).blockType == BlockType::EMPTY)
-						renderFace |= BLOCK_FACE_UP;
-					if (int(GetBlock(Int3{ i, k - 1, j }).blockType) >= 1000 || GetBlock(Int3{ i, k - 1, j }).blockType == BlockType::EMPTY)
-						renderFace |= BLOCK_FACE_DOWN;
-					if (int(GetBlock(Int3{ i, k, j + 1 }).blockType) >= 1000 || GetBlock(Int3{ i, k, j + 1 }).blockType == BlockType::EMPTY)
-						renderFace |= BLOCK_FACE_BEHIND;
-					if (int(GetBlock(Int3{ i, k, j - 1 }).blockType) >= 1000 || GetBlock(Int3{ i, k, j - 1 }).blockType == BlockType::EMPTY)
-						renderFace |= BLOCK_FACE_FORWARD;
-
-					if (renderFace)
-						SetBlockDectec(Int3{ i, k, j }, renderFace);
-				}
-				else if (int(GetBlock(Int3{ i, k, j }).blockType) >= 2)
-				{
-					int renderFace = 0;
-					if (int(GetBlock(Int3{ i + 1, k, j }).blockType) < 1000)
-						renderFace |= BLOCK_FACE_RIGHT;
-					if (int(GetBlock(Int3{ i - 1, k, j }).blockType) < 1000)
-						renderFace |= BLOCK_FACE_LEFT;
-					if (int(GetBlock(Int3{ i, k + 1, j }).blockType) < 1000)
-						renderFace |= BLOCK_FACE_UP;
-					if (int(GetBlock(Int3{ i, k - 1, j }).blockType) < 1000)
-						renderFace |= BLOCK_FACE_DOWN;
-					if (int(GetBlock(Int3{ i, k, j + 1 }).blockType) < 1000)
-						renderFace |= BLOCK_FACE_BEHIND;
-					if (int(GetBlock(Int3{ i, k, j - 1 }).blockType) < 1000)
-						renderFace |= BLOCK_FACE_FORWARD;
-
-					if (renderFace)
-						SetBlockDectec(Int3{ i, k, j }, renderFace);
-				}
-			
+				distinguishBlock(Int3{ i, k, j });
 			}
 		}
+	}
+}
+
+void World::distinguishBlock(Int3 from)
+{
+	const Int3 sixPos[6] = { {0, 1, 0}, {0, -1, 0}, {1, 0, 0}, {-1, 0, 0}, {0, 0, 1}, {0, 0, -1} };
+	const int sixFaces[6] = { BLOCK_FACE_UP, BLOCK_FACE_DOWN, BLOCK_FACE_RIGHT, BLOCK_FACE_LEFT, BLOCK_FACE_BEHIND, BLOCK_FACE_FORWARD };
+
+	if (GetBlock(from).blockType == BlockType::WATER)
+	{
+		int renderFace = 0;
+
+		for (int i = 0; i < 6; i++) {
+			if (unsigned char(GetBlock(from + sixPos[i]).blockType) >= 100 || GetBlock(from + sixPos[i]).blockType == BlockType::EMPTY)
+				renderFace |= sixFaces[i];
+		}
+
+		SetBlockDectec(from, renderFace);
+	}
+	else if (unsigned char(GetBlock(from).blockType) >= 2)
+	{
+		int renderFace = 0;
+
+		for (int i = 0; i < 6; i++) {
+			Int3 temp = from + sixPos[i];
+			if (unsigned char(GetBlock(from + sixPos[i]).blockType) < 100)
+				renderFace |= sixFaces[i];
+		}
+
+		SetBlockDectec(from, renderFace);
 	}
 }
 

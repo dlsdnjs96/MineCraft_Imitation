@@ -81,7 +81,7 @@ class Scene
 {
 public:
 	SceneState	state = SceneState::NONE;
-	float		time;
+	float		passedTime;
 	virtual ~Scene() {};
 	//√ ±‚»≠
 	virtual void Init() = 0;
@@ -149,6 +149,65 @@ struct Int3
 	{
 		return { static_cast<float>(x), static_cast<float>(y), static_cast<float>(z) };
 	}
+	Int3 operator += (Int3 rv)
+	{
+		return { x + rv.x , y + rv.y , z + rv.z };
+	}
+	Int3 operator -= (Int3 rv)
+	{
+		return { x - rv.x , y - rv.y , z - rv.z };
+	}
+	Int3 operator *= (Int3 rv)
+	{
+		return { x * rv.x , y * rv.y , z * rv.z };
+	}
+	Int3 operator /= (Int3 rv)
+	{
+		return { x / rv.x , y / rv.y , z / rv.z };
+	}
+
+	const Int3 operator + (const Int3 rv)
+	{
+		return { x + rv.x, y + rv.y, z + rv.z };
+	}
+	const Int3 operator - (const Int3 rv)
+	{
+		return { x - rv.x, y - rv.y, z - rv.z };
+	}
+	const Int3 operator * (const Int3 rv)
+	{
+		return { x * rv.x, y * rv.y, z * rv.z };
+	}
+	const Int3 operator / (const Int3 rv)
+	{
+		return { x / rv.x, y / rv.y, z / rv.z };
+	}
+
+	//Int3 operator + (Int3& p) {
+	//	x = x + p.x;
+	//	y = y + p.y;
+	//	z = z + p.z;
+	//	return Int3(x, y, z);
+	//}
+	//Int3 operator - (Int3& p) {
+	//	x = x - p.x;
+	//	y = y - p.y;
+	//	z = z - p.z;
+	//	return Int3(x, y, z);
+	//}
+	//Int3 operator * (Int3& p) {
+	//	x = x * p.x;
+	//	y = y * p.y;
+	//	z = z * p.z;
+	//	return Int3(x, y, z);
+	//}
+	//Int3 operator / (Int3& p) {
+	//	x = x / p.x;
+	//	y = y / p.y;
+	//	z = z / p.z;
+	//	return Int3(x, y, z);
+	//}
+
 	Int3 operator *= (int divide)
 	{
 		return { x * divide , y * divide , z * divide };

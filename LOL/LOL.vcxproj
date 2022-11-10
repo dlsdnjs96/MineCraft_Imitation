@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
+    <ClInclude Include="BlockCollider.h" />
     <ClInclude Include="InGameScene.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="Main.h" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BlockCollider.cpp" />
     <ClCompile Include="InGameScene.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="Main.cpp" />

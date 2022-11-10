@@ -81,6 +81,11 @@ void BinaryWriter::Char(char data)
 	WriteFile(fileHandle, &data, sizeof(char), &size, NULL);
 }
 
+void BinaryWriter::Uchar(unsigned char data)
+{
+	WriteFile(fileHandle, &data, sizeof(unsigned char), &size, NULL);
+}
+
 void BinaryWriter::vector2(const Vector2& data)
 {
 	WriteFile(fileHandle, &data, sizeof(Vector2), &size, NULL);
@@ -228,6 +233,15 @@ char BinaryReader::Char()
 
 	return temp;
 }
+
+unsigned char BinaryReader::Uchar()
+{
+	unsigned char temp = 0;
+	ReadFile(fileHandle, &temp, sizeof(unsigned char), &size, NULL);
+
+	return temp;
+}
+
 
 Vector2 BinaryReader::vector2()
 {

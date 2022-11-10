@@ -3,9 +3,20 @@
     <Shader File="6.Cube.hlsl"/>
     <Material File="button1.mtl"/>
     <Transform>
-        <Position X="0" Y="-0.25" Z="0"/>
+        <Position X="0" Y="-0.40000001" Z="0"/>
         <Scale X="1" Y="0.30000001" Z="1"/>
         <Rotation X="0" Y="0" Z="0"/>
     </Transform>
-    <Children Size="0"/>
+    <Children Size="1"/>
+    <Child0 Name="text" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="Text/saveQuit.mtl"/>
+        <Transform>
+            <Position X="0" Y="0" Z="-0.1"/>
+            <Scale X="0.80000001" Y="1.15" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="0"/>
+    </Child0>
 </Root>

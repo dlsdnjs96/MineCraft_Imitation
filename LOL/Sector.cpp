@@ -333,7 +333,7 @@ void Sector::Save(BinaryWriter& out)
         {
             for (int y = 0; y < WORLD_HEIGHT; y++)
             {
-                out.Char(static_cast<char>(blocks[x][y][z].blockType));
+                out.Uchar(static_cast<unsigned char>(blocks[x][y][z].blockType));
             }
         }
     }
@@ -347,7 +347,7 @@ void Sector::Load(BinaryReader& in)
 		{
 			for (int y = 0; y < WORLD_HEIGHT; y++)
 			{
-				blocks[x][y][z].blockType = static_cast<BlockType>(in.Char());
+				blocks[x][y][z].blockType = static_cast<BlockType>(in.Uchar());
 				blocks[x][y][z].renderFace = 0;
 			}
 		}

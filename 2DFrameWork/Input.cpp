@@ -98,7 +98,6 @@ void Input::Update()
     ScreenToClient(App.handle, &point);
     if (fixedMousePos.x != -1) {
         SetCursorPos(fixedMousePos.x, fixedMousePos.y);
-        printf("point %ld %ld %ld\r\n", point.x, fixedMousePos.x, point.x - fixedMousePos.x);
     }
 
     wheelOldStatus.x = wheelStatus.x;

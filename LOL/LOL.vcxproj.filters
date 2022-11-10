@@ -53,6 +53,9 @@
     <ClCompile Include="WorldList.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="BlockCollider.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -89,6 +92,9 @@
     </ClInclude>
     <ClInclude Include="WorldList.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockCollider.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

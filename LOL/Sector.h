@@ -7,7 +7,7 @@ struct Block
 {
 	BlockType	blockType;
 	Vector3		position;
-	int			renderFace = 1;
+	int			renderFace = 0;
 };
 
 struct WorldBlock

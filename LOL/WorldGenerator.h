@@ -15,8 +15,8 @@ class WorldGenerator : public Singleton<WorldGenerator>
 {
 private:
 	//Int2 mapSize = { 4096, 4096 };
-	//Int2 mapSize = { 512, 512 };
-	Int2 mapSize = { 32, 32 };
+	Int2 mapSize = { 128, 128 };
+	//Int2 mapSize = { 32, 32 };
 	//Int2 mapSize = { 1024, 1024 };
 	//Int2 mapSize = { 2048, 2048 };
 	vector<vector<char>> heightMap[2];

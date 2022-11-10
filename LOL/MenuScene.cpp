@@ -1,5 +1,6 @@
 #include "stdafx.h"
 
+
 MenuScene::MenuScene()
 {
     Init();
@@ -42,6 +43,7 @@ void MenuScene::Init()
 
     exit->mouseOver = [=]() { exit->material = RESOURCE->materials.Load("button2.mtl"); };
     exit->mouseNotOver = [=]() { exit->material = RESOURCE->materials.Load("button1.mtl"); };
+    exit->mouseDown = [=]() { PostQuitMessage(0); };
 
 
     //phase 2///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -60,7 +62,13 @@ void MenuScene::Init()
 
     createWorld->mouseOver = [=]() { createWorld->material = RESOURCE->materials.Load("button2.mtl"); };
     createWorld->mouseNotOver = [=]() { createWorld->material = RESOURCE->materials.Load("button1.mtl"); };
-    //createWorld->mouseDown = [=]() { SCENE->ChangeScene("LOADING", 0.1f)->Init(); };
+    createWorld->mouseDown = [=]() { 
+        time_t timer = time(NULL);
+        struct tm pLocal;
+        localtime_s(&pLocal, &timer);
+        WORLD->name = "NewWorld_"+to_string(pLocal.tm_year) + to_string(pLocal.tm_mon) + to_string(pLocal.tm_mday)
+            + "_" + to_string(pLocal.tm_hour) + to_string(pLocal.tm_min) + to_string(pLocal.tm_sec);
+        SCENE->ChangeScene("LOADING", 0.1f)->Init(); };
 
     prev->mouseOver = [=]() { prev->material = RESOURCE->materials.Load("button2.mtl"); };
     prev->mouseNotOver = [=]() { prev->material = RESOURCE->materials.Load("button1.mtl"); };
@@ -91,10 +99,11 @@ void MenuScene::Update()
         iter->RenderHierarchy();
     ImGui::End();
 
-
+    Cam->rotation.y += DELTA / 5.f;
     Cam->Update();
     for (auto iter : activeObj)
         iter->Update();
+
 }
 
 void MenuScene::LateUpdate()

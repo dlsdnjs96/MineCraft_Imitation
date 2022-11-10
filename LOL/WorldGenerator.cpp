@@ -15,6 +15,8 @@ WorldGenerator::WorldGenerator()
 void WorldGenerator::Init()
 {
     //loadingFunction(*GetInstance());
+    loadingStage = 0;
+    loadingFunction = &WorldGenerator::HeightMap;
 }
 
 void WorldGenerator::Update()
@@ -207,6 +209,7 @@ void WorldGenerator::RiverMap()
 void WorldGenerator::MapToWorld()
 {
     // Height Map
+    printf("Height Map to World\r\n");
     {
         for (int i = 0; i < heightMap[1].size(); i++)
         {
@@ -226,6 +229,7 @@ void WorldGenerator::MapToWorld()
     }
 
     // Tree Map
+    printf("Tree Map to World\r\n");
     {
         for (int i = 0; i < mapSize.x; i++)
         {

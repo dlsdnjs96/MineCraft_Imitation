@@ -6,12 +6,14 @@ class InGameScene : public Scene
 {
 private:
 	Actor* Grid;
+	Actor* TestBlock;
 	Camera* Cam;
 	Player* player;
 
 	UI* resume;
 	UI* setting;
 	UI* exit;
+	UI* aim;
 
 	bool menuTab = false;
 public:

@@ -16,12 +16,14 @@ namespace Util
 	bool RayIntersectTri(IN Ray WRay, IN GameObject* Target, OUT Vector3& HitPoint);
 
 	bool RayIntersectTriNear(IN Ray WRay, IN GameObject* Target, OUT Vector3& HitPoint);
+	int RayIntersectSquareNear(IN Ray WRay, IN GameObject* Target);
 
 	//수직으로 내다 꽂은 레이만 사용할것
 	bool RayIntersectMap(IN Ray WRay, IN GameObject* Terrain, OUT Vector3& HitPoint);
 
 
 	Ray MouseToRay(Vector3 Mouse, Camera* Cam);
+	Ray AimToRay(Camera* Cam);
 
 	template<typename T>
 	//			3     5  
@@ -87,4 +89,6 @@ namespace Util
 	bool IsInScreen(Vector3 pos, Matrix matrix);
 
 	void ClipWindow(bool on);
+
+	void CursorVisible(bool on);
 }

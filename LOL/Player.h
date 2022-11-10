@@ -28,6 +28,9 @@ private:
 	float			swimSpeed = 50.f / 3.f;
 	float			jumpSpeed = 50.f;
 	float			jumppedTime = 0.f;
+
+	//GameObject*		rayIntersectOrder[94];
+	vector<Int3>	rayIntersectOrder;
 public:
 	void Init();
 	void Update();
@@ -49,6 +52,11 @@ public:
 
 	bool RenderHierarchy();
 	void Render();
+
+	void InstallBlock();
+	void UninstallBlock();
+
+	void Collider();
 
 	const char* StateToString(PLAYER_STATE e);
 

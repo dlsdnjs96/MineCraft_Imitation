@@ -22,13 +22,13 @@ enum class BlockType
 	EMPTY		= 0,
 	WATER		= 1,
 	LEAF		= 2,
-	GRASS		= 1000,
-	STONE		= 1001,
-	DIRT		= 1002,
-	SAND		= 1003,
-	WOOD_OAK	= 2000,
-	COAL_ORE	= 3000,
-	IRON_ORE	= 3001,
+	GRASS		= 100,
+	STONE		= 101,
+	DIRT		= 102,
+	SAND		= 103,
+	WOOD_OAK	= 104,
+	COAL_ORE	= 105,
+	IRON_ORE	= 106,
 
 };
 
@@ -40,6 +40,7 @@ enum class BlockType
 #include "WorldGenerator.h"
 #include "WorldList.h"
 #include "Setting.h"
+#include "BlockCollider.h"
 
 
 #include "LoadingScene.h"

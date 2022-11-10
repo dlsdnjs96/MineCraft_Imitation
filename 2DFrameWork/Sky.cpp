@@ -7,7 +7,7 @@ Sky* Sky::Create(string name)
 	//temp->type = ObType::UI;
 
 	temp->mesh = RESOURCE->meshes.Load("0.Cube.mesh");
-	temp->shader = RESOURCE->shaders.Load("0.ExamCubeMap.hlsl");
+	temp->shader = RESOURCE->shaders.Load("0.Exam.hlsl");
 
 	temp->texCube = make_shared<Texture>();
 	temp->texCube->LoadFile("sky.dds");

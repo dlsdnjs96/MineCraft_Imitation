@@ -23,35 +23,59 @@ Main::~Main()
 
 void Main::Init()
 {
-    VertexPT* vertices;
-    UINT vertexCount = 4;
-    UINT* indices;
-    UINT indexCount = 6;
-    VertexType type = VertexType::PT;
+    VertexP cubeEdges[8] = { 
+        {{ -1.f, 1.f,  -1.f }},
+        {{ -1.f, 1.f,  1.f }},
+        {{ 1.f,  1.f,  1.f }},
+        {{ 1.f,  1.f,  -1.f }},
+        {{ -1.f, -1.f, -1.f }},
+        {{ -1.f, -1.f, 1.f }},
+        {{ 1.f,  -1.f, 1.f }},
+        {{ 1.f,  -1.f, -1.f }}
+    };
 
-    vertices = new VertexPT[vertexCount];
+    int edgesIndex[6][4] = {
+        { 3, 2, 1, 0 },
+        { 6, 7, 4, 5 },
+        { 6, 2, 3, 7 },
+        { 4, 0, 1, 5 },
+        { 7, 3, 0, 4 },
+        { 5, 1, 2, 6 }
+    };
+
+    VertexP* vertices;
+    UINT vertexCount = 6 * 4;
+    UINT* indices;
+    UINT indexCount = 6 * 6;
+    VertexType type = VertexType::P;
+
+    vertices = new VertexP[vertexCount];
     indices = new UINT[indexCount];
 
-    vertices[0].position = { 1.0f, -1.0f, 0.f };
-    vertices[1].position = { 1.0f, 1.0f, 0.f };
-    vertices[2].position = { -1.0f, 1.0f, 0.f };
-    vertices[3].position = { -1.0f, -1.0f, 0.f };
-
-    vertices[0].uv = { 1.f, 1.f };
-    vertices[1].uv = { 1.f, 0.f };
-    vertices[2].uv = { 0.f, 0.f };
-    vertices[3].uv = { 0.f, 1.f };
+    int vIndex = 0, iIndex = 0;
 
 
-    int arr[6] = { 0, 1, 2, 0, 2, 3 };
-    for (int j = 0; j < 6; j++)
-        indices[j] = arr[j] + 0;
+    for (int j = 0; j < 6; j++) {
+
+        for (int i = 0; i < 4; i++) {
+            vertices[vIndex].position = cubeEdges[edgesIndex[j][i]].position;
+            vertices[vIndex].position *= 1.f;
+            vIndex++;
+        }
+        int arr[6] = { 0, 1, 2, 0, 2, 3 };
+
+        for (int i = 0; i < 6; i++) {
+            indices[iIndex] = arr[i] + vIndex - 4;
+            iIndex++;
+        }
+    }
+
 
     
 
 
     Mesh* newMesh = new Mesh(vertices, vertexCount, indices, indexCount, type);
-    newMesh->SaveFile("6.button0.mesh");
+    newMesh->SaveFile("6.blockCollider.mesh");
 
     printf("Saved mesh\r\n");
 }

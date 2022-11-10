@@ -3,13 +3,16 @@
 InGameScene::InGameScene()
 {
 
+    TestBlock = Actor::Create();
+    TestBlock->LoadFile("TestBlock.xml");
+
     Grid = Actor::Create();
     Grid->LoadFile("Grid.xml");
 
     player = new Player();
     player->Init();
 
-    Cam = dynamic_cast<Camera*>(player->Find("camHead"));
+    Camera::main = dynamic_cast<Camera*>(player->Find("camHead"));
     //WORLD->LoadWorld();
     //WORLD->SaveWorld();
     resume = UI::Create("Resume");
@@ -18,6 +21,9 @@ InGameScene::InGameScene()
     setting->LoadFile("Ingame/Setting.xml");
     exit = UI::Create("Exit");
     exit->LoadFile("Ingame/Exit.xml");
+
+    aim = UI::Create("Aim");
+    aim->LoadFile("Ingame/Aim.xml");
 }
 
 InGameScene::~InGameScene()
@@ -25,6 +31,12 @@ InGameScene::~InGameScene()
     RESOURCE->ReleaseAll();
     Grid->Release();
     player->Release();
+    Cam->Release();
+    resume->Release();
+    setting->Release();
+    exit->Release();
+    aim->Release();
+    TestBlock->Release();
 }
 
 void InGameScene::Init()
@@ -38,14 +50,31 @@ void InGameScene::Init()
 
     resume->mouseOver = [=]() { resume->material = RESOURCE->materials.Load("button2.mtl"); };
     resume->mouseNotOver = [=]() { resume->material = RESOURCE->materials.Load("button1.mtl"); };
-    resume->mouseDown = [=]() { menuTab = false; };
+    resume->mouseDown = [=]() {
+        POINT cursor;
+        if (GetCursorPos(&cursor)) {
+            INPUT->fixedMousePos.x = cursor.x;
+            INPUT->fixedMousePos.y = cursor.y;
+            INPUT->prevPosition = INPUT->position;
+        }
+        Util::CursorVisible(false);
+        menuTab = false; };
 
     setting->mouseOver = [=]() { setting->material = RESOURCE->materials.Load("button2.mtl"); };
     setting->mouseNotOver = [=]() { setting->material = RESOURCE->materials.Load("button1.mtl"); };
 
     exit->mouseOver = [=]() { exit->material = RESOURCE->materials.Load("button2.mtl"); };
     exit->mouseNotOver = [=]() { exit->material = RESOURCE->materials.Load("button1.mtl"); };
-    exit->mouseDown = [=]() { WORLD->SaveWorld(); SCENE->ChangeScene("MENU", 0.f)->Init(); };
+    exit->mouseDown = [=]() { WORLD->SaveWorld(); SCENE->ChangeScene("MENU", 0.1f)->Init(); };
+
+
+    POINT cursor;
+    if (GetCursorPos(&cursor)) {
+        INPUT->fixedMousePos.x = cursor.x;
+        INPUT->fixedMousePos.y = cursor.y;
+        INPUT->prevPosition = INPUT->position;
+        Util::CursorVisible(false);
+    }
 }
 
 void InGameScene::Release()
@@ -63,6 +92,7 @@ void InGameScene::Update()
     if (INPUT->KeyDown(VK_ESCAPE)) {
         menuTab = true;
         INPUT->fixedMousePos.x = -1;
+        Util::CursorVisible(true);
     }
 
     if (INPUT->KeyDown(VK_F1)) {
@@ -78,12 +108,14 @@ void InGameScene::Update()
     ImGui::Begin("Hierarchy");
     Grid->RenderHierarchy();
     player->RenderHierarchy();
-    Cam->RenderHierarchy();
+    Camera::main->RenderHierarchy();
+    TestBlock->RenderHierarchy();
     WORLD->RenderHierarchy();
 
     resume->RenderHierarchy();
     setting->RenderHierarchy();
     exit->RenderHierarchy();
+    aim->RenderHierarchy();
     ImGui::End();
 
     if (menuTab)
@@ -95,11 +127,20 @@ void InGameScene::Update()
     else {
         Grid->Update();
 
-        Cam->Update();
+        Camera::main->Update();
         WORLD->Update();
         player->Update();
+        aim->Update();
+        TestBlock->Update();
     }
 
+    //if (INPUT->KeyDown(VK_LBUTTON))
+    //{
+    //    Vector3 temp = INPUT->movePosition;
+    //    Ray rayToAim = Util::AimToRay(Cam);
+    //    int mIndex = Util::RayIntersectSquareNear(rayToAim, TestBlock);
+    //    printf("mIndex %d\r\n", mIndex);
+    //}
 }
 
 void InGameScene::LateUpdate()
@@ -112,7 +153,7 @@ void InGameScene::PreRender()
 
 void InGameScene::Render()
 {
-    Cam->Set();
+    Camera::main->Set();
     Grid->Render();
 
     player->Render();
@@ -121,6 +162,8 @@ void InGameScene::Render()
     BLEND->Set(true);
     WORLD->Render();
     BLEND->Set(false);
+    aim->Render();
+    TestBlock->Render();
 
     if (menuTab)
     {
@@ -132,8 +175,8 @@ void InGameScene::Render()
 
 void InGameScene::ResizeScreen()
 {
-    Cam->width = App.GetWidth();
-    Cam->height = App.GetHeight();
-    Cam->viewport.width = App.GetWidth();
-    Cam->viewport.height = App.GetHeight();
+    Camera::main->width = App.GetWidth();
+    Camera::main->height = App.GetHeight();
+    Camera::main->viewport.width = App.GetWidth();
+    Camera::main->viewport.height = App.GetHeight();
 }

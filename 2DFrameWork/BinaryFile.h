@@ -17,6 +17,7 @@ public:
 	void Float(float data);
 	void Double(double data);
 	void Char(char data);
+	void Uchar(unsigned char data);
 
 	void vector2(const Vector2& data);
 	void vector3(const Vector3& data);
@@ -52,6 +53,7 @@ public:
 	float Float();
 	double Double();
 	char Char();
+	unsigned char Uchar();
 
 	Vector2 vector2();
 	Vector3 vector3();

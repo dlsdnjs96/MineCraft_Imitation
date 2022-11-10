@@ -16,7 +16,7 @@ private:
 
 
 public:
-	string name = "testWorld";
+	string name = "";
 	void Init();
 	void Update();
 	bool RenderHierarchy();
@@ -31,7 +31,9 @@ public:
 	void CreateDumpBlocks();
 	void distinguishSectors();
 	void distinguishBlocks(Int3 from, int range);
+	void distinguishBlock(Int3 from);
 	void UpdateMesh();
+	void UpdateMesh(Int3 _pos);
 	
 
 	WorldBlock GetBlock(Vector3 pos);

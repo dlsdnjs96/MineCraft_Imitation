@@ -280,8 +280,8 @@ void GameObject::RenderDetail()
 void GameObject::DeleteChildren()
 {
 	for (auto& iter : children) {
-		iter.second->DeleteChildren();
 		root->DeleteObject(iter.second->name);
+		iter.second->DeleteChildren();
 	}
 }
 
