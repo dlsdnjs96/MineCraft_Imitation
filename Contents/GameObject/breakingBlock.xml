@@ -1,0 +1,11 @@
+<Root Name="breakingBlock" Visible="true" ObType="1">
+    <Mesh File="6.OneFaceBlock.mesh"/>
+    <Shader File="Block.hlsl"/>
+    <Material File="breakingBlock/8.mtl"/>
+    <Transform>
+        <Position X="310" Y="325" Z="270"/>
+        <Scale X="5.0500002" Y="5.0500002" Z="5.0500002"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Transform>
+    <Children Size="0"/>
+</Root>

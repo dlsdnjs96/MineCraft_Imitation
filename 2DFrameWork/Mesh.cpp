@@ -277,6 +277,9 @@ void Mesh::LoadFile(string file)
 
     vertexType = (VertexType)in.UInt();
 
+
+    printf("Mesh %s %d\r\n", file.c_str(), vertexType);
+
     //ÀÐ±âÀü
     switch (vertexType)
     {

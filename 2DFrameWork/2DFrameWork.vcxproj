@@ -186,6 +186,7 @@
     <ClInclude Include="Sky.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="Sky.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />

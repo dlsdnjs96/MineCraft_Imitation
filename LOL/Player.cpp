@@ -3,54 +3,9 @@
 void Player::Init()
 {
     LoadFile("Player.xml");
+    breakingBlock = Actor::Create("breakingBlock");
+    breakingBlock->LoadFile("breakingBlock.xml");
 
-
-    //for (int x = -2; x < 3; x++)
-    //{
-    //    for (int z = -2; z < 3; z++)
-    //    {
-    //        for (int y = -2; y < 3; y++)
-    //        {
-    //            if (x != 0 || y != 0 || z != 0)
-    //            {
-    //                GameObject* temp = GameObject::Create(to_string(x) + ", " + to_string(y) + ", " + to_string(z));
-    //                Find("Collider")->AddChild(temp);
-    //                temp->SetLocalPos({ float(x * 2.f), float(y * 2.f), float(z * 2.f) });
-    //                temp->mesh = RESOURCE->meshes.Load("1.BoxCollider.mesh");
-    //                temp->shader = RESOURCE->shaders.Load("1.Collider.hlsl");
-    //            }
-    //        }
-    //    }
-    //}
-
-    //const Int3 sixPos[6] = { {1, 0, 0}, {-1, 0, 0}, {0, 1, 0}, {0, -1, 0}, {0, 0, 1}, {0, 0, -1} };
-    //for (int i = 0;i < 6;i++)
-    //    rayIntersectOrder.push_back(sixPos[i]);
-    //for (int i = -1; i <= 1; i += 2)
-    //{
-    //    for (int j = -1; j <= 1; j += 2)
-    //    {
-    //        for (int l = -1; l <= 1; l += 2)
-    //            rayIntersectOrder.push_back({i, j, l});
-    //    }
-    //}
-    //for (int i = -2; i <= 2; i++)
-    //{
-    //    for (int j = -2; j <= 2; j++)
-    //    {
-    //        rayIntersectOrder.push_back({ i, j, 2 });
-    //        rayIntersectOrder.push_back({ i, j, -2 });
-    //    }
-    //}
-    //for (int i = -2; i <= 2; i++)
-    //{
-    //    for (int j = -1; j <= 1; j++) {
-    //        rayIntersectOrder.push_back({ i, 2, j });
-    //        rayIntersectOrder.push_back({ i, -2, j });
-    //        rayIntersectOrder.push_back({ 2, i, j });
-    //        rayIntersectOrder.push_back({ -2, i, j });
-    //    }
-    //}
 
     for (int i = -2; i <= 2; i++)
     {
@@ -83,20 +38,13 @@ void Player::Init()
     temp->mesh = RESOURCE->meshes.Load("6.blockCollider.mesh");
     temp->shader = RESOURCE->shaders.Load("1.Collider.hlsl");
 
-    //for (int i = 0; i < rayIntersectOrder.size(); i++)
-    //{
-    //    GameObject* temp = GameObject::Create("t" + to_string(i));
-    //    Find("Collider")->AddChild(temp);
-    //    temp->SetLocalPos(rayIntersectOrder[i].GetVector3() * 2.f);
-    //    temp->mesh = RESOURCE->meshes.Load("1.BoxCollider.mesh");
-    //    temp->shader = RESOURCE->shaders.Load("1.Collider.hlsl");
-    //
-    //}
+    quickSlots.Init();
 }
 
 void Player::Update()
 {
     Actor::Update();
+    quickSlots.Update();
     Collider();
 
     if (INPUT->fixedMousePos.x != -1) {
@@ -115,18 +63,12 @@ void Player::Update()
     ImGui::Text(("Vector3 : " + WORLD->GetBlock(GetWorldPos()).to_string()+" "+to_string(GetWorldPos().x) + " " + to_string(GetWorldPos().y) + " " + to_string(GetWorldPos().z)).c_str());
     ImGui::Text(("renderFace : " + to_string(WORLD->GetBlock(GetWorldPos()).renderFace)).c_str());
     
-    if (INPUT->KeyDown('T')) {
-        WORLD->SetBlockType(curPos2, BlockType::WOOD_OAK);
-        WORLD->UpdateMesh(temp);
-    }
-    if (INPUT->KeyDown('R')) {
-        WORLD->SetBlockType(curPos2, BlockType::EMPTY);
-        WORLD->UpdateMesh(temp);
-    }
+
     if (INPUT->KeyDown(VK_RBUTTON))
         InstallBlock();
-    if (INPUT->KeyDown(VK_LBUTTON))
-        UninstallBlock();
+    //if (INPUT->KeyDown(VK_LBUTTON))
+    //    UninstallBlock();
+
 
 
     curInt3 = Int3(GetWorldPos() / BLOCK_LENGTH);
@@ -146,9 +88,6 @@ void Player::Update()
     case PLAYER_STATE::FALL:
         Fall();
         break;
-    case PLAYER_STATE::ATTACK:
-        Attack();
-        break;
     case PLAYER_STATE::SUPER:
         Super();
         break;
@@ -161,11 +100,25 @@ void Player::Update()
     }
     MoveWorldPos(moveForce);
 
+    switch (actState)
+    {
+    case ACT_STATE::NORMAL:
+        Normal();
+        break;
+    case ACT_STATE::ATTACKING:
+        Acttacking();
+        break;
+    case ACT_STATE::DIGGING:
+        Digging();
+        break;
+    }
+
     return;
 }
 
 void Player::Release()
 {
+    breakingBlock->Release();
 }
 
 void Player::Idle()
@@ -234,10 +187,6 @@ void Player::Fall()
     }
 }
 
-void Player::Attack()
-{
-}
-
 void Player::Super()
 {
     Vector3 forward     = Find("head")->GetForward();
@@ -293,6 +242,69 @@ void Player::Dive()
 
     if (INPUT->KeyPress(VK_LSHIFT)) { moveForce.y -= swimSpeed * DELTA; }
     if (INPUT->KeyPress(VK_SPACE)) { moveForce.y = swimSpeed * DELTA; }
+}
+
+void Player::Normal()
+{
+    if (INPUT->KeyPress(VK_LBUTTON))
+    {
+        actState = ACT_STATE::DIGGING;
+    }
+}
+
+void Player::Acttacking()
+{
+}
+
+void Player::Digging()
+{
+    static bool firstTime = true;
+    static float passedTime = 0.f;
+    static Int3 prevTarget;
+
+    if (not INPUT->KeyPress(VK_LBUTTON)) {
+        firstTime = true;
+        breakingBlock->visible = false;
+        return;
+    }
+
+    if (firstTime)
+    {
+        passedTime = 0.f;
+        int intersectIndex = FindTarget();
+        if (intersectIndex == -1)
+        {
+            actState = ACT_STATE::NORMAL;
+            return;
+        }
+        breakingBlock->SetLocalPos(targetInt3.GetVector3() * 10.f);
+        breakingBlock->MoveLocalPos({ 0.f, 5.f, 0.f });
+        breakingBlock->Update();
+        breakingBlock->visible = true;
+        breakingBlock->material = RESOURCE->materials.Load("breakingBlock/0.mtl");
+        prevTarget = targetInt3;
+        firstTime = false;
+    }
+    passedTime += DELTA;
+
+    printf("%f %d %d %d %d\r\n", passedTime, targetInt3.x, targetInt3.y, targetInt3.z, firstTime);
+
+
+    if (passedTime > 0.9f)
+    {
+        UninstallBlock();
+        passedTime = 0.f;
+        firstTime = true;
+        breakingBlock->visible = false;
+        actState = ACT_STATE::NORMAL;
+        return;
+    }
+    if (int(passedTime / 0.1f) != int((passedTime - DELTA) / 0.1f))
+    {
+        breakingBlock->material = RESOURCE->materials.Load("breakingBlock/" + to_string(int(passedTime / 0.1f)) + ".mtl");
+    }
+    if (FindTarget() == -1)
+        actState = ACT_STATE::NORMAL;
 }
 
 bool Player::FourWaysMoving()
@@ -388,6 +400,8 @@ bool Player::GravityFloating()
 bool Player::RenderHierarchy()
 {
     Actor::RenderHierarchy();
+    breakingBlock->RenderHierarchy();
+    quickSlots.RenderHierarchy();
 
     return false;
 }
@@ -395,9 +409,12 @@ bool Player::RenderHierarchy()
 void Player::Render()
 {
     Actor::Render();
+    quickSlots.Render();
+    if (actState == ACT_STATE::DIGGING)
+        breakingBlock->Render();
 }
 
-void Player::InstallBlock()
+int Player::FindTarget()
 {
     Matrix mat = Camera::main->proj;
     Ray rayToAim = Util::AimToRay(Camera::main);
@@ -406,51 +423,7 @@ void Player::InstallBlock()
     int intersectIndex = -1;
 
     Int3 intersectInt3;
-    Int3 targetInt3;
-    for (int i = 0; i < rayIntersectOrder.size(); i++)
-    {
-        intersectInt3 = curInt3 + rayIntersectOrder[i];
-        if (WORLD->GetBlock(intersectInt3).blockType > BlockType::WATER)
-        //    && Util::IsInScreen())
-        {
-            float camToBlock = Vector3::Distance(Camera::main->GetWorldPos(), Find("Collider")->GetWorldPos() + (rayIntersectOrder[i].GetVector3() * 10.f));
-            if (dis > camToBlock) {
-                Find("testCollider")->SetLocalPos(rayIntersectOrder[i].GetVector3() * 10.f);
-                Find("Collider")->Update();
-                Find("testCollider")->scale = { 5.1f, 5.1f, 5.1f };
-                Find("testCollider")->visible = true;
-                int mIndex = Util::RayIntersectSquareNear(rayToAim, Find("testCollider"));
-                if (mIndex != -1) {
-                    intersectIndex = mIndex;
-                    dis = camToBlock;
-                    targetInt3 = rayIntersectOrder[i];
-                    printf("mIndex %d %d %d %d\r\n", rayIntersectOrder[i].x, rayIntersectOrder[i].y, rayIntersectOrder[i].z, mIndex);
-                    //break;
-                }
-            }
-        }
-    }
-    if (dis != FLT_MAX) {
-        Int3 sixPos[6] = { {0, 1, 0}, {0, -1, 0}, {1, 0, 0}, {-1, 0, 0}, {0, 0, -1}, {0, 0, 1} };
-        intersectInt3 = curInt3 + targetInt3; 
-        printf("intersectInt2 %d %d %d\r\n", intersectInt3.x, intersectInt3.y, intersectInt3.z);
-        intersectInt3 = intersectInt3 + sixPos[intersectIndex];
-        printf("intersectInt3 %d %d %d\r\n", intersectInt3.x, intersectInt3.y, intersectInt3.z);
-        WORLD->SetBlockType(intersectInt3, BlockType::STONE);
-        WORLD->UpdateMesh(intersectInt3);
-    }
-}
 
-void Player::UninstallBlock()
-{
-    Matrix mat = Camera::main->proj;
-    Ray rayToAim = Util::AimToRay(Camera::main);
-
-    float dis = FLT_MAX;
-    int mIndex = -1;
-
-    Int3 intersectInt3;
-    Int3 targetInt3;
     for (int i = 0; i < rayIntersectOrder.size(); i++)
     {
         intersectInt3 = curInt3 + rayIntersectOrder[i];
@@ -463,21 +436,45 @@ void Player::UninstallBlock()
                 Find("Collider")->Update();
                 Find("testCollider")->scale = { 5.1f, 5.1f, 5.1f };
                 Find("testCollider")->visible = true;
-                mIndex = Util::RayIntersectSquareNear(rayToAim, Find("testCollider"));
+                int mIndex = Util::RayIntersectSquareNear(rayToAim, Find("testCollider"));
                 if (mIndex != -1) {
+                    intersectIndex = mIndex;
                     dis = camToBlock;
-                    targetInt3 = rayIntersectOrder[i];
-                    printf("mIndex %d %d %d %d\r\n", rayIntersectOrder[i].x, rayIntersectOrder[i].y, rayIntersectOrder[i].z, mIndex);
-                    //break;
+                    targetInt3 = curInt3 + rayIntersectOrder[i];
                 }
             }
         }
     }
-    if (dis != FLT_MAX) {
-        intersectInt3 = curInt3 + targetInt3;
-        printf("intersectInt3 %d %d %d\r\n", intersectInt3.x, intersectInt3.y, intersectInt3.z);
-        WORLD->SetBlockType(intersectInt3, BlockType::EMPTY);
+    return intersectIndex;
+}
+
+void Player::InstallBlock()
+{
+    if (quickSlots.GetPickedItem().ea == 0)
+    {
+        return;
+    }
+    int intersectIndex = FindTarget();
+
+    if (intersectIndex != -1) {
+        Int3 sixPos[6] = { {0, 1, 0}, {0, -1, 0}, {1, 0, 0}, {-1, 0, 0}, {0, 0, -1}, {0, 0, 1} };
+        Int3 intersectInt3 = targetInt3 + sixPos[intersectIndex];
+        WORLD->SetBlockType(intersectInt3, static_cast<BlockType>(quickSlots.GetPickedItem().itemid));
         WORLD->UpdateMesh(intersectInt3);
+        quickSlots.UsePickedItem();
+    }
+}
+
+void Player::UninstallBlock()
+{
+
+
+    int intersectIndex = FindTarget();
+
+    if (intersectIndex != -1) {
+        ITEM_MANAGER->Spawn(targetInt3.GetVector3() * BLOCK_LENGTH, Item{ int(WORLD->GetBlock(targetInt3).blockType), 1 });
+        WORLD->SetBlockType(targetInt3, BlockType::EMPTY);
+        WORLD->UpdateMesh(targetInt3);
     }
 }
 
@@ -502,7 +499,6 @@ const char* Player::StateToString(PLAYER_STATE e)
         { PLAYER_STATE::WALK, "WALK" },
         { PLAYER_STATE::JUMP, "JUMP" },
         { PLAYER_STATE::FALL, "FALL" },
-        { PLAYER_STATE::ATTACK, "ATTACK" },
         { PLAYER_STATE::SUPER, "SUPER" },
         { PLAYER_STATE::SWIM, "SWIM" },
         { PLAYER_STATE::DIVE, "DIVE" }

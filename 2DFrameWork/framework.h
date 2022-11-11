@@ -128,6 +128,7 @@ extern Application App;//Extern Global
 #include "RasterState.h"
 #include "RenderTarget.h"
 #include "CubeMap.h"
+#include "Text.h"
 
 #include "Util.h"
 

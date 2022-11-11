@@ -58,6 +58,7 @@ void InGameScene::Init()
             INPUT->prevPosition = INPUT->position;
         }
         Util::CursorVisible(false);
+        aim->visible = true;
         menuTab = false; };
 
     setting->mouseOver = [=]() { setting->material = RESOURCE->materials.Load("button2.mtl"); };
@@ -74,6 +75,7 @@ void InGameScene::Init()
         INPUT->fixedMousePos.y = cursor.y;
         INPUT->prevPosition = INPUT->position;
         Util::CursorVisible(false);
+        aim->visible = true;
     }
 }
 
@@ -93,6 +95,7 @@ void InGameScene::Update()
         menuTab = true;
         INPUT->fixedMousePos.x = -1;
         Util::CursorVisible(true);
+        aim->visible = false;
     }
 
     if (INPUT->KeyDown(VK_F1)) {
@@ -111,6 +114,7 @@ void InGameScene::Update()
     Camera::main->RenderHierarchy();
     TestBlock->RenderHierarchy();
     WORLD->RenderHierarchy();
+    ITEM_MANAGER->RenderHierarchy();
 
     resume->RenderHierarchy();
     setting->RenderHierarchy();
@@ -129,10 +133,11 @@ void InGameScene::Update()
 
         Camera::main->Update();
         WORLD->Update();
-        player->Update();
         aim->Update();
         TestBlock->Update();
     }
+        player->Update();
+    ITEM_MANAGER->Update();
 
     //if (INPUT->KeyDown(VK_LBUTTON))
     //{
@@ -164,6 +169,7 @@ void InGameScene::Render()
     BLEND->Set(false);
     aim->Render();
     TestBlock->Render();
+    ITEM_MANAGER->Render();
 
     if (menuTab)
     {

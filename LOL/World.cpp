@@ -163,7 +163,7 @@ void World::CreateDumpBlocks()
 {
 
 
-	actor = Actor::Create();
+	actor = Actor::Create("World");
 
 	for (auto& it : sector)
 	{

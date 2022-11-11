@@ -71,6 +71,11 @@ bool GameObject::RenderHierarchy()
 			{
 				AddChild(Billboard::Create(childName));
 			}
+			ImGui::SameLine();
+			if (ImGui::Button("TEXT"))
+			{
+				AddChild(Text::Create(childName));
+			}
 			ImGui::EndPopup();
 		}
 

@@ -1,0 +1,220 @@
+<Root Name="QuickSlots" Visible="true" ObType="4">
+    <Mesh File="6.UI.mesh"/>
+    <Shader File="6.Cube.hlsl"/>
+    <Material File="quickSlots.mtl"/>
+    <Transform>
+        <Position X="0" Y="-0.89999998" Z="0"/>
+        <Scale X="1" Y="0.2" Z="1"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Transform>
+    <Children Size="10"/>
+    <Child0 Name="pickedSlot" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="pickedSlot.mtl"/>
+        <Transform>
+            <Position X="-0.44" Y="0.024999999" Z="-0.050000001"/>
+            <Scale X="0.13" Y="1" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="0"/>
+    </Child0>
+    <Child1 Name="slot1" Visible="false" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="Items/100.mtl"/>
+        <Transform>
+            <Position X="-0.44" Y="0.0049999999" Z="-0.050000001"/>
+            <Scale X="0.079999998" Y="0.61500001" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="slot1_ea" Visible="true" ObType="6">
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="ascii.mtl"/>
+            <Transform>
+                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Scale X="4" Y="4" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Text text="0"/>
+            <Children Size="0"/>
+        </Child0>
+    </Child1>
+    <Child2 Name="slot2" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="Items/102.mtl"/>
+        <Transform>
+            <Position X="-0.32999998" Y="0.0049999999" Z="-0.050000001"/>
+            <Scale X="0.079999998" Y="0.61500001" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="slot2_ea" Visible="true" ObType="6">
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="ascii.mtl"/>
+            <Transform>
+                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Scale X="4" Y="4" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Text text="0"/>
+            <Children Size="0"/>
+        </Child0>
+    </Child2>
+    <Child3 Name="slot3" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="Items/104.mtl"/>
+        <Transform>
+            <Position X="-0.22" Y="0.0049999999" Z="-0.050000001"/>
+            <Scale X="0.079999998" Y="0.61500001" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="slot3_ea" Visible="true" ObType="6">
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="ascii.mtl"/>
+            <Transform>
+                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Scale X="4" Y="4" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Text text="0"/>
+            <Children Size="0"/>
+        </Child0>
+    </Child3>
+    <Child4 Name="slot4" Visible="false" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="Items/100.mtl"/>
+        <Transform>
+            <Position X="-0.11000001" Y="0.0049999999" Z="-0.050000001"/>
+            <Scale X="0.079999998" Y="0.61500001" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="slot4_ea" Visible="true" ObType="6">
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="ascii.mtl"/>
+            <Transform>
+                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Scale X="4" Y="4" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Text text="0"/>
+            <Children Size="0"/>
+        </Child0>
+    </Child4>
+    <Child5 Name="slot5" Visible="false" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="Items/100.mtl"/>
+        <Transform>
+            <Position X="0" Y="0.0049999999" Z="-0.050000001"/>
+            <Scale X="0.079999998" Y="0.61500001" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="slot5_ea" Visible="true" ObType="6">
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="ascii.mtl"/>
+            <Transform>
+                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Scale X="4" Y="4" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Text text="0"/>
+            <Children Size="0"/>
+        </Child0>
+    </Child5>
+    <Child6 Name="slot6" Visible="false" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="Items/100.mtl"/>
+        <Transform>
+            <Position X="0.11000001" Y="0.0049999999" Z="-0.050000001"/>
+            <Scale X="0.079999998" Y="0.61500001" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="slot6_ea" Visible="true" ObType="6">
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="ascii.mtl"/>
+            <Transform>
+                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Scale X="4" Y="4" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Text text="0"/>
+            <Children Size="0"/>
+        </Child0>
+    </Child6>
+    <Child7 Name="slot7" Visible="false" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="Items/100.mtl"/>
+        <Transform>
+            <Position X="0.21999997" Y="0.0049999999" Z="-0.050000001"/>
+            <Scale X="0.079999998" Y="0.61500001" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="slot7_ea" Visible="true" ObType="6">
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="ascii.mtl"/>
+            <Transform>
+                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Scale X="4" Y="4" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Text text="0"/>
+            <Children Size="0"/>
+        </Child0>
+    </Child7>
+    <Child8 Name="slot8" Visible="false" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="Items/100.mtl"/>
+        <Transform>
+            <Position X="0.32999998" Y="0.0049999999" Z="-0.050000001"/>
+            <Scale X="0.079999998" Y="0.61500001" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="slot8_ea" Visible="true" ObType="6">
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="ascii.mtl"/>
+            <Transform>
+                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Scale X="4" Y="4" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Text text="0"/>
+            <Children Size="0"/>
+        </Child0>
+    </Child8>
+    <Child9 Name="slot9" Visible="false" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="Items/100.mtl"/>
+        <Transform>
+            <Position X="0.44" Y="0.0049999999" Z="-0.050000001"/>
+            <Scale X="0.079999998" Y="0.61500001" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="slot9_ea" Visible="true" ObType="6">
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="ascii.mtl"/>
+            <Transform>
+                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Scale X="4" Y="4" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Text text="0"/>
+            <Children Size="0"/>
+        </Child0>
+    </Child9>
+</Root>

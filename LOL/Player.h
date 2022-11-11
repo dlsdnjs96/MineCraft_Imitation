@@ -7,16 +7,23 @@ enum class PLAYER_STATE
 	WALK = 1,
 	JUMP = 2,
 	FALL = 3,
-	ATTACK = 4,
 	SUPER = 5,
 	SWIM = 6,
 	DIVE = 7
+};
+
+enum class ACT_STATE
+{
+	NORMAL = 0,
+	ATTACKING = 1,
+	DIGGING = 2
 };
 
 class Player : public Actor
 {
 private:
 	PLAYER_STATE	state = PLAYER_STATE::SUPER;
+	ACT_STATE		actState = ACT_STATE::NORMAL;
 	Vector3			prevPos;
 	Vector3			moveForce;
 
@@ -29,8 +36,12 @@ private:
 	float			jumpSpeed = 50.f;
 	float			jumppedTime = 0.f;
 
-	//GameObject*		rayIntersectOrder[94];
+
+	Int3			targetInt3;
+	Actor*			breakingBlock;
 	vector<Int3>	rayIntersectOrder;
+
+	QuickSlots		quickSlots;
 public:
 	void Init();
 	void Update();
@@ -40,10 +51,13 @@ public:
 	void Walk();
 	void Jump();
 	void Fall();
-	void Attack();
 	void Super();
 	void Swim();
 	void Dive();
+
+	void Normal();
+	void Acttacking();
+	void Digging();
 
 	bool FourWaysMoving();
 	bool GravityMoving();
@@ -53,6 +67,7 @@ public:
 	bool RenderHierarchy();
 	void Render();
 
+	int FindTarget();
 	void InstallBlock();
 	void UninstallBlock();
 

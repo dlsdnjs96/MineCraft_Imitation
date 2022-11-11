@@ -18,6 +18,7 @@ private:
 	UI*			playWorld;
 	UI*			prev;
 
+
 	vector<GameObject*> activeObj;
 public:
 	MenuScene();

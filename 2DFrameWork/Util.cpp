@@ -380,24 +380,33 @@ void Util::ClipWindow(bool on)
 		ClipCursor(nullptr);
 }
 
-void Util::CursorVisible(bool on)
+void Util::CursorVisible(bool _on)
 {
-	static int count = 1;
+	//static int count = 1;
 
-	if (on)
+	//if (on)
+	//{
+	//	while (count < 0)
+	//	{
+	//		ShowCursor(true);
+	//		count++;
+	//	}
+	//}
+	//else {
+	//	while (count >= 0)
+	//	{
+	//		ShowCursor(false);
+	//		count--;
+	//	}
+	//}
+	static bool on = true;
+
+	if (_on and not on)
 	{
-		while (count < 0)
-		{
-			ShowCursor(true);
-			count++;
-		}
+		ShowCursor(true);
 	}
-	else {
-		while (count >= 0)
-		{
-			ShowCursor(false);
-			count--;
-		}
+	else if (not _on and on) {
+		ShowCursor(false);
 	}
 }
 

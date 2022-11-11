@@ -56,6 +56,18 @@
     <ClCompile Include="BlockCollider.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="ItemObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="QuickSlots.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -94,6 +106,18 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="BlockCollider.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="QuickSlots.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

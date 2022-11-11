@@ -86,7 +86,7 @@ void GameObject::SaveObject(Xml::XMLElement* This, Xml::XMLDocument* doc)
 		}
 	}
 
-	if (mesh)
+	if (mesh && type != ObType::TEXT)
 	{
 		Xml::XMLElement* Mesh = doc->NewElement("Mesh");
 		This->LinkEndChild(Mesh);
@@ -154,6 +154,13 @@ void GameObject::SaveObject(Xml::XMLElement* This, Xml::XMLDocument* doc)
 	{
 		Terrain* TerrainOb = dynamic_cast<Terrain*>(this);
 		TerrainOb->dijkstra.SaveFile(TerrainOb->file);
+	}
+	else if (type == ObType::TEXT)
+	{
+		Text* TextOb = dynamic_cast<Text*>(this);
+		Xml::XMLElement* Text_str = doc->NewElement("Text");
+		This->LinkEndChild(Text_str);
+		Text_str->SetAttribute("text", TextOb->text.c_str());
 	}
 
 	Xml::XMLElement* Chidren = doc->NewElement("Children");
@@ -240,11 +247,17 @@ void GameObject::LoadObject(Xml::XMLElement* This)
 		CamOb->viewport.height = component->FloatAttribute("viewportH");
 
 	}
-
 	else if (type == ObType::Terrain)
 	{
 		Terrain* TerrainOb = dynamic_cast<Terrain*>(this);
 		TerrainOb->dijkstra.LoadFile(TerrainOb->file);
+	}
+	else if (type == ObType::TEXT)
+	{
+		Text* TextOb = dynamic_cast<Text*>(this);
+		component = This->FirstChildElement("Text");
+		TextOb->text = component->Attribute("text");
+		TextOb->ChangeText(TextOb->text);
 	}
 
 	Transform::LoadTransform(This);
@@ -291,6 +304,12 @@ void GameObject::LoadObject(Xml::XMLElement* This)
 		else if (Type == ObType::Billboard)
 		{
 			Billboard* temp = Billboard::Create(childName);
+			AddChild(temp);
+			temp->LoadObject(ob);
+		}
+		else if (Type == ObType::TEXT)
+		{
+			Text* temp = Text::Create(childName);
 			AddChild(temp);
 			temp->LoadObject(ob);
 		}

@@ -1,7 +1,7 @@
 <Root Name="Player" Visible="true" ObType="1">
     <Mesh File="1.Cube.mesh"/>
     <Transform>
-        <Position X="-81.832039" Y="313.88388" Z="-88.167892"/>
+        <Position X="455.04562" Y="313.88388" Z="370.83691"/>
         <Scale X="1" Y="1" Z="1"/>
         <Rotation X="0" Y="0" Z="0"/>
     </Transform>
@@ -29,7 +29,7 @@
             <Transform>
                 <Position X="0" Y="0" Z="0"/>
                 <Scale X="1" Y="1" Z="1"/>
-                <Rotation X="0.13528527" Y="568.66437" Z="0"/>
+                <Rotation X="0.30106804" Y="578.48944" Z="0"/>
             </Transform>
             <Children Size="1"/>
             <Child0 Name="camHead" Visible="true" ObType="2">
@@ -43,14 +43,24 @@
             </Child0>
         </Child1>
     </Child0>
-    <Child1 Name="Collider" Visible="true" ObType="0">
+    <Child1 Name="Collider" Visible="false" ObType="0">
         <Mesh File="1.BoxCollider.mesh"/>
         <Shader File="1.Collider.hlsl"/>
         <Transform>
-            <Position X="1.8320389" Y="1.1161194" Z="-1.8321075"/>
+            <Position X="4.9543762" Y="1.1161194" Z="-0.83691406"/>
             <Scale X="1" Y="1" Z="1"/>
             <Rotation X="0" Y="0" Z="0"/>
         </Transform>
-        <Children Size="0"/>
+        <Children Size="1"/>
+        <Child0 Name="testCollider" Visible="true" ObType="0">
+            <Mesh File="6.blockCollider.mesh"/>
+            <Shader File="1.Collider.hlsl"/>
+            <Transform>
+                <Position X="0" Y="20" Z="-10"/>
+                <Scale X="5.0999999" Y="5.0999999" Z="5.0999999"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
     </Child1>
 </Root>

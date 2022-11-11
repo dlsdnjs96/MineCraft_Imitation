@@ -32,15 +32,21 @@ enum class BlockType
 
 };
 
+
 #include "Block.h"
 #include "TextureData.h"
 #include "Sector.h"
 #include "World.h"
+#include "Item.h"
+#include "ItemObject.h"
+#include "QuickSlots.h"
 #include "Player.h"
 #include "WorldGenerator.h"
 #include "WorldList.h"
 #include "Setting.h"
 #include "BlockCollider.h"
+#include "ItemManager.h"
+
 
 
 #include "LoadingScene.h"
@@ -52,3 +58,4 @@ enum class BlockType
 #define WORLD_GENERATOR WorldGenerator::GetInstance()
 #define TEXTURE_DATA TextureData::GetInstance()
 #define SETTING Setting::GetInstance()
+#define ITEM_MANAGER ItemManager::GetInstance()
