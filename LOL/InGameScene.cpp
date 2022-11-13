@@ -12,6 +12,8 @@ InGameScene::InGameScene()
     player = new Player();
     player->Init();
 
+    ITEM_MANAGER->user = player;
+
     Camera::main = dynamic_cast<Camera*>(player->Find("camHead"));
     //WORLD->LoadWorld();
     //WORLD->SaveWorld();

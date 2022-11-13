@@ -41,8 +41,8 @@ private:
 	Actor*			breakingBlock;
 	vector<Int3>	rayIntersectOrder;
 
-	QuickSlots		quickSlots;
 public:
+	Inventory		inventory;
 	void Init();
 	void Update();
 	void Release();

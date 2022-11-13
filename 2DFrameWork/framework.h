@@ -129,6 +129,7 @@ extern Application App;//Extern Global
 #include "RenderTarget.h"
 #include "CubeMap.h"
 #include "Text.h"
+#include "EditObject.h"
 
 #include "Util.h"
 

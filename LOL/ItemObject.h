@@ -21,5 +21,7 @@ public:
 	void Stay();
 	void Fall();
 	void Gain();
+
+	Item GetItem();
 };
 

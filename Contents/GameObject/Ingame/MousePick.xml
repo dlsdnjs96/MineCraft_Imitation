@@ -1,0 +1,23 @@
+<Root Name="MousePick" Visible="true" ObType="4">
+    <Mesh File="6.UI.mesh"/>
+    <Shader File="6.Cube.hlsl"/>
+    <Material File="Items/100.mtl"/>
+    <Transform>
+        <Position X="-0.95625001" Y="-0.64999998" Z="0.1"/>
+        <Scale X="0.079899997" Y="0.123" Z="1"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Transform>
+    <Children Size="1"/>
+    <Child0 Name="ea" Visible="true" ObType="6">
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="ascii.mtl"/>
+        <Transform>
+            <Position X="0.62578225" Y="0" Z="0"/>
+            <Scale X="4" Y="4" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Text text="10"/>
+        <FromLeft fromLeft="false"/>
+        <Children Size="0"/>
+    </Child0>
+</Root>

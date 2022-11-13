@@ -39,7 +39,7 @@ enum class BlockType
 #include "World.h"
 #include "Item.h"
 #include "ItemObject.h"
-#include "QuickSlots.h"
+#include "Inventory.h"
 #include "Player.h"
 #include "WorldGenerator.h"
 #include "WorldList.h"

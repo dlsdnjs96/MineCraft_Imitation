@@ -11,3 +11,9 @@ Item::Item(int _itemid, int _ea)
 	itemid = _itemid;
 	ea = _ea;
 }
+
+void Item::Remove()
+{
+	itemid = 0;
+	ea = 0;
+}

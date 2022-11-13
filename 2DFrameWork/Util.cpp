@@ -382,31 +382,22 @@ void Util::ClipWindow(bool on)
 
 void Util::CursorVisible(bool _on)
 {
-	//static int count = 1;
+	static int count = 1;
 
-	//if (on)
-	//{
-	//	while (count < 0)
-	//	{
-	//		ShowCursor(true);
-	//		count++;
-	//	}
-	//}
-	//else {
-	//	while (count >= 0)
-	//	{
-	//		ShowCursor(false);
-	//		count--;
-	//	}
-	//}
-	static bool on = true;
-
-	if (_on and not on)
+	if (_on)
 	{
-		ShowCursor(true);
+		while (count < 0)
+		{
+			ShowCursor(true);
+			count++;
+		}
 	}
-	else if (not _on and on) {
-		ShowCursor(false);
+	else {
+		while (count >= 0)
+		{
+			ShowCursor(false);
+			count--;
+		}
 	}
 }
 

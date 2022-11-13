@@ -2,8 +2,15 @@
 
 void ItemManager::Update()
 {
-	for (auto& it : objects)
-		it->Update();
+	auto iter = objects.begin();
+	while (iter != objects.end())
+	{
+		(*iter)->Update();
+		if ((*iter)->GetItem().itemid == 0) {
+			objects.erase(iter++);
+		}
+		else iter++;
+	}
 }
 
 void ItemManager::Render()

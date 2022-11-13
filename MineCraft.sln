@@ -59,6 +59,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameObject", "GameObject", 
 		Contents\GameObject\Menu\Exit.xml = Contents\GameObject\Menu\Exit.xml
 		Contents\GameObject\Grid.xml = Contents\GameObject\Grid.xml
 		Contents\GameObject\Inven.xml = Contents\GameObject\Inven.xml
+		Contents\GameObject\Ingame\Invens.xml = Contents\GameObject\Ingame\Invens.xml
 		Contents\GameObject\Line.xml = Contents\GameObject\Line.xml
 		Contents\GameObject\Map.xml = Contents\GameObject\Map.xml
 		Contents\GameObject\MapSurface.xml = Contents\GameObject\MapSurface.xml

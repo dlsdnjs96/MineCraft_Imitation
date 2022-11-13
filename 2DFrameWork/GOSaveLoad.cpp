@@ -161,6 +161,9 @@ void GameObject::SaveObject(Xml::XMLElement* This, Xml::XMLDocument* doc)
 		Xml::XMLElement* Text_str = doc->NewElement("Text");
 		This->LinkEndChild(Text_str);
 		Text_str->SetAttribute("text", TextOb->text.c_str());
+		Xml::XMLElement* from_Left = doc->NewElement("FromLeft");
+		This->LinkEndChild(from_Left);
+		from_Left->SetAttribute("fromLeft", TextOb->fromLeft);
 	}
 
 	Xml::XMLElement* Chidren = doc->NewElement("Children");
@@ -257,6 +260,10 @@ void GameObject::LoadObject(Xml::XMLElement* This)
 		Text* TextOb = dynamic_cast<Text*>(this);
 		component = This->FirstChildElement("Text");
 		TextOb->text = component->Attribute("text");
+		component = This->FirstChildElement("FromLeft");
+		TextOb->fromLeft = component->BoolAttribute("fromLeft");
+
+
 		TextOb->ChangeText(TextOb->text);
 	}
 

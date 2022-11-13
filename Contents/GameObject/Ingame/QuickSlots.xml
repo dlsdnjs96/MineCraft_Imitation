@@ -13,7 +13,7 @@
         <Shader File="6.Cube.hlsl"/>
         <Material File="pickedSlot.mtl"/>
         <Transform>
-            <Position X="-0.44" Y="0.024999999" Z="-0.050000001"/>
+            <Position X="-0.32999998" Y="0.024999999" Z="-0.050000001"/>
             <Scale X="0.13" Y="1" Z="1"/>
             <Rotation X="0" Y="0" Z="0"/>
         </Transform>
@@ -33,11 +33,12 @@
             <Shader File="6.Cube.hlsl"/>
             <Material File="ascii.mtl"/>
             <Transform>
-                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Position X="0.625" Y="-0.020000001" Z="0.050000001"/>
                 <Scale X="4" Y="4" Z="1"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
             <Text text="0"/>
+            <FromLeft fromLeft="false"/>
             <Children Size="0"/>
         </Child0>
     </Child1>
@@ -55,11 +56,12 @@
             <Shader File="6.Cube.hlsl"/>
             <Material File="ascii.mtl"/>
             <Transform>
-                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Position X="0.625" Y="0" Z="0.050000001"/>
                 <Scale X="4" Y="4" Z="1"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
-            <Text text="0"/>
+            <Text text="10"/>
+            <FromLeft fromLeft="false"/>
             <Children Size="0"/>
         </Child0>
     </Child2>
@@ -77,11 +79,12 @@
             <Shader File="6.Cube.hlsl"/>
             <Material File="ascii.mtl"/>
             <Transform>
-                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Position X="0.625" Y="0" Z="0.050000001"/>
                 <Scale X="4" Y="4" Z="1"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
-            <Text text="0"/>
+            <Text text="10"/>
+            <FromLeft fromLeft="false"/>
             <Children Size="0"/>
         </Child0>
     </Child3>
@@ -99,11 +102,12 @@
             <Shader File="6.Cube.hlsl"/>
             <Material File="ascii.mtl"/>
             <Transform>
-                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Position X="0.625" Y="-0.020000001" Z="0.050000001"/>
                 <Scale X="4" Y="4" Z="1"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
             <Text text="0"/>
+            <FromLeft fromLeft="false"/>
             <Children Size="0"/>
         </Child0>
     </Child4>
@@ -121,11 +125,12 @@
             <Shader File="6.Cube.hlsl"/>
             <Material File="ascii.mtl"/>
             <Transform>
-                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Position X="0.625" Y="-0.020000001" Z="0.050000001"/>
                 <Scale X="4" Y="4" Z="1"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
             <Text text="0"/>
+            <FromLeft fromLeft="false"/>
             <Children Size="0"/>
         </Child0>
     </Child5>
@@ -143,11 +148,12 @@
             <Shader File="6.Cube.hlsl"/>
             <Material File="ascii.mtl"/>
             <Transform>
-                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Position X="0.625" Y="-0.020000001" Z="0.050000001"/>
                 <Scale X="4" Y="4" Z="1"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
             <Text text="0"/>
+            <FromLeft fromLeft="false"/>
             <Children Size="0"/>
         </Child0>
     </Child6>
@@ -165,11 +171,12 @@
             <Shader File="6.Cube.hlsl"/>
             <Material File="ascii.mtl"/>
             <Transform>
-                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Position X="0.625" Y="-0.020000001" Z="0.050000001"/>
                 <Scale X="4" Y="4" Z="1"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
             <Text text="0"/>
+            <FromLeft fromLeft="false"/>
             <Children Size="0"/>
         </Child0>
     </Child7>
@@ -187,11 +194,12 @@
             <Shader File="6.Cube.hlsl"/>
             <Material File="ascii.mtl"/>
             <Transform>
-                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Position X="0.625" Y="-0.020000001" Z="0.050000001"/>
                 <Scale X="4" Y="4" Z="1"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
             <Text text="0"/>
+            <FromLeft fromLeft="false"/>
             <Children Size="0"/>
         </Child0>
     </Child8>
@@ -209,11 +217,12 @@
             <Shader File="6.Cube.hlsl"/>
             <Material File="ascii.mtl"/>
             <Transform>
-                <Position X="-0.0099999998" Y="-0.02" Z="0.050000001"/>
+                <Position X="0.625" Y="-0.020000001" Z="0.050000001"/>
                 <Scale X="4" Y="4" Z="1"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
             <Text text="0"/>
+            <FromLeft fromLeft="false"/>
             <Children Size="0"/>
         </Child0>
     </Child9>

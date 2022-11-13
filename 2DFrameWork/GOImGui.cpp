@@ -76,6 +76,11 @@ bool GameObject::RenderHierarchy()
 			{
 				AddChild(Text::Create(childName));
 			}
+			ImGui::SameLine();
+			if (ImGui::Button("Edit"))
+			{
+				AddChild(EditObject::Create(childName));
+			}
 			ImGui::EndPopup();
 		}
 

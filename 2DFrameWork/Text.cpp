@@ -12,6 +12,33 @@ Text* Text::Create(string name)
     return temp;
 }
 
+void Text::Update()
+{
+    GameObject::Update();
+}
+
+void Text::RenderDetail()
+{
+    GameObject::RenderDetail();
+    if (ImGui::BeginTabBar("MyTabBar3"))
+    {
+        if (ImGui::BeginTabItem("Text"))
+        {
+            ImGui::Checkbox("fromLeft", &fromLeft);
+            char buf[200];
+            ImGui::InputText("Text", buf, sizeof(buf));
+            if (ImGui::Button("ChangeText"))
+            {
+                //text = buf;
+                ChangeText(text);
+            }
+
+            ImGui::EndTabItem();
+        }
+        ImGui::EndTabBar();
+    }
+}
+
 
 
 void Text::ChangeText(string _text)
@@ -31,6 +58,10 @@ void Text::ChangeText(string _text)
 
     int vIndex = 0, iIndex = 0;
 
+    float startX = 0.f;
+    if (not fromLeft)
+        startX = -(text.size() * 0.1f);
+
     for (int i = 0; i < text.size(); i++)
     {
         char ch = text.c_str()[i];
@@ -40,7 +71,7 @@ void Text::ChangeText(string _text)
         Util::Saturate(ch, char(0), char(127));
         from.x = static_cast<float>(ch % 16) / 16.f;
         from.y = static_cast<float>(ch / 16) / 16.f;
-        pos.x = static_cast<float>(i) * 0.1f;
+        pos.x = startX + (static_cast<float>(i) * 0.1f);
         pos.y = 0.f;
         pos.z = 0.f;
 

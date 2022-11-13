@@ -3,7 +3,9 @@
 #pragma comment (lib,"../Build/2DFrameWork/2DFrameWork.lib")
 
 
-#include "EditObject.h"
+#include "MeshFactory.h"
+
 
 #define WORLD World::GetInstance()
 #define WORLD_GENERATOR WorldGenerator::GetInstance()
+#define MESH_FACTORY MeshFactory::GetInstance()

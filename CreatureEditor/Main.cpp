@@ -23,109 +23,57 @@ Main::~Main()
 
 void Main::Init()
 {
-    VertexP cubeEdges[8] = { 
-        {{ -1.f, 1.f,  -1.f }},
-        {{ -1.f, 1.f,  1.f }},
-        {{ 1.f,  1.f,  1.f }},
-        {{ 1.f,  1.f,  -1.f }},
-        {{ -1.f, -1.f, -1.f }},
-        {{ -1.f, -1.f, 1.f }},
-        {{ 1.f,  -1.f, 1.f }},
-        {{ 1.f,  -1.f, -1.f }}
-    };
-
-    int edgesIndex[6][4] = {
-        { 3, 2, 1, 0 },
-        { 6, 7, 4, 5 },
-        { 6, 2, 3, 7 },
-        { 4, 0, 1, 5 },
-        { 7, 3, 0, 4 },
-        { 5, 1, 2, 6 }
-    };
-    Vector2 uvs[4] = {
-        { 1.f, 1.f },
-        { 0.f, 1.f },
-        { 0.f, 0.f },
-        { 1.f, 0.f }
-    };
-    Vector3 normals[6] = {
-        { 0.f, 1.f, 0.f },
-        { 0.f, -1.f, 0.f },
-        { 1.f, 0.f, 0.f },
-        { -1.f, 0.f, 0.f },
-        { 0.f, 0.f, -1.f },
-        { 0.f, 0.f, 1.f }
-    };
-
-    VertexPTN* vertices;
-    UINT vertexCount = 6 * 4;
-    UINT* indices;
-    UINT indexCount = 6 * 6;
-    VertexType type = VertexType::PTN;
-
-    vertices = new VertexPTN[vertexCount];
-    indices = new UINT[indexCount];
-
-    int vIndex = 0, iIndex = 0;
-
-
-    for (int j = 0; j < 6; j++) {
-
-        for (int i = 0; i < 4; i++) {
-            vertices[vIndex].position = cubeEdges[edgesIndex[j][i]].position;
-            vertices[vIndex].position *= 1.f;
-            vertices[vIndex].normal = normals[j];
-            vertices[vIndex].uv = uvs[i];
-            vIndex++;
-        }
-       // int arr[6] = { 0, 1, 2, 0, 2, 3 };
-        int arr[6] = { 3, 2, 0, 2, 1, 0 };
-
-        for (int i = 0; i < 6; i++) {
-            indices[iIndex] = arr[i] + vIndex - 4;
-            iIndex++;
-        }
-    }
-
-
+    cam = Camera::Create("Camera");
+    cam->LoadFile("EditCam.xml");
     
+    Grid = Actor::Create();
+    Grid->LoadFile("Grid.xml");
 
+    model = Actor::Create("Model");
+    model->LoadFile("model.xml");
 
-    Mesh* newMesh = new Mesh(vertices, vertexCount, indices, indexCount, type);
-    newMesh->SaveFile("6.OneFaceBlock.mesh");
-
-    printf("Saved mesh\r\n");
 }
 
 void Main::Release()
 {
-    SCENE->Release();
+    cam->Release();
+    Grid->Release();
+    model->Release();
 }
 
 
 void Main::Update()
 {
-    SCENE->Update();
+    cam->RenderHierarchy();
+    Grid->RenderHierarchy();
+    model->RenderHierarchy();
+
+    cam->Update();
+    Grid->Update();
+    model->Update();
 }
 
 void Main::LateUpdate()
 {
-    SCENE->LateUpdate();
 }
 
 void Main::PreRender()
 {
-    SCENE->PreRender();
 }
 
 void Main::Render()
 {
-    SCENE->Render();
+    cam->Set();
+    Grid->Render();
+    model->Render();
 }
 
 void Main::ResizeScreen()
 {
-    SCENE->ResizeScreen();
+    cam->width = App.GetWidth();
+    cam->height = App.GetHeight();
+    cam->viewport.width = App.GetWidth();
+    cam->viewport.height = App.GetHeight();
 }
 
 int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prevInstance, LPWSTR param, int command)
@@ -136,7 +84,7 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prevInstance, LPWSTR param, in
     D3D->Create();
     Main* main = new Main();
     main->Init();
-    //int wParam = (int)WIN->Run(main);
+    int wParam = (int)WIN->Run(main);
     main->Release();
     SafeDelete(main);
     D3D->DeleteSingleton();

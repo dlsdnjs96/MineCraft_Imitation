@@ -5,6 +5,7 @@ class ItemManager : public Singleton<ItemManager>
 private:
 	list<ItemObject*> objects;
 public:
+	Player* user;
 	void Update();
 	void Render();
 	void RenderHierarchy();

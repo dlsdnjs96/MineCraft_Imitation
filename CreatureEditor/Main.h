@@ -5,7 +5,9 @@
 class Main : public Scene
 {
 private:
-
+	Camera* cam;
+	Actor* Grid;
+	Actor* model;
 public:
 	Main();
 	~Main();

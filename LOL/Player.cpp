@@ -38,13 +38,15 @@ void Player::Init()
     temp->mesh = RESOURCE->meshes.Load("6.blockCollider.mesh");
     temp->shader = RESOURCE->shaders.Load("1.Collider.hlsl");
 
-    quickSlots.Init();
+    inventory.Init();
 }
 
 void Player::Update()
 {
+    inventory.Update();
+    if (inventory.showInven)
+        return;
     Actor::Update();
-    quickSlots.Update();
     Collider();
 
     if (INPUT->fixedMousePos.x != -1) {
@@ -287,7 +289,7 @@ void Player::Digging()
     }
     passedTime += DELTA;
 
-    printf("%f %d %d %d %d\r\n", passedTime, targetInt3.x, targetInt3.y, targetInt3.z, firstTime);
+    //printf("%f %d %d %d %d\r\n", passedTime, targetInt3.x, targetInt3.y, targetInt3.z, firstTime);
 
 
     if (passedTime > 0.9f)
@@ -401,7 +403,7 @@ bool Player::RenderHierarchy()
 {
     Actor::RenderHierarchy();
     breakingBlock->RenderHierarchy();
-    quickSlots.RenderHierarchy();
+    inventory.RenderHierarchy();
 
     return false;
 }
@@ -409,7 +411,7 @@ bool Player::RenderHierarchy()
 void Player::Render()
 {
     Actor::Render();
-    quickSlots.Render();
+    inventory.Render();
     if (actState == ACT_STATE::DIGGING)
         breakingBlock->Render();
 }
@@ -450,7 +452,7 @@ int Player::FindTarget()
 
 void Player::InstallBlock()
 {
-    if (quickSlots.GetPickedItem().ea == 0)
+    if (inventory.GetPickedItem().ea == 0)
     {
         return;
     }
@@ -459,9 +461,9 @@ void Player::InstallBlock()
     if (intersectIndex != -1) {
         Int3 sixPos[6] = { {0, 1, 0}, {0, -1, 0}, {1, 0, 0}, {-1, 0, 0}, {0, 0, -1}, {0, 0, 1} };
         Int3 intersectInt3 = targetInt3 + sixPos[intersectIndex];
-        WORLD->SetBlockType(intersectInt3, static_cast<BlockType>(quickSlots.GetPickedItem().itemid));
+        WORLD->SetBlockType(intersectInt3, static_cast<BlockType>(inventory.GetPickedItem().itemid));
         WORLD->UpdateMesh(intersectInt3);
-        quickSlots.UsePickedItem();
+        inventory.UsePickedItem();
     }
 }
 

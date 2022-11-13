@@ -32,6 +32,8 @@ public:
     Vector3 moveNDCPos;
 
     POINT fixedMousePos = { -1, -1 };
+
+    int controlType = 1;
 public:
     Input();
     ~Input();

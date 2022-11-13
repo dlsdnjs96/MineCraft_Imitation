@@ -44,11 +44,17 @@ void ItemObject::Stay()
 		height += sinf(passedTime) + 3.f;
 		SetLocalPosY(height);
 	}
+
+	if (Vector3::Distance(GetWorldPos(), ITEM_MANAGER->user->GetWorldPos()) < 10.f)
+	{
+		state = ItemObjectState::GAIN;
+		return;
+	}
 }
 
 void ItemObject::Fall()
 {
-	MoveLocalPos({ 0.f, -DELTA, 0.f });
+	MoveLocalPos({ 0.f, -DELTA * 20.f, 0.f });
 
 	Int3 curInt3 = Int3(GetWorldPos() / BLOCK_LENGTH);
 	curInt3 = Int3{ curInt3.x, curInt3.y - 1, curInt3.z };
@@ -59,4 +65,18 @@ void ItemObject::Fall()
 
 void ItemObject::Gain()
 {
+	Vector3 dir = ITEM_MANAGER->user->GetWorldPos() - GetWorldPos();
+	dir.Normalize();
+	MoveWorldPos(dir * DELTA * 10.f);
+	if (Vector3::Distance(GetWorldPos(), ITEM_MANAGER->user->GetWorldPos()) < 2.f)
+	{
+		ITEM_MANAGER->user->inventory.GainItem(item);
+		item = { 0, 0 };
+		return;
+	}
+}
+
+Item ItemObject::GetItem()
+{
+	return item;
 }

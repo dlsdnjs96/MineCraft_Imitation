@@ -113,6 +113,9 @@
     <ClInclude Include="Text.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="EditObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">
@@ -244,6 +247,9 @@
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="Text.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="EditObject.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>

@@ -169,6 +169,7 @@
     <ClInclude Include="Direct3D11.h" />
     <ClInclude Include="Dwrite.h" />
     <ClInclude Include="CubeMap.h" />
+    <ClInclude Include="EditObject.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gui.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="Direct3D11.cpp" />
     <ClCompile Include="Dwrite.cpp" />
     <ClCompile Include="CubeMap.cpp" />
+    <ClCompile Include="EditObject.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GOImGui.cpp" />
     <ClCompile Include="Gui.cpp" />

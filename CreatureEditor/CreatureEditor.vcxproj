@@ -139,12 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EditObject.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MeshFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EditObject.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="MeshFactory.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
