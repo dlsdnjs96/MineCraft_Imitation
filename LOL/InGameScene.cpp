@@ -2,7 +2,6 @@
 
 InGameScene::InGameScene()
 {
-
     TestBlock = Actor::Create();
     TestBlock->LoadFile("TestBlock.xml");
 
@@ -70,15 +69,8 @@ void InGameScene::Init()
     exit->mouseNotOver = [=]() { exit->material = RESOURCE->materials.Load("button1.mtl"); };
     exit->mouseDown = [=]() { WORLD->SaveWorld(); SCENE->ChangeScene("MENU", 0.1f)->Init(); };
 
-
-    POINT cursor;
-    if (GetCursorPos(&cursor)) {
-        INPUT->fixedMousePos.x = cursor.x;
-        INPUT->fixedMousePos.y = cursor.y;
-        INPUT->prevPosition = INPUT->position;
-        Util::CursorVisible(false);
-        aim->visible = true;
-    }
+    INVENTORY->Init();
+    CRAFTING->Init();
 }
 
 void InGameScene::Release()
@@ -93,11 +85,20 @@ void InGameScene::Release()
 
 void InGameScene::Update()
 {
+    static bool first_lock = Util::LockMouse();
+
+    if (INPUT->KeyDown('T')) {
+        if (not CRAFTING->active)
+            Util::UnLockMouse();
+        else
+            Util::LockMouse();
+        CRAFTING->active = !CRAFTING->active;
+    }
     if (INPUT->KeyDown(VK_ESCAPE)) {
         menuTab = true;
-        INPUT->fixedMousePos.x = -1;
-        Util::CursorVisible(true);
-        aim->visible = false;
+        CRAFTING->active = false;
+        INVENTORY->showInven = false;
+        Util::UnLockMouse();
     }
 
     if (INPUT->KeyDown(VK_F1)) {
@@ -117,6 +118,8 @@ void InGameScene::Update()
     TestBlock->RenderHierarchy();
     WORLD->RenderHierarchy();
     ITEM_MANAGER->RenderHierarchy();
+    INVENTORY->RenderHierarchy();
+    CRAFTING->RenderHierarchy();
 
     resume->RenderHierarchy();
     setting->RenderHierarchy();
@@ -138,8 +141,10 @@ void InGameScene::Update()
         aim->Update();
         TestBlock->Update();
     }
-        player->Update();
+    player->Update();
     ITEM_MANAGER->Update();
+    INVENTORY->Update();
+    CRAFTING->Update();
 
     //if (INPUT->KeyDown(VK_LBUTTON))
     //{
@@ -172,6 +177,8 @@ void InGameScene::Render()
     aim->Render();
     TestBlock->Render();
     ITEM_MANAGER->Render();
+    INVENTORY->Render();
+    CRAFTING->Render();
 
     if (menuTab)
     {
@@ -188,3 +195,4 @@ void InGameScene::ResizeScreen()
     Camera::main->viewport.width = App.GetWidth();
     Camera::main->viewport.height = App.GetHeight();
 }
+

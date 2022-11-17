@@ -123,6 +123,11 @@ void Transform::MoveWorldPos(const Vector3& WScaleVec)
 		position += WScaleVec;
 }
 
+Vector3 Transform::GetPosition()
+{
+	return position;
+}
+
 Vector3 Transform::GetLocalPos()
 {
 	if (parent)

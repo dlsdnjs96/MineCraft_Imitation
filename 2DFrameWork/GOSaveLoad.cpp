@@ -320,6 +320,12 @@ void GameObject::LoadObject(Xml::XMLElement* This)
 			AddChild(temp);
 			temp->LoadObject(ob);
 		}
+		else if (Type == ObType::Edit)
+		{
+			EditObject* temp = EditObject::Create(childName);
+			AddChild(temp);
+			temp->LoadObject(ob);
+		}
 	}
 }
 void Transform::SaveTransform(Xml::XMLElement* This, Xml::XMLDocument* doc)

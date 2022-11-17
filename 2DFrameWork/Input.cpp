@@ -123,5 +123,5 @@ void Input::Update()
     NDCPosition.y = position.y / -App.GetHalfHeight() + 1.0f;
     moveNDCPos = NDCPosition - oldNDCPosition;
 
-
+    //prevPosition = position;
 }

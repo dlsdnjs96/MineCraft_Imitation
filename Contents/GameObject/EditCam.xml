@@ -1,10 +1,10 @@
 <Root Name="Camera" Visible="true" ObType="2">
     <Shader File="1.Cube.hlsl"/>
     <Transform>
-        <Position X="1.7661006" Y="102.212" Z="-2.9518909"/>
+        <Position X="-1.034" Y="37.512001" Z="36.298"/>
         <Scale X="1" Y="1" Z="1"/>
-        <Rotation X="0.76794493" Y="0.78700012" Z="0"/>
+        <Rotation X="0.57595867" Y="2.8797934" Z="0"/>
     </Transform>
-    <Camera Ortho="false" Fov="1.047192" Width="1280" Height="720" NearZ="0.2" FarZ="10000" viewportX="0" viewportY="0" viewportW="1280" viewportH="720"/>
+    <Camera Ortho="false" Fov="1.047192" Width="1280" Height="720" NearZ="0.5" FarZ="3000" viewportX="0" viewportY="0" viewportW="1280" viewportH="720"/>
     <Children Size="0"/>
 </Root>

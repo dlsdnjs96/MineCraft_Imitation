@@ -27,6 +27,6 @@ public:
 	virtual void Render() override;
 	virtual void ResizeScreen() override;
 
-	
+
 };
 

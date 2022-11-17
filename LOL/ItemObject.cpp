@@ -1,14 +1,14 @@
 #include "stdafx.h"
 
-ItemObject::ItemObject(Item _item)
+
+ItemObject::ItemObject(Item _item, Vector3 _dir)
 {
 	item = _item;
 	state = ItemObjectState::FALL;
 	passedTime = 0.f;
+	dir = _dir;
 
-	mesh = RESOURCE->meshes.Load("6.OneFaceBlock.mesh");
-	shader = RESOURCE->shaders.Load("Block.hlsl");
-	material = RESOURCE->materials.Load("Items/100.mtl");
+	ITEM_MANAGER->SetItemObjectImage(this, _item);
 }
 
 void ItemObject::Update()
@@ -26,6 +26,9 @@ void ItemObject::Update()
 	case ItemObjectState::GAIN:
 		Gain();
 		break;
+	case ItemObjectState::THROW:
+		Throw();
+		break;
 	}
 }
 
@@ -35,7 +38,7 @@ void ItemObject::Stay()
 	Int3 curInt3 = Int3(GetWorldPos() / BLOCK_LENGTH);
 	curInt3 = Int3{ curInt3.x, curInt3.y - 1, curInt3.z };
 
-	if (WORLD->GetBlock(curInt3).blockType == BlockType::EMPTY) {
+	if (WORLD->GetBlock(curInt3).blockType == BlockType::AIR) {
 		state = ItemObjectState::FALL;
 	}
 	else {
@@ -57,21 +60,44 @@ void ItemObject::Fall()
 	MoveLocalPos({ 0.f, -DELTA * 20.f, 0.f });
 
 	Int3 curInt3 = Int3(GetWorldPos() / BLOCK_LENGTH);
-	curInt3 = Int3{ curInt3.x, curInt3.y - 1, curInt3.z };
-	if (WORLD->GetBlock(curInt3).blockType != BlockType::EMPTY) {
+	curInt3 = Int3{ curInt3.x, curInt3.y+1, curInt3.z };
+	if (WORLD->GetBlock(curInt3).blockType != BlockType::AIR) {
 		state = ItemObjectState::STAY;
 	}
 }
 
 void ItemObject::Gain()
 {
-	Vector3 dir = ITEM_MANAGER->user->GetWorldPos() - GetWorldPos();
-	dir.Normalize();
-	MoveWorldPos(dir * DELTA * 10.f);
+	Vector3 toUser = ITEM_MANAGER->user->GetWorldPos() - GetWorldPos();
+	toUser.Normalize();
+	MoveWorldPos(toUser * DELTA * 10.f);
 	if (Vector3::Distance(GetWorldPos(), ITEM_MANAGER->user->GetWorldPos()) < 2.f)
 	{
-		ITEM_MANAGER->user->inventory.GainItem(item);
-		item = { 0, 0 };
+		INVENTORY->GainItem(item);
+		item.Remove();
+		return;
+	}
+}
+
+void ItemObject::Throw()
+{
+	float height = (passedTime * 10.f) - (0.5f * 9.8f * powf(passedTime, 2.f));
+	Vector3 tempDir = dir;
+	tempDir.y = height;
+	tempDir.Normalize();
+
+	MoveWorldPos(tempDir * DELTA * 10.f);
+
+	if (passedTime > 0.1f)
+	{
+		state = ItemObjectState::FALL;
+		return;
+	}
+
+	Int3 curInt3 = Int3(GetWorldPos() / BLOCK_LENGTH);
+	curInt3 = Int3{ curInt3.x, curInt3.y, curInt3.z };
+	if (WORLD->GetBlock(curInt3).blockType != BlockType::AIR) {
+		state = ItemObjectState::STAY;
 		return;
 	}
 }

@@ -161,3 +161,174 @@ shared_ptr<Mesh> MeshFactory::EditMesh(EditObject& _editObject)
     printf("Edited mesh\r\n");
     return make_shared<Mesh>(vertices, vertexCount, indices, indexCount, type);
 }
+
+shared_ptr<Mesh> MeshFactory::CrossMesh()
+{
+    VertexP cubeEdges[8] = {
+    {{ -1.f, 1.f,  -1.f }},
+    {{ -1.f, 1.f,  1.f }},
+    {{ 1.f,  1.f,  1.f }},
+    {{ 1.f,  1.f,  -1.f }},
+    {{ -1.f, -1.f, -1.f }},
+    {{ -1.f, -1.f, 1.f }},
+    {{ 1.f,  -1.f, 1.f }},
+    {{ 1.f,  -1.f, -1.f }}
+    };
+
+    int edgesIndex[4][4] = {
+        { 6, 2, 0, 4 },
+        { 4, 0, 2, 6 },
+        { 7, 3, 1, 5 },
+        { 5, 1, 3, 7 }
+    };
+
+    Vector3 normals[6] = {
+        { 0.f, 1.f, 0.f },
+        { 0.f, -1.f, 0.f },
+        { 1.f, 0.f, 0.f },
+        { -1.f, 0.f, 0.f },
+        { 0.f, 0.f, -1.f },
+        { 0.f, 0.f, 1.f }
+    };
+
+
+    VertexPTN* vertices;
+    UINT vertexCount = 4 * 4;
+    UINT* indices;
+    UINT indexCount = 4 * 6;
+    VertexType type = VertexType::PTN;
+
+    vertices = new VertexPTN[vertexCount];
+    indices = new UINT[indexCount];
+
+    int vIndex = 0, iIndex = 0;
+
+    for (int i = 0; i < 8; i++)
+    {
+        cubeEdges[i].position.x *= 10.f;
+        cubeEdges[i].position.y *= 10.f;
+        cubeEdges[i].position.z *= 10.f;
+    }
+
+
+    for (int j = 0; j < 4; j++) {
+
+        for (int i = 0; i < 4; i++) {
+            vertices[vIndex].position = cubeEdges[edgesIndex[j][i]].position;
+            vertices[vIndex].position *= 1.f;
+            vertices[vIndex].normal = normals[j];
+            vIndex++;
+        }
+        vertices[vIndex - 4].uv = { 8.f / 16.f, 3.f / 16.f };
+        vertices[vIndex - 3].uv = { 8.f / 16.f, 2.f / 16.f };
+        vertices[vIndex - 2].uv = { 7.f / 16.f, 2.f / 16.f };
+        vertices[vIndex - 1].uv = { 7.f / 16.f, 3.f / 16.f };
+
+
+        int arr[6] = { 3, 2, 0, 2, 1, 0 };
+
+        for (int i = 0; i < 6; i++) {
+            indices[iIndex] = arr[i] + vIndex - 4;
+            iIndex++;
+        }
+    }
+
+
+    printf("Edited mesh\r\n");
+    shared_ptr<Mesh> temp = make_shared<Mesh>(vertices, vertexCount, indices, indexCount, type);
+    temp->SaveFile("CrossMesh.mesh");
+    return temp;
+}
+
+shared_ptr<Mesh> MeshFactory::SharpMesh()
+{
+    return shared_ptr<Mesh>();
+}
+
+shared_ptr<Mesh> MeshFactory::ItemMesh()
+{
+    VertexP cubeEdges[8] = {
+    {{ -1.f, 1.f,  -1.f }},
+    {{ -1.f, 1.f,  1.f }},
+    {{ 1.f,  1.f,  1.f }},
+    {{ 1.f,  1.f,  -1.f }},
+    {{ -1.f, -1.f, -1.f }},
+    {{ -1.f, -1.f, 1.f }},
+    {{ 1.f,  -1.f, 1.f }},
+    {{ 1.f,  -1.f, -1.f }}
+    };
+
+    int edgesIndex[6][4] = {
+        { 3, 2, 1, 0 },
+        { 6, 7, 4, 5 },
+        { 6, 2, 3, 7 },
+        { 4, 0, 1, 5 },
+        { 7, 3, 0, 4 },
+        { 5, 1, 2, 6 }
+    };
+
+    Vector3 normals[6] = {
+        { 0.f, 1.f, 0.f },
+        { 0.f, -1.f, 0.f },
+        { 1.f, 0.f, 0.f },
+        { -1.f, 0.f, 0.f },
+        { 0.f, 0.f, -1.f },
+        { 0.f, 0.f, 1.f }
+    };
+
+
+    VertexPTN* vertices;
+    UINT vertexCount = 6 * 4;
+    UINT* indices;
+    UINT indexCount = 6 * 6;
+    VertexType type = VertexType::PTN;
+
+    vertices = new VertexPTN[vertexCount];
+    indices = new UINT[indexCount];
+
+    int vIndex = 0, iIndex = 0;
+
+    for (int i = 0; i < 8; i++)
+    {
+        cubeEdges[i].position.x *= 1.f;
+        cubeEdges[i].position.y *= 1.f;
+        cubeEdges[i].position.z *= 0.1f;
+    }
+
+
+    for (int j = 0; j < 6; j++) {
+
+        for (int i = 0; i < 4; i++) {
+            vertices[vIndex].position = cubeEdges[edgesIndex[j][i]].position;
+            vertices[vIndex].position *= 1.f;
+            vertices[vIndex].normal = normals[j];
+            vIndex++;
+        }
+        vertices[vIndex - 4].uv = { 0.f, 1.f / 16.f };
+        vertices[vIndex - 3].uv = { 0.f, 0.f };
+        vertices[vIndex - 2].uv = { 1.f / 16.f, 0.f };
+        vertices[vIndex - 1].uv = { 1.f / 16.f, 1.f / 16.f };
+
+
+        int arr[6] = { 3, 2, 0, 2, 1, 0 };
+
+        for (int i = 0; i < 6; i++) {
+            indices[iIndex] = arr[i] + vIndex - 4;
+            iIndex++;
+        }
+    }
+    vertices[vIndex - 8].uv = { 0.f, 1.f };
+    vertices[vIndex - 7].uv = { 0.f, 0.f };
+    vertices[vIndex - 6].uv = { 1.f, 0.f };
+    vertices[vIndex - 5].uv = { 1.f, 1.f };
+    vertices[vIndex - 4].uv = { 0.f, 1.f };
+    vertices[vIndex - 3].uv = { 0.f, 0.f };
+    vertices[vIndex - 2].uv = { 1.f, 0.f };
+    vertices[vIndex - 1].uv = { 1.f, 1.f };
+
+
+    printf("Edited mesh\r\n");
+    shared_ptr<Mesh> temp = make_shared<Mesh>(vertices, vertexCount, indices, indexCount, type);
+    temp->SaveFile("item.mesh");
+    return temp;
+}

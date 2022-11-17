@@ -32,6 +32,10 @@ void UI::Update()
 			Press = true;
 			if (mouseDown) mouseDown();
 		}
+		if (INPUT->KeyDown(VK_RBUTTON))
+		{
+			if (mouseDownR) mouseDownR();
+		}
 
 	}
 	else {

@@ -1,0 +1,173 @@
+<Root Name="Player" Visible="true" ObType="1">
+    <Transform>
+        <Position X="0" Y="0" Z="0"/>
+        <Scale X="1" Y="1" Z="1"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Transform>
+    <Children Size="2"/>
+    <Child0 Name="Collider" Visible="true" ObType="0">
+        <Transform>
+            <Position X="0" Y="0" Z="0"/>
+            <Scale X="1" Y="1" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="testCollider" Visible="true" ObType="0">
+            <Transform>
+                <Position X="0" Y="0" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
+    </Child0>
+    <Child1 Name="body" Visible="true" ObType="7">
+        <Mesh File="Player/body.mesh"/>
+        <Shader File="Block.hlsl"/>
+        <Material File="Monster/Steve.mtl"/>
+        <Transform>
+            <Position X="0" Y="19.6" Z="0"/>
+            <Scale X="1" Y="1" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="2"/>
+        <Child0 Name="shoulderC" Visible="true" ObType="0">
+            <Transform>
+                <Position X="0" Y="2.5" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="3"/>
+            <Child0 Name="neck" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="7.1999998" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="head" Visible="true" ObType="7">
+                    <Mesh File="Player/head.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Steve.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="1"/>
+                    <Child0 Name="camHead" Visible="true" ObType="2">
+                        <Transform>
+                            <Position X="0" Y="0" Z="0"/>
+                            <Scale X="1" Y="1" Z="1"/>
+                            <Rotation X="0" Y="0" Z="0"/>
+                        </Transform>
+                        <Camera Ortho="false" Fov="1.047192" Width="1280" Height="720" NearZ="0.30000001" FarZ="5000" viewportX="0" viewportY="0" viewportW="1280" viewportH="720"/>
+                        <Children Size="0"/>
+                    </Child0>
+                </Child0>
+            </Child0>
+            <Child1 Name="shoulderL" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="-6" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="armL" Visible="true" ObType="7">
+                    <Mesh File="Player/armL.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Steve.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="-3" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child1>
+            <Child2 Name="shoulderR" Visible="true" ObType="0">
+                <Mesh File="Pig/armR.mesh"/>
+                <Material File="Monster/Cow.mtl"/>
+                <Transform>
+                    <Position X="6" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="armR" Visible="true" ObType="7">
+                    <Mesh File="Player/armR.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="-3" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child2>
+        </Child0>
+        <Child1 Name="waist" Visible="true" ObType="0">
+            <Transform>
+                <Position X="0" Y="-3.5" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="3"/>
+            <Child0 Name="hipC" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="tail" Visible="true" ObType="7">
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child0>
+            <Child1 Name="hipL" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="-2" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legL" Visible="true" ObType="7">
+                    <Mesh File="Player/legL.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Steve.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="-8.5" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child1>
+            <Child2 Name="hipR" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="2" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legR" Visible="true" ObType="7">
+                    <Mesh File="Player/legR.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Steve.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="-8.5" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child2>
+        </Child1>
+    </Child1>
+</Root>

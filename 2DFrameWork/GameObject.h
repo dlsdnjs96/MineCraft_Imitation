@@ -8,7 +8,8 @@ enum class ObType
 	Terrain,
 	UI,
 	Billboard,
-	TEXT
+	TEXT,
+	Edit
 };
 
 class GameObject : public Transform

@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockCollider.h" />
+    <ClInclude Include="Crafting.h" />
     <ClInclude Include="InGameScene.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="MenuScene.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Sector.h" />
     <ClInclude Include="Setting.h" />
@@ -163,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockCollider.cpp" />
+    <ClCompile Include="Crafting.cpp" />
     <ClCompile Include="InGameScene.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -171,6 +174,7 @@
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MenuScene.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sector.cpp" />
     <ClCompile Include="Setting.cpp" />

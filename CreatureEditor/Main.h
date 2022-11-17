@@ -8,6 +8,7 @@ private:
 	Camera* cam;
 	Actor* Grid;
 	Actor* model;
+	Actor* player;
 public:
 	Main();
 	~Main();
@@ -18,4 +19,6 @@ public:
 	virtual void PreRender() override;
 	virtual void Render() override;
 	virtual void ResizeScreen() override;
+	void TextureToMaterial();
+	void BlockTexture();
 };

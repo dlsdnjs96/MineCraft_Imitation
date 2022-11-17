@@ -43,6 +43,7 @@ public:
     void        MoveWorldPos(const Vector3& WScaleVec);
 
     //월드 스케일 로컬 좌표
+    Vector3     GetPosition();
     Vector3     GetLocalPos();
     void        SetLocalPos(Vector3 WPos);
     void        SetLocalPosX(float WPosX);

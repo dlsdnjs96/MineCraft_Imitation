@@ -1,0 +1,135 @@
+<Root Name="Pig" Visible="true" ObType="1">
+    <Transform>
+        <Position X="0" Y="0" Z="0"/>
+        <Scale X="1" Y="1" Z="1"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Transform>
+    <Children Size="1"/>
+    <Child0 Name="body" Visible="true" ObType="0">
+        <Shader File="Block.hlsl"/>
+        <Transform>
+            <Position X="0" Y="0" Z="0"/>
+            <Scale X="1" Y="1" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="2"/>
+        <Child0 Name="shoulderC" Visible="true" ObType="0">
+            <Transform>
+                <Position X="0" Y="0" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="3"/>
+            <Child0 Name="neck" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="head" Visible="true" ObType="0">
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child0>
+            <Child1 Name="shoulderL" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="armL" Visible="true" ObType="0">
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child1>
+            <Child2 Name="shoulderR" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="armR" Visible="true" ObType="0">
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child2>
+        </Child0>
+        <Child1 Name="waist" Visible="true" ObType="0">
+            <Transform>
+                <Position X="0" Y="0" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="3"/>
+            <Child0 Name="hipC" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="tail" Visible="true" ObType="0">
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child0>
+            <Child1 Name="hipL" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legL" Visible="true" ObType="0">
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child1>
+            <Child2 Name="hipR" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legR" Visible="true" ObType="0">
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child2>
+        </Child1>
+    </Child0>
+</Root>

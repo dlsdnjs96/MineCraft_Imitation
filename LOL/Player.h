@@ -42,7 +42,6 @@ private:
 	vector<Int3>	rayIntersectOrder;
 
 public:
-	Inventory		inventory;
 	void Init();
 	void Update();
 	void Release();
@@ -67,6 +66,7 @@ public:
 	bool RenderHierarchy();
 	void Render();
 
+	void InteractBlock();
 	int FindTarget();
 	void InstallBlock();
 	void UninstallBlock();

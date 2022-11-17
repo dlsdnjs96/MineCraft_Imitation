@@ -4,6 +4,7 @@ class EditObject : public GameObject
 {
 private:
 public:
+	Vector2 imgSize = { 10.f, 10.f };
 	Vector3 meshFrom = { 0.f, 0.f, 0.f };
 	Vector3 meshSize = { 1.f, 1.f, 1.f };
 

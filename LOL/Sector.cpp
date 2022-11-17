@@ -10,11 +10,11 @@ Sector::Sector()
 		for (int z = 0; z < SECTOR_SIZE; z++)
 		{
 			for (int y = 0; y < 3; y++)
-				blocks[x][y][z].blockType = BlockType::EMPTY;
+				blocks[x][y][z].blockType = BlockType::AIR;
 			for (int y = 3; y < 10; y++)
-				blocks[x][y][z].blockType = BlockType::EMPTY;
+				blocks[x][y][z].blockType = BlockType::AIR;
 			for (int y = 10; y < WORLD_HEIGHT; y++)
-				blocks[x][y][z].blockType = BlockType::EMPTY;
+				blocks[x][y][z].blockType = BlockType::AIR;
 		}
 	}
 }
@@ -135,7 +135,7 @@ void Sector::UpdateWaterMesh()
 			{
 				if (blocks[from.x][from.y][from.z].renderFace == 0)
 					continue;
-				if (blocks[from.x][from.y][from.z].blockType != BlockType::WATER)
+				if (blocks[from.x][from.y][from.z].blockType != BlockType::STILL_WATER)
 					continue;
 
 				for (int i = 0; i < 6; i++) {

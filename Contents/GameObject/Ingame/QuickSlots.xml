@@ -13,7 +13,7 @@
         <Shader File="6.Cube.hlsl"/>
         <Material File="pickedSlot.mtl"/>
         <Transform>
-            <Position X="-0.32999998" Y="0.024999999" Z="-0.050000001"/>
+            <Position X="-0.44" Y="0.024999999" Z="-0.050000001"/>
             <Scale X="0.13" Y="1" Z="1"/>
             <Rotation X="0" Y="0" Z="0"/>
         </Transform>
@@ -42,7 +42,7 @@
             <Children Size="0"/>
         </Child0>
     </Child1>
-    <Child2 Name="slot2" Visible="true" ObType="4">
+    <Child2 Name="slot2" Visible="false" ObType="4">
         <Mesh File="6.UI.mesh"/>
         <Shader File="6.Cube.hlsl"/>
         <Material File="Items/102.mtl"/>
@@ -65,7 +65,7 @@
             <Children Size="0"/>
         </Child0>
     </Child2>
-    <Child3 Name="slot3" Visible="true" ObType="4">
+    <Child3 Name="slot3" Visible="false" ObType="4">
         <Mesh File="6.UI.mesh"/>
         <Shader File="6.Cube.hlsl"/>
         <Material File="Items/104.mtl"/>

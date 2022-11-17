@@ -68,6 +68,12 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Crafting.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -119,6 +125,12 @@
     </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Crafting.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,10 @@ void Transform::RenderDetail()
 	ImGui::SliderAngle("rotationY", &rotation.y);
 	ImGui::SliderAngle("rotationZ", &rotation.z);
 	ImGui::DragFloat3("scale", (float*)&scale, 0.05f);
+	if (ImGui::Button("Rest Rotation"))
+	{
+		rotation = { 0.f, 0.f, 0.f };
+	}
 }
 
 bool GameObject::RenderHierarchy()

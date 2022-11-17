@@ -1,0 +1,147 @@
+<Root Name="Sheep" Visible="true" ObType="1">
+    <Transform>
+        <Position X="0" Y="0" Z="0"/>
+        <Scale X="1" Y="1" Z="1"/>
+        <Rotation X="0" Y="1.5882497" Z="0"/>
+    </Transform>
+    <Children Size="1"/>
+    <Child0 Name="body" Visible="true" ObType="7">
+        <Mesh File="Sheep/body.mesh"/>
+        <Shader File="Block.hlsl"/>
+        <Material File="Monster/Sheep.mtl"/>
+        <Transform>
+            <Position X="0" Y="7.9000001" Z="0"/>
+            <Scale X="1" Y="1" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="2"/>
+        <Child0 Name="shoulderC" Visible="true" ObType="0">
+            <Transform>
+                <Position X="0" Y="0" Z="5.8499999"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="3"/>
+            <Child0 Name="neck" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="-1.1" Z="2.95"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="head" Visible="true" ObType="7">
+                    <Mesh File="Sheep/head.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Sheep.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="4.6500001" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child0>
+            <Child1 Name="shoulderL" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="-2.5" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="armL" Visible="true" ObType="7">
+                    <Mesh File="Sheep/armL.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Sheep.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="-8.3500004" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child1>
+            <Child2 Name="shoulderR" Visible="true" ObType="0">
+                <Mesh File="Pig/armR.mesh"/>
+                <Material File="Monster/Cow.mtl"/>
+                <Transform>
+                    <Position X="2.5" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="armR" Visible="true" ObType="7">
+                    <Mesh File="Sheep/armR.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="-8.3500004" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child2>
+        </Child0>
+        <Child1 Name="waist" Visible="true" ObType="0">
+            <Transform>
+                <Position X="0" Y="0" Z="-5.5500002"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="3"/>
+            <Child0 Name="hipC" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="tail" Visible="true" ObType="7">
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child0>
+            <Child1 Name="hipL" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="-2.5" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legL" Visible="true" ObType="7">
+                    <Mesh File="Sheep/legL.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Sheep.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="-8.3500004" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child1>
+            <Child2 Name="hipR" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="2.5" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legR" Visible="true" ObType="7">
+                    <Mesh File="Sheep/legR.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="-8.3500004" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child2>
+        </Child1>
+    </Child0>
+</Root>

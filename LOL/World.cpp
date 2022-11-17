@@ -197,7 +197,7 @@ void World::distinguishBlocks(Int3 from, int range)
 		{
 			for (int k = 1; k < WORLD_HEIGHT; k++)
 			{
-				if (GetBlock(Int3{ i, k, j }).blockType == BlockType::EMPTY)
+				if (GetBlock(Int3{ i, k, j }).blockType == BlockType::AIR)
 					continue;
 
 				distinguishBlock(Int3{ i, k, j });
@@ -211,24 +211,24 @@ void World::distinguishBlock(Int3 from)
 	const Int3 sixPos[6] = { {0, 1, 0}, {0, -1, 0}, {1, 0, 0}, {-1, 0, 0}, {0, 0, 1}, {0, 0, -1} };
 	const int sixFaces[6] = { BLOCK_FACE_UP, BLOCK_FACE_DOWN, BLOCK_FACE_RIGHT, BLOCK_FACE_LEFT, BLOCK_FACE_BEHIND, BLOCK_FACE_FORWARD };
 
-	if (GetBlock(from).blockType == BlockType::WATER)
+	if (GetBlock(from).blockType == BlockType::STILL_WATER)
 	{
 		int renderFace = 0;
 
 		for (int i = 0; i < 6; i++) {
-			if (unsigned char(GetBlock(from + sixPos[i]).blockType) >= 100 || GetBlock(from + sixPos[i]).blockType == BlockType::EMPTY)
+			if (unsigned char(GetBlock(from + sixPos[i]).blockType) >= 10 || GetBlock(from + sixPos[i]).blockType == BlockType::AIR)
 				renderFace |= sixFaces[i];
 		}
 
 		SetBlockDectec(from, renderFace);
 	}
-	else if (unsigned char(GetBlock(from).blockType) >= 2)
+	else if (GetBlock(from).blockType > BlockType::STILL_WATER)
 	{
 		int renderFace = 0;
 
 		for (int i = 0; i < 6; i++) {
 			Int3 temp = from + sixPos[i];
-			if (unsigned char(GetBlock(from + sixPos[i]).blockType) < 100)
+			if (unsigned char(GetBlock(from + sixPos[i]).blockType) < 10)
 				renderFace |= sixFaces[i];
 		}
 

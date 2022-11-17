@@ -215,15 +215,15 @@ void WorldGenerator::MapToWorld()
         {
             for (int j = 0; j < heightMap[1][0].size(); j++) {
                 for (int k = 0; k < heightMap[1][i][j]; k++)
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::DIRT);
+                    WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STONE);
                 if (char(heightMap[1][i][j]) < WATER_HEIGHT) {
                     for (int k = 0; k < heightMap[1][i][j]; k++)
                         WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::DIRT);
                     for (int k = heightMap[1][i][j]; k <= WATER_HEIGHT; k++)
-                        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::WATER);
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STILL_WATER);
                 }
                 else
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j], j - (mapSize.y / 2) }, BlockType::GRASS);
+                    WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j], j - (mapSize.y / 2) }, BlockType::GRASS_DIRT);
             }
         }
     }
@@ -239,7 +239,7 @@ void WorldGenerator::MapToWorld()
                     int leafRadius = 3;
 
                     for (int k = 0; k < treeMap[i][j]; k++)
-                        WORLD->SetBlockType({ i - (mapSize.x / 2), groundHeight + k, j - (mapSize.y / 2) }, BlockType::WOOD_OAK);
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), groundHeight + k, j - (mapSize.y / 2) }, BlockType::OAK_WOOD);
 
                     for (int _x = 0; _x < leafRadius; _x++)
                     {
@@ -248,10 +248,10 @@ void WorldGenerator::MapToWorld()
                             if (_x == 0 && _z == 0)
                                 continue;
                             for (int _y = treeMap[i][j] - 2; _y < treeMap[i][j]; _y++) {
-                                WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, BlockType::LEAF);
-                                WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, BlockType::LEAF);
-                                WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, BlockType::LEAF);
-                                WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, BlockType::LEAF);
+                                WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, BlockType::LEAVE);
+                                WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, BlockType::LEAVE);
+                                WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, BlockType::LEAVE);
+                                WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, BlockType::LEAVE);
                             }
                         }
                     }
@@ -260,10 +260,10 @@ void WorldGenerator::MapToWorld()
                         for (int _z = 0; _z < leafRadius - 1; _z++)
                         {
                             for (int _y = treeMap[i][j]; _y < treeMap[i][j] + 2; _y++) {
-                                WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, BlockType::LEAF);
-                                WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, BlockType::LEAF);
-                                WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, BlockType::LEAF);
-                                WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, BlockType::LEAF);
+                                WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, BlockType::LEAVE);
+                                WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, BlockType::LEAVE);
+                                WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, BlockType::LEAVE);
+                                WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, BlockType::LEAVE);
                             }
                         }
                     }

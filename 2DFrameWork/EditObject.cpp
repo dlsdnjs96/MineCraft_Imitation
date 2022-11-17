@@ -4,7 +4,7 @@ EditObject* EditObject::Create(string name)
 {
     EditObject* temp = new EditObject();
     temp->name = name;
-    temp->type = ObType::GameObject;
+    temp->type = ObType::Edit;
 
 
     temp->shader = RESOURCE->shaders.Load("Block.hlsl");
@@ -30,12 +30,21 @@ void EditObject::RenderDetail()
 		{
 			if (ImGui::Button("Edit Mesh"))
 			{
+                if (mesh)
+                    mesh.reset();
                 mesh = EditMesh();
+
+                //filesystem::create_directory("../Contents/Mesh/" + root->name);
+                mesh->SaveFile(root->name + "/" + name + ".mesh");
 			}
 			if (ImGui::Button("Save Mesh"))
 			{
                 mesh->SaveFile(root->name+"/"+name+".mesh");
 			}
+
+			ImGui::NewLine();
+			ImGui::InputFloat("imgSize X", &imgSize.x);
+			ImGui::InputFloat("imgSize Y", &imgSize.y);
 
 			ImGui::NewLine();
 			ImGui::InputFloat("meshFrom X", &meshFrom.x);
@@ -157,10 +166,10 @@ shared_ptr<Mesh> EditObject::EditMesh()
             //vertices[vIndex].uv = uvs[j];
             vIndex++;
         }
-        vertices[vIndex - 4].uv = uvArr[j].second;
-        vertices[vIndex - 3].uv = { uvArr[j].second.x, uvArr[j].first.y };
-        vertices[vIndex - 2].uv = uvArr[j].first;
-        vertices[vIndex - 1].uv = { uvArr[j].first.x, uvArr[j].second.y };
+        vertices[vIndex - 4].uv = { uvArr[j].second.x / imgSize.x, uvArr[j].second.y / imgSize.y };
+        vertices[vIndex - 3].uv = { uvArr[j].second.x / imgSize.x, uvArr[j].first.y / imgSize.y };
+        vertices[vIndex - 2].uv = { uvArr[j].first.x / imgSize.x, uvArr[j].first.y / imgSize.y };
+        vertices[vIndex - 1].uv = { uvArr[j].first.x / imgSize.x, uvArr[j].second.y / imgSize.y };
 
 
         int arr[6] = { 3, 2, 0, 2, 1, 0 };

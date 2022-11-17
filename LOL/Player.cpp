@@ -3,6 +3,7 @@
 void Player::Init()
 {
     LoadFile("Player.xml");
+    //LoadFile("Monster/Steve.xml");
     breakingBlock = Actor::Create("breakingBlock");
     breakingBlock->LoadFile("breakingBlock.xml");
 
@@ -38,13 +39,11 @@ void Player::Init()
     temp->mesh = RESOURCE->meshes.Load("6.blockCollider.mesh");
     temp->shader = RESOURCE->shaders.Load("1.Collider.hlsl");
 
-    inventory.Init();
 }
 
 void Player::Update()
 {
-    inventory.Update();
-    if (inventory.showInven)
+    if (INVENTORY->showInven || CRAFTING->active)
         return;
     Actor::Update();
     Collider();
@@ -52,7 +51,8 @@ void Player::Update()
     if (INPUT->fixedMousePos.x != -1) {
         Find("head")->rotation.x -= (INPUT->moveNDCPos.y * PI) / 2.f;
         Find("head")->rotation.y += (INPUT->moveNDCPos.x * PI) / 2.f;
-        Util::Saturate(Find("head")->rotation.x, -PI / 2.f, PI / 2.f);
+        //Util::Saturate(Find("head")->rotation.x, -PI / 2.f, PI / 2.f);
+        Util::Saturate(Find("head")->rotation.x, -PI / 2.f, PI * 0.1736f);
     }
 
     Vector3 temp = GetWorldPos() / BLOCK_LENGTH;
@@ -67,7 +67,7 @@ void Player::Update()
     
 
     if (INPUT->KeyDown(VK_RBUTTON))
-        InstallBlock();
+        InteractBlock();
     //if (INPUT->KeyDown(VK_LBUTTON))
     //    UninstallBlock();
 
@@ -150,7 +150,7 @@ void Player::Walk()
         jumppedTime = 0.f;
     }
 
-    if (WORLD->GetBlock(underInt3).blockType == BlockType::EMPTY)
+    if (WORLD->GetBlock(underInt3).blockType == BlockType::AIR)
     {
         state = PLAYER_STATE::FALL;
         jumppedTime = jumpSpeed / gravity;
@@ -178,7 +178,7 @@ void Player::Fall()
 
     Int3 currentPos = Int3(GetWorldPos() / BLOCK_LENGTH);
 
-    if (WORLD->GetBlock(currentPos).blockType == BlockType::WATER)
+    if (WORLD->GetBlock(currentPos).blockType == BlockType::STILL_WATER)
     {
         state = PLAYER_STATE::DIVE;
     } else if (int(WORLD->GetBlock(currentPos).blockType) >= 2)
@@ -232,7 +232,7 @@ void Player::Dive()
     if (INPUT->KeyDown('W') or INPUT->KeyDown('S') or INPUT->KeyDown('D') or INPUT->KeyDown('A'))
         state = PLAYER_STATE::SWIM;
 
-    if (WORLD->GetBlock(curInt3).blockType == BlockType::EMPTY)
+    if (WORLD->GetBlock(curInt3).blockType == BlockType::AIR)
     {
         state = PLAYER_STATE::FALL;
         jumppedTime = jumpSpeed / risingForce;
@@ -327,7 +327,7 @@ bool Player::FourWaysMoving()
 
     Int3 enterBlock = Int3((GetWorldPos() + moveForce) / BLOCK_LENGTH);
     //enterBlock.y++;
-    if (WORLD->GetBlock(enterBlock).blockType != BlockType::EMPTY)
+    if (WORLD->GetBlock(enterBlock).blockType != BlockType::AIR)
     {
         moveForce.x = 0.f;
         moveForce.z = 0.f;
@@ -372,7 +372,7 @@ bool Player::FourWaysFloating()
 
     Int3 enterBlock = Int3((GetWorldPos() + moveForce) / BLOCK_LENGTH);
     //enterBlock.y++;
-    if (WORLD->GetBlock(enterBlock).blockType == BlockType::EMPTY)
+    if (WORLD->GetBlock(enterBlock).blockType == BlockType::AIR)
     {
         state = PLAYER_STATE::FALL;
     }
@@ -403,7 +403,6 @@ bool Player::RenderHierarchy()
 {
     Actor::RenderHierarchy();
     breakingBlock->RenderHierarchy();
-    inventory.RenderHierarchy();
 
     return false;
 }
@@ -411,9 +410,25 @@ bool Player::RenderHierarchy()
 void Player::Render()
 {
     Actor::Render();
-    inventory.Render();
     if (actState == ACT_STATE::DIGGING)
         breakingBlock->Render();
+}
+
+void Player::InteractBlock()
+{
+    switch (WORLD->GetBlock(targetInt3).blockType)
+    {
+    case BlockType::CRAFTING_TABLE:
+        if (not CRAFTING->active)
+            Util::UnLockMouse();
+        else
+            Util::LockMouse();
+        CRAFTING->active = !CRAFTING->active;
+        break;
+    default:
+        InstallBlock();
+        break;
+    }
 }
 
 int Player::FindTarget()
@@ -429,7 +444,7 @@ int Player::FindTarget()
     for (int i = 0; i < rayIntersectOrder.size(); i++)
     {
         intersectInt3 = curInt3 + rayIntersectOrder[i];
-        if (WORLD->GetBlock(intersectInt3).blockType > BlockType::WATER)
+        if (WORLD->GetBlock(intersectInt3).blockType > BlockType::STILL_WATER)
             //    && Util::IsInScreen())
         {
             float camToBlock = Vector3::Distance(Camera::main->GetWorldPos(), Find("Collider")->GetWorldPos() + (rayIntersectOrder[i].GetVector3() * 10.f));
@@ -452,7 +467,7 @@ int Player::FindTarget()
 
 void Player::InstallBlock()
 {
-    if (inventory.GetPickedItem().ea == 0)
+    if (INVENTORY->GetPickedItem().ea == 0)
     {
         return;
     }
@@ -461,9 +476,9 @@ void Player::InstallBlock()
     if (intersectIndex != -1) {
         Int3 sixPos[6] = { {0, 1, 0}, {0, -1, 0}, {1, 0, 0}, {-1, 0, 0}, {0, 0, -1}, {0, 0, 1} };
         Int3 intersectInt3 = targetInt3 + sixPos[intersectIndex];
-        WORLD->SetBlockType(intersectInt3, static_cast<BlockType>(inventory.GetPickedItem().itemid));
+        WORLD->SetBlockType(intersectInt3, static_cast<BlockType>(INVENTORY->GetPickedItem().itemid));
         WORLD->UpdateMesh(intersectInt3);
-        inventory.UsePickedItem();
+        INVENTORY->UsePickedItem();
     }
 }
 
@@ -474,8 +489,10 @@ void Player::UninstallBlock()
     int intersectIndex = FindTarget();
 
     if (intersectIndex != -1) {
-        ITEM_MANAGER->Spawn(targetInt3.GetVector3() * BLOCK_LENGTH, Item{ int(WORLD->GetBlock(targetInt3).blockType), 1 });
-        WORLD->SetBlockType(targetInt3, BlockType::EMPTY);
+        Vector3 temp = targetInt3.GetVector3() * BLOCK_LENGTH;
+        temp.y += 5.f;
+        ITEM_MANAGER->Spawn(temp, Item{ int(WORLD->GetBlock(targetInt3).blockType), 1 });
+        WORLD->SetBlockType(targetInt3, BlockType::AIR);
         WORLD->UpdateMesh(targetInt3);
     }
 }
