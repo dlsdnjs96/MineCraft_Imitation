@@ -3,7 +3,9 @@
 class LoadingScene : public Scene
 {
 private:
-	Camera* Cam;
+	Camera*		Cam;
+	Text*		stage;
+	Actor*		backGround;
 
 public:
 	LoadingScene();

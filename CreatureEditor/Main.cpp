@@ -32,21 +32,30 @@ void Main::Init()
     Grid = Actor::Create();
     Grid->LoadFile("Grid.xml");
 
-    model = Actor::Create("Steve");
-    model->LoadFile("Monster/Steve.xml");
+    model = Actor::Create("Spider");
+    model->LoadFile("Monster/Spider.xml");
 
     player = Actor::Create("Player2");
+    return;
     //player->LoadFile("Player.xml");
 
     //MESH_FACTORY->ItemMesh();
-    BlockTexture();
+    //BlockTexture();
     //TextureToMaterial();
+
+    FILE* fp2 = nullptr;
+    freopen_s(&fp2, "output.txt", "w", stdout);
+    for (int i = 265; i < 3000; i++)
+    {
+        if (ITEM_MANAGER->GetItemName(i) != "Unknown")
+        {
+            printf("{ \"%s\", %d }, \n", ITEM_MANAGER->GetItemName(i), i);
+        }
+    }
     return;
 
     FILE* fp1 = nullptr;
-    FILE* fp2 = nullptr;
     //freopen_s(&fp1, "input.txt", "r", stdin);
-    freopen_s(&fp2, "output.txt", "w", stdout);
 
     string filename("input.txt");
     ifstream input_file(filename);

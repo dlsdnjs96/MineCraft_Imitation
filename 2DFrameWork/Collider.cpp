@@ -207,3 +207,40 @@ bool Collider::Intersect(Ray Ray, Vector3& Hit)
 
 	return result;
 }
+
+bool Collider::Intersect(Ray Ray)
+{
+	Ray.direction.Normalize();
+	float Dis;
+
+	if (type == ColliderType::BOX)
+	{
+		BoundingBox box1;
+		box1.Center = GetWorldPos();
+		box1.Extents = Vector3(S._11, S._22, S._33);
+
+		return Ray.Intersects(box1, Dis);
+	}
+	else if (type == ColliderType::OBOX)
+	{
+		BoundingBox box1;
+		box1.Center = Vector3(0, 0, 0);
+		box1.Extents = Vector3(S._11, S._22, S._33);
+		Matrix inverse = RT.Invert();
+		Ray.position = Vector3::Transform(Ray.position, inverse);
+		Ray.direction = Vector3::TransformNormal(Ray.direction, inverse);
+		Ray.direction.Normalize();
+
+		return  Ray.Intersects(box1, Dis);
+	}
+	else
+	{
+		BoundingSphere box1;
+		box1.Center = GetWorldPos();
+		box1.Radius = S._11;
+
+		return Ray.Intersects(box1, Dis);
+	}
+
+	return false;
+}

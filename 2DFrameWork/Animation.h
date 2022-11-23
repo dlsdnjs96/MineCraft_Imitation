@@ -13,6 +13,7 @@ public:
 	~Animation();
 	void LoadFile(string file);
 	void SaveFile(string file);
+	void AddMotion(Matrix* _motion);
 };
 enum class AnimationState
 {

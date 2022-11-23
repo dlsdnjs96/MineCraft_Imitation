@@ -17,9 +17,11 @@
     <Filter Include="Tools">
       <UniqueIdentifier>{72b2763e-7fe4-4fe0-94fd-9da869d5644c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Monster">
+      <UniqueIdentifier>{947e9f0a-4565-443a-aa3b-94dfbcd53b98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="InGameScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
@@ -68,15 +70,42 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Crafting.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Pig.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterManager.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterFactory.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Chicken.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Cow.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemDetail.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Sheep.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SkeletonArcher.cpp">
+      <Filter>Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Main.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="InGameScene.h">
       <Filter>Scenes</Filter>
@@ -126,11 +155,42 @@
     <ClInclude Include="Inventory.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Crafting.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Pig.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterManager.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterFactory.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Chicken.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Cow.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemDetail.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Sheep.h">
+      <Filter>Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="SkeletonArcher.h">
+      <Filter>Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

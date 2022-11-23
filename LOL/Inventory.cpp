@@ -23,51 +23,47 @@ void Inventory::Init()
 
 
 
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < 27; i++)
     {
-        for (int j = 0; j < 3; j++)
-        {
-            dynamic_cast<UI*>(invens->Find("slot" + to_string(int((j * 9) + i))))->mouseOver = [=]() { invens->Find("slot" + to_string(int((j * 9) + i)))->SetWorldPosZ(0.55f); };
-            dynamic_cast<UI*>(invens->Find("slot" + to_string(int((j * 9) + i))))->mouseNotOver = [=]() { invens->Find("slot" + to_string(int((j * 9) + i)))->SetWorldPosZ(0.6f); };
-            dynamic_cast<UI*>(invens->Find("slot" + to_string(int((j * 9) + i))))->mouseDown  = [=]() {
-                if (invenSlots[(j * 9) + i].itemid == mousePick.itemid)
-                {
-                    invenSlots[(j * 9) + i].ea += mousePick.ea;
-                    mousePick.Remove();
-                }
-                else
-                     Util::Swap(invenSlots[(j * 9) + i], mousePick);
-                UpdateInven((j * 9) + i);
-                UpdateMouse(); };
-            dynamic_cast<UI*>(invens->Find("slot" + to_string(int((j * 9) + i))))->mouseDownR = [=]() {
-                if (invenSlots[(j * 9) + i].itemid == 0 and mousePick.itemid != 0)
-                {
-                    invenSlots[(j * 9) + i].itemid = mousePick.itemid;
-                    invenSlots[(j * 9) + i].ea++;
-                    mousePick.ea--;
-                }
-                else if (mousePick.itemid == 0 and invenSlots[(j * 9) + i].itemid != 0)
-                {
-                    mousePick.itemid = invenSlots[(j * 9) + i].itemid;
-                    mousePick.ea = int(invenSlots[(j * 9) + i].ea / 2);
-                    invenSlots[(j * 9) + i].ea -= mousePick.ea;
-                } else if (invenSlots[(j * 9) + i].itemid == mousePick.itemid and mousePick.itemid != 0)
-                {
-                    invenSlots[(j * 9) + i].ea++;
-                    mousePick.ea--;
-                }
-                else
-                    Util::Swap(invenSlots[(j * 9) + i], mousePick);
-                UpdateInven((j * 9) + i);
-                UpdateMouse(); };
-
-        }
+        dynamic_cast<UI*>(invens->Find("slot" + to_string(i)))->mouseOver = [=]() { ITEM_DETAIL->SetDetail(invenSlots[i].itemid); invens->Find("slot" + to_string(i))->SetWorldPosZ(0.55f); };
+        dynamic_cast<UI*>(invens->Find("slot" + to_string(i)))->mouseNotOver = [=]() { ITEM_DETAIL->SetDetail(0); invens->Find("slot" + to_string(i))->SetWorldPosZ(0.6f); };
+        dynamic_cast<UI*>(invens->Find("slot" + to_string(i)))->mouseDown  = [=]() {
+            if (invenSlots[i].itemid == mousePick.itemid)
+            {
+                invenSlots[i].ea += mousePick.ea;
+                mousePick.Remove();
+            }
+            else
+                    Util::Swap(invenSlots[i], mousePick);
+            UpdateInven(i);
+            UpdateMouse(); };
+        dynamic_cast<UI*>(invens->Find("slot" + to_string(i)))->mouseDownR = [=]() {
+            if (invenSlots[i].itemid == 0 and mousePick.itemid != 0)
+            {
+                invenSlots[i].itemid = mousePick.itemid;
+                invenSlots[i].ea++;
+                mousePick.ea--;
+            }
+            else if (mousePick.itemid == 0 and invenSlots[i].itemid != 0)
+            {
+                mousePick.itemid = invenSlots[i].itemid;
+                mousePick.ea = int(invenSlots[i].ea / 2);
+                invenSlots[i].ea -= mousePick.ea;
+            } else if (invenSlots[i].itemid == mousePick.itemid and mousePick.itemid != 0)
+            {
+                invenSlots[i].ea++;
+                mousePick.ea--;
+            }
+            else
+                Util::Swap(invenSlots[i], mousePick);
+            UpdateInven(i);
+            UpdateMouse(); };
     }
     invens->Update();
     for (int j = 0; j < 4; j++)
     {
-        dynamic_cast<UI*>(invens->Find("equip" + to_string(j)))->mouseOver = [=]() { invens->Find("equip" + to_string(j))->SetWorldPosZ(0.55f); };
-        dynamic_cast<UI*>(invens->Find("equip" + to_string(j)))->mouseNotOver = [=]() { invens->Find("equip" + to_string(j))->SetWorldPosZ(0.6f); };
+        dynamic_cast<UI*>(invens->Find("equip" + to_string(j)))->mouseOver = [=]() { ITEM_DETAIL->SetDetail(equipSlot[j].itemid); invens->Find("equip" + to_string(j))->SetWorldPosZ(0.55f); };
+        dynamic_cast<UI*>(invens->Find("equip" + to_string(j)))->mouseNotOver = [=]() { ITEM_DETAIL->SetDetail(0); invens->Find("equip" + to_string(j))->SetWorldPosZ(0.6f); };
         dynamic_cast<UI*>(invens->Find("equip" + to_string(j)))->mouseDown = [=]() {
             Util::Swap(equipSlot[j], mousePick);
             UpdateEquipSlot(j);
@@ -87,8 +83,8 @@ void Inventory::Init()
     }
     for (int j = 1; j <= 9; j++)
     {
-        dynamic_cast<UI*>(invens->Find("qSlot" + to_string(j)))->mouseOver = [=]() { invens->Find("qSlot" + to_string(j))->SetWorldPosZ(0.55f); };
-        dynamic_cast<UI*>(invens->Find("qSlot" + to_string(j)))->mouseNotOver = [=]() { invens->Find("qSlot" + to_string(j))->SetWorldPosZ(0.6f); };
+        dynamic_cast<UI*>(invens->Find("qSlot" + to_string(j)))->mouseOver = [=]() { ITEM_DETAIL->SetDetail(slots[j].itemid); invens->Find("qSlot" + to_string(j))->SetWorldPosZ(0.55f); };
+        dynamic_cast<UI*>(invens->Find("qSlot" + to_string(j)))->mouseNotOver = [=]() { ITEM_DETAIL->SetDetail(0); invens->Find("qSlot" + to_string(j))->SetWorldPosZ(0.6f); };
         dynamic_cast<UI*>(invens->Find("qSlot" + to_string(j)))->mouseDown = [=]() {
             if (slots[j].itemid == mousePick.itemid)
             {
@@ -138,8 +134,8 @@ void Inventory::Init()
     {
         for (int j = 0; j < 2; j++)
         {
-            dynamic_cast<UI*>(invens->Find("combine" + to_string(int((j * 2) + i))))->mouseOver = [=]() { invens->Find("combine" + to_string(int((j * 2) + i)))->SetWorldPosZ(0.55f); };
-            dynamic_cast<UI*>(invens->Find("combine" + to_string(int((j * 2) + i))))->mouseNotOver = [=]() { invens->Find("combine" + to_string(int((j * 2) + i)))->SetWorldPosZ(0.6f); };
+            dynamic_cast<UI*>(invens->Find("combine" + to_string(int((j * 2) + i))))->mouseOver = [=]() { ITEM_DETAIL->SetDetail(combineSlot[j][i].itemid); invens->Find("combine" + to_string(int((j * 2) + i)))->SetWorldPosZ(0.55f); };
+            dynamic_cast<UI*>(invens->Find("combine" + to_string(int((j * 2) + i))))->mouseNotOver = [=]() { ITEM_DETAIL->SetDetail(0); invens->Find("combine" + to_string(int((j * 2) + i)))->SetWorldPosZ(0.6f); };
             dynamic_cast<UI*>(invens->Find("combine" + to_string(int((j * 2) + i))))->mouseDown = [=]() {
                 if (combineSlot[j][i].itemid == mousePick.itemid)
                 {
@@ -148,6 +144,8 @@ void Inventory::Init()
                 }
                 else
                     Util::Swap(combineSlot[j][i], mousePick);
+                outcomeSlot = CRAFTING->GetCraftItem2x2(combineSlot);
+                UpdateOutcomeSlot();
                 UpdateCombineSlot(j, i);
                 UpdateMouse(); };
             dynamic_cast<UI*>(invens->Find("combine" + to_string(int((j * 2) + i))))->mouseDownR = [=]() {
@@ -170,6 +168,8 @@ void Inventory::Init()
                 }
                 else
                     Util::Swap(combineSlot[j][i], mousePick);
+                //outcomeSlot = CRAFTING->GetCraftItem2x2(combineSlot);
+                UpdateOutcomeSlot();
                 UpdateCombineSlot(j, i);
                 UpdateMouse(); };
             //UI* temp = UI::Create("cItemImg" + to_string(int((j * 2) + i)));
@@ -185,12 +185,12 @@ void Inventory::Init()
             //dynamic_cast<Text*>(invens->Find("cItemEa" + to_string(int((j * 2) + i))))->ChangeText(to_string(j));
         }
     }
-    dynamic_cast<UI*>(invens->Find("outcome"))->mouseOver = [=]() { invens->Find("outcome")->SetWorldPosZ(0.55f); };
-    dynamic_cast<UI*>(invens->Find("outcome"))->mouseNotOver = [=]() { invens->Find("outcome")->SetWorldPosZ(0.6f); };
+    dynamic_cast<UI*>(invens->Find("outcome"))->mouseOver = [=]() { ITEM_DETAIL->SetDetail(outcomeSlot.itemid); invens->Find("outcome")->SetWorldPosZ(0.55f); };
+    dynamic_cast<UI*>(invens->Find("outcome"))->mouseNotOver = [=]() { ITEM_DETAIL->SetDetail(0); invens->Find("outcome")->SetWorldPosZ(0.6f); };
     dynamic_cast<UI*>(invens->Find("outcome"))->mouseDown = [=]() {
         if (outcomeSlot.itemid != 0 && mousePick.itemid == 0) {
+            CRAFTING->MakeCraftItem2x2(combineSlot, outcomeSlot);
             Util::Swap(outcomeSlot, mousePick);
-            CRAFTING->CraftItem(combineSlot, 2, outcomeSlot);
             for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 2; j++)
@@ -201,8 +201,8 @@ void Inventory::Init()
         }
         else if (outcomeSlot.itemid == mousePick.itemid && mousePick.itemid != 0)
         {
+            CRAFTING->MakeCraftItem2x2(combineSlot, outcomeSlot);
             mousePick.ea += outcomeSlot.ea;
-            CRAFTING->CraftItem(combineSlot, 2, outcomeSlot);
             for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 2; j++)
@@ -256,11 +256,11 @@ void Inventory::Update()
     {
         if (showInven) {
             Util::LockMouse();
-            showInven = false;
+            ShowInven(false);
         }
         else {
             Util::UnLockMouse();
-            showInven = true;
+            ShowInven(true);
         }
     }
 
@@ -315,6 +315,12 @@ void Inventory::ShowInven(bool _on)
 {
     if (_on)
     {
+        for (int i = 0; i < 27; i++)
+            UpdateInven(i);
+        for (int i = 1; i <= 9; i++)
+            UpdateQuickSlot(i);
+        UpdateMouse();
+
         showInven = true;
     }
     else {
@@ -510,7 +516,7 @@ void Inventory::UpdateCombineSlot(int _slotX, int _slotY)
         ITEM_MANAGER->SetItemImage(invens->Find("cItemImg" + to_string((2 * _slotX) + _slotY)), combineSlot[_slotX][_slotY]);
         dynamic_cast<Text*>(invens->Find("cItemEa" + to_string((2 * _slotX) + _slotY)))->ChangeText(to_string(combineSlot[_slotX][_slotY].ea));
     }
-    outcomeSlot = CRAFTING->GetOutput(combineSlot, 2);
+    outcomeSlot = CRAFTING->GetCraftItem2x2(combineSlot);
     UpdateOutcomeSlot();
 }
 

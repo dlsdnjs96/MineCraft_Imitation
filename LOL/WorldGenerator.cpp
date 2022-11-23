@@ -3,9 +3,9 @@
 WorldGenerator::WorldGenerator()
 {
     ui = UI::Create("Climate_Graph");
-    ui->shader = RESOURCE->shaders.Load("MapGraph.hlsl");
-    ui->SetLocalPos({ 0.f, 0.f, 0.f });
-    ui->scale = { 0.05f, 0.05f, 0.3f };
+    ui->shader = RESOURCE->shaders.Load("1.Cube.hlsl");
+    ui->SetLocalPos({ 0.f, 0.f, 0.2f });
+    ui->scale = { 1.f, 1.f, 1.f };
     ui->mesh = MapToMesh();
 
     loadingStage = 0;
@@ -49,13 +49,14 @@ void WorldGenerator::GenerateWorld()
 void WorldGenerator::HeightMap()
 {
     printf("HeightMap stage %d\r\n", loadingStage);
+    loadingStage++;
+    stageName = "Making HeightMap... ("+to_string(loadingStage)+"/7)";
     Int2 sectorSize = mapSize;
 
-    //srand(time(NULL));
+    srand(time(NULL));
 
     static int _x = rand(), _y = rand();
 
-    loadingStage++;
 
     switch (loadingStage) {
         case 1:
@@ -110,56 +111,59 @@ void WorldGenerator::HeightMap()
 
 void WorldGenerator::TreeMap()
 {
-    printf("TreeMap stage %d\r\n", loadingStage);
-
     treeMap.resize(mapSize.x);
     for (int i = 0; i < mapSize.x; i++)
         treeMap[i].resize(mapSize.y);
     treeMap.resize(mapSize.x);
     for (int i = 0; i < mapSize.x; i++)
         treeMap[i].resize(mapSize.y);
+    
+    //for (int i = 0; i < mapSize.x; i+=16)
+    //{
+    //    for (int j = 0; j < mapSize.y; j+=16)
+    //    {
+    //            
+    //        for (int k = 0; k < 10; k++)
+    //        {
+    //            int x = static_cast<int>(rand() % 16);
+    //            int y = static_cast<int>(rand() % 16);
+    //
+    //            if (heightMap[1][i + x][j + y] > WATER_HEIGHT && treeMap[i + x][j + y] == 0)
+    //            {
+    //                char leafBoundary = (2 + (rand() % 2));
+    //                char treeHeight = 5 + (rand() % 3);
+    //
+    //                for (int _x = 0; _x < leafBoundary; _x++)
+    //                {
+    //                    for (int _y = 0; _y < leafBoundary; _y++)
+    //                    {
+    //                        if ((i + x) + _x >= mapSize.x || (i + x) - _x < 0
+    //                            || (j + y) + _y >= mapSize.y || (j + y) - _y < 0)
+    //                            continue;
+    //                        treeMap[(i + x) + _x][(j + y) + _y] = 1;
+    //                        treeMap[(i + x) + _x][(j + y) - _y] = 1;
+    //                        treeMap[(i + x) - _x][(j + y) + _y] = 1;
+    //                        treeMap[(i + x) - _x][(j + y) - _y] = 1;
+    //                    }
+    //                }
+    //                treeMap[i + x][j + y] = treeHeight;
+    //            }
+    //        }
+    //    }
+    //}
 
-    for (int i = 0; i < mapSize.x; i+=16)
-    {
-        for (int j = 0; j < mapSize.y; j+=16)
-        {
-                
-            for (int k = 0; k < 10; k++)
-            {
-                int x = static_cast<int>(rand() % 16);
-                int y = static_cast<int>(rand() % 16);
+    //loadingStage = 0;
+    //loadingFunction = &WorldGenerator::RiverMap;
 
-                if (heightMap[1][i + x][j + y] > WATER_HEIGHT && treeMap[i + x][j + y] == 0)
-                {
-                    char leafBoundary = (2 + (rand() % 2));
-                    char treeHeight = 5 + (rand() % 3);
 
-                    for (int _x = 0; _x < leafBoundary; _x++)
-                    {
-                        for (int _y = 0; _y < leafBoundary; _y++)
-                        {
-                            if ((i + x) + _x >= mapSize.x || (i + x) - _x < 0
-                                || (j + y) + _y >= mapSize.y || (j + y) - _y < 0)
-                                continue;
-                            treeMap[(i + x) + _x][(j + y) + _y] = 1;
-                            treeMap[(i + x) + _x][(j + y) - _y] = 1;
-                            treeMap[(i + x) - _x][(j + y) + _y] = 1;
-                            treeMap[(i + x) - _x][(j + y) - _y] = 1;
-                        }
-                    }
-                    treeMap[i + x][j + y] = treeHeight;
-                }
-            }
-        }
-    }
-    loadingStage = 0;
     MapToWorld();
     SCENE->ChangeScene("INGAME", 0.f)->Init();
 }
 
 void WorldGenerator::RiverMap()
 {
-    printf("RiverMap stage %d\r\n", loadingStage);
+    stageName = "Making RiverMap... (" + to_string(loadingStage) + "/7)";
+
      switch (loadingStage) {
         case 1:
         {
@@ -200,6 +204,7 @@ void WorldGenerator::RiverMap()
             loadingFunction = &WorldGenerator::RiverMap;
             RiverToMesh(riverMap[1]);
             loadingStage = 0;
+            MapToWorld();
             break;
         }
      }
@@ -286,46 +291,115 @@ void WorldGenerator::MapToWorld()
 
 void WorldGenerator::HeightToMesh(vector<vector<char>>& map)
 {
+    VertexPC*   vertices = 0;
+    UINT*       indicies = 0;
+    UINT        vIndex = 0;
+    UINT        iIndex = 0;
+
+    vertices = new VertexPC[map.size() * map[0].size() * 4];
+    indicies = new UINT[map.size() * map[0].size() * 6];
+
+    float xSize = float(mapSize.x / 2) / 4.f;
+    float ySize = float(mapSize.y / 2) / 4.f;
+
+    float colorRGB;
+    Color cc = { 255.f, 255.f, 255.f };
+    int arr[6] = { 0, 1, 2, 0, 2, 3 };
+
+
+
     for (int i = 0; i < mapSize.x; i++)
     {
         for (int j = 0; j < mapSize.y; j++)
         {
-            Color cc = { 255.f, 255.f, 255.f };
-            float colorRGB = 255.f;// *static_cast<float>(map[i][j] / 10);
-
-            if (map[i][j] < 5)
+            if (map[i][j] < WATER_HEIGHT) {
+                colorRGB = static_cast<float>(map[i][j] / 20.f) + 0.1;
                 cc = { 0.f, 0.f, colorRGB };
+            }
             else
+            {
+                colorRGB = static_cast<float>((map[i][j] - WATER_HEIGHT) / 80.f) + 0.1;
                 cc = { 0.f, colorRGB, 0.f };
+            }
 
-            ((VertexPC*)(ui->mesh->vertices))[(((i * mapSize.x) + j) * 4) + 0].color = cc;
-            ((VertexPC*)(ui->mesh->vertices))[(((i * mapSize.x) + j) * 4) + 1].color = cc;
-            ((VertexPC*)(ui->mesh->vertices))[(((i * mapSize.x) + j) * 4) + 2].color = cc;
-            ((VertexPC*)(ui->mesh->vertices))[(((i * mapSize.x) + j) * 4) + 3].color = cc;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2) + 1) / xSize, float(j - (mapSize.y / 2) + 1) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2) + 1) / xSize, float(j - (mapSize.y / 2)) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2)) / xSize, float(j - (mapSize.y / 2)) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2)) / xSize, float(j - (mapSize.y / 2) + 1) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+
+
+
+            for (int k = 0; k < 6; k++) {
+                indicies[iIndex] = arr[k] + vIndex - 4;
+                iIndex++;
+            }
         }
     }
-    ui->mesh->UpdateMesh();
+
+
+    ui->mesh = make_shared<Mesh>(vertices, vIndex, indicies, iIndex, VertexType::PC);
+
+    //ui->mesh->UpdateMesh();
 }
 
 void WorldGenerator::RiverToMesh(vector<vector<bool>>& map)
 {
+    VertexPC* vertices = 0;
+    UINT* indicies = 0;
+    UINT        vIndex = 0;
+    UINT        iIndex = 0;
+
+    vertices = new VertexPC[map.size() * map[0].size() * 4];
+    indicies = new UINT[map.size() * map[0].size() * 6];
+
+    float xSize = float(mapSize.x / 2) / 4.f;
+    float ySize = float(mapSize.y / 2) / 4.f;
+
+    float colorRGB;
+    Color cc = { 255.f, 255.f, 255.f };
+    int arr[6] = { 0, 1, 2, 0, 2, 3 };
+
+
     for (int i = 0; i < mapSize.x; i++)
     {
         for (int j = 0; j < mapSize.y; j++)
         {
-            Color cc = { 255.f, 255.f, 255.f };
             if (map[i][j])
-                cc = { 255.f, 255.f, 255.f };
+                cc = { 255.f, 0.f, 0.f };
             else
                 cc = { 0.f, 0.f, 0.f };
 
-            ((VertexPC*)(ui->mesh->vertices))[(((i * mapSize.x) + j) * 4) + 0].color = cc;
-            ((VertexPC*)(ui->mesh->vertices))[(((i * mapSize.x) + j) * 4) + 1].color = cc;
-            ((VertexPC*)(ui->mesh->vertices))[(((i * mapSize.x) + j) * 4) + 2].color = cc;
-            ((VertexPC*)(ui->mesh->vertices))[(((i * mapSize.x) + j) * 4) + 3].color = cc;
+
+            vertices[vIndex].position = { float(i - (mapSize.x / 2) + 1) / xSize, float(j - (mapSize.y / 2) + 1) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2) + 1) / xSize, float(j - (mapSize.y / 2)) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2)) / xSize, float(j - (mapSize.y / 2)) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2)) / xSize, float(j - (mapSize.y / 2) + 1) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+
+
+
+            for (int k = 0; k < 6; k++) {
+                indicies[iIndex] = arr[k] + vIndex - 4;
+                iIndex++;
+            }
         }
     }
-    ui->mesh->UpdateMesh();
+    ui->mesh = make_shared<Mesh>(vertices, vIndex, indicies, iIndex, VertexType::PC);
 }
 
 template<typename T>
@@ -419,4 +493,9 @@ shared_ptr<Mesh> WorldGenerator::MapToMesh()
     shared_ptr<Mesh> newMesh = make_shared<Mesh>(vertices, vertexCount, indices, indexCount, type);
 
     return newMesh;
+}
+
+string WorldGenerator::GetStageName()
+{
+    return stageName;
 }

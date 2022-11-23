@@ -1,8 +1,13 @@
 <Root Name="Sheep" Visible="true" ObType="1">
+    <Collider ColliderType="2" Visible="true">
+        <Position X="0" Y="12.15" Z="1.9"/>
+        <Scale X="6.6500001" Y="9.3000002" Z="10.75"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Collider>
     <Transform>
         <Position X="0" Y="0" Z="0"/>
         <Scale X="1" Y="1" Z="1"/>
-        <Rotation X="0" Y="1.5882497" Z="0"/>
+        <Rotation X="0" Y="0" Z="0"/>
     </Transform>
     <Children Size="1"/>
     <Child0 Name="body" Visible="true" ObType="7">
@@ -10,11 +15,11 @@
         <Shader File="Block.hlsl"/>
         <Material File="Monster/Sheep.mtl"/>
         <Transform>
-            <Position X="0" Y="7.9000001" Z="0"/>
+            <Position X="0" Y="14.5" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
             <Rotation X="0" Y="0" Z="0"/>
         </Transform>
-        <Children Size="2"/>
+        <Children Size="3"/>
         <Child0 Name="shoulderC" Visible="true" ObType="0">
             <Transform>
                 <Position X="0" Y="0" Z="5.8499999"/>
@@ -143,5 +148,16 @@
                 </Child0>
             </Child2>
         </Child1>
+        <Child2 Name="wool" Visible="true" ObType="7">
+            <Mesh File="Sheep/wool.mesh"/>
+            <Shader File="Block.hlsl"/>
+            <Material File="Monster/Sheep_fur.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child2>
     </Child0>
 </Root>

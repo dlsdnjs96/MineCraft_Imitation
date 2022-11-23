@@ -23,6 +23,8 @@ private:
 	vector<vector<bool>> riverMap[2];
 	vector<vector<char>> treeMap;
 
+	string stageName = "";
+
 	int loadingStage = 0;
 	function<void(WorldGenerator&)> loadingFunction = nullptr;
 public:
@@ -51,5 +53,6 @@ public:
 
 	shared_ptr<Mesh> MapToMesh();
 
+	string GetStageName();
 };
 

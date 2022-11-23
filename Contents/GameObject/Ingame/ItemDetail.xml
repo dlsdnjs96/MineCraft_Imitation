@@ -1,0 +1,31 @@
+<Root Name="ItemDetail" Visible="false" ObType="4">
+    <Transform>
+        <Position X="-0.2775" Y="-0.040000003" Z="0"/>
+        <Scale X="0.1" Y="0.1" Z="1"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Transform>
+    <Children Size="2"/>
+    <Child0 Name="background" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="itemDetail.mtl"/>
+        <Transform>
+            <Position X="1.75" Y="0" Z="0"/>
+            <Scale X="3.5" Y="1" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="0"/>
+    </Child0>
+    <Child1 Name="text" Visible="true" ObType="6">
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="ascii.mtl"/>
+        <Transform>
+            <Position X="0.5" Y="0.24992885" Z="0"/>
+            <Scale X="4" Y="5" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Text text="Unknown"/>
+        <FromLeft fromLeft="true"/>
+        <Children Size="0"/>
+    </Child1>
+</Root>

@@ -10,6 +10,7 @@ InGameScene::InGameScene()
 
     player = new Player();
     player->Init();
+    Player::user = player;
 
     ITEM_MANAGER->user = player;
 
@@ -38,6 +39,8 @@ InGameScene::~InGameScene()
     exit->Release();
     aim->Release();
     TestBlock->Release();
+    ITEM_DETAIL->Release();
+    MONSTER_MANAGER->Release();
 }
 
 void InGameScene::Init()
@@ -71,6 +74,8 @@ void InGameScene::Init()
 
     INVENTORY->Init();
     CRAFTING->Init();
+    ITEM_DETAIL->Init();
+    MONSTER_MANAGER->Init();
 }
 
 void InGameScene::Release()
@@ -88,11 +93,7 @@ void InGameScene::Update()
     static bool first_lock = Util::LockMouse();
 
     if (INPUT->KeyDown('T')) {
-        if (not CRAFTING->active)
-            Util::UnLockMouse();
-        else
-            Util::LockMouse();
-        CRAFTING->active = !CRAFTING->active;
+        MONSTER_MANAGER->Spawn(MonsterType::CHICKEN, Camera::main->GetWorldPos());
     }
     if (INPUT->KeyDown(VK_ESCAPE)) {
         menuTab = true;
@@ -120,6 +121,8 @@ void InGameScene::Update()
     ITEM_MANAGER->RenderHierarchy();
     INVENTORY->RenderHierarchy();
     CRAFTING->RenderHierarchy();
+    ITEM_DETAIL->RenderHierarchy();
+    MONSTER_MANAGER->RenderHierarchy();
 
     resume->RenderHierarchy();
     setting->RenderHierarchy();
@@ -145,6 +148,8 @@ void InGameScene::Update()
     ITEM_MANAGER->Update();
     INVENTORY->Update();
     CRAFTING->Update();
+    ITEM_DETAIL->Update();
+    MONSTER_MANAGER->Update();
 
     //if (INPUT->KeyDown(VK_LBUTTON))
     //{
@@ -179,6 +184,8 @@ void InGameScene::Render()
     ITEM_MANAGER->Render();
     INVENTORY->Render();
     CRAFTING->Render();
+    ITEM_DETAIL->Render();
+    MONSTER_MANAGER->Render();
 
     if (menuTab)
     {

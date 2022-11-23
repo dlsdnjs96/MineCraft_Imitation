@@ -24,7 +24,7 @@ public:
 	void	RenderHierarchy();
 	void	Render();
 
-
+	
 
 	void	ShowInven(bool _on);
 	Item&	GetInvenItem(int _slot);

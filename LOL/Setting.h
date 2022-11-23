@@ -4,7 +4,7 @@ class Setting : public Singleton<Setting>
 {
 private:
 	bool*	verticalSync = nullptr;
-	float	visualRange = 500.f;
+	float	visualRange = 5000.f;
 
 public:
 	Setting();

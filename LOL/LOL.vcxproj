@@ -143,45 +143,64 @@
   <ItemGroup>
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockCollider.h" />
+    <ClInclude Include="Chicken.h" />
+    <ClInclude Include="Cow.h" />
     <ClInclude Include="Crafting.h" />
     <ClInclude Include="InGameScene.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemDetail.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="ItemObject.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterFactory.h" />
+    <ClInclude Include="MonsterManager.h" />
+    <ClInclude Include="ObjectPool.h" />
+    <ClInclude Include="Pig.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Sector.h" />
     <ClInclude Include="Setting.h" />
+    <ClInclude Include="Sheep.h" />
+    <ClInclude Include="SkeletonArcher.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TextureData.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldGenerator.h" />
     <ClInclude Include="WorldList.h" />
+    <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockCollider.cpp" />
+    <ClCompile Include="Chicken.cpp" />
+    <ClCompile Include="Cow.cpp" />
     <ClCompile Include="Crafting.cpp" />
     <ClCompile Include="InGameScene.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemDetail.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="ItemObject.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterFactory.cpp" />
+    <ClCompile Include="MonsterManager.cpp" />
+    <ClCompile Include="Pig.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sector.cpp" />
     <ClCompile Include="Setting.cpp" />
+    <ClCompile Include="Sheep.cpp" />
+    <ClCompile Include="SkeletonArcher.cpp" />
     <ClCompile Include="TextureData.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldGenerator.cpp" />
     <ClCompile Include="WorldList.cpp" />
+    <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

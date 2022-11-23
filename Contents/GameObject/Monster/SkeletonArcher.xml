@@ -1,0 +1,202 @@
+<Root Name="SkeletonArcher" Visible="true" ObType="1">
+    <Transform>
+        <Position X="0" Y="0" Z="0"/>
+        <Scale X="1" Y="1" Z="1"/>
+        <Rotation X="0" Y="0.087266468" Z="0"/>
+    </Transform>
+    <Children Size="1"/>
+    <Child0 Name="body" Visible="true" ObType="7">
+        <Mesh File="SkeletonArcher/body.mesh"/>
+        <Shader File="Block.hlsl"/>
+        <Material File="Monster/Skeleton.mtl"/>
+        <Transform>
+            <Position X="0" Y="19.6" Z="0"/>
+            <Scale X="1" Y="1" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="7"/>
+        <Child0 Name="innerB" Visible="true" ObType="7">
+            <Mesh File="SkeletonArcher/innerB.mesh"/>
+            <Shader File="Block.hlsl"/>
+            <Material File="Monster/Skeleton.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="-2"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
+        <Child1 Name="innerD" Visible="true" ObType="7">
+            <Mesh File="SkeletonArcher/innerD.mesh"/>
+            <Shader File="Block.hlsl"/>
+            <Material File="Monster/Skeleton.mtl"/>
+            <Transform>
+                <Position X="0" Y="-6" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child1>
+        <Child2 Name="innerF" Visible="true" ObType="7">
+            <Mesh File="SkeletonArcher/innerF.mesh"/>
+            <Shader File="Block.hlsl"/>
+            <Material File="Monster/Skeleton.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="2"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child2>
+        <Child3 Name="innerL" Visible="true" ObType="7">
+            <Mesh File="SkeletonArcher/innerL.mesh"/>
+            <Shader File="Block.hlsl"/>
+            <Material File="Monster/Skeleton.mtl"/>
+            <Transform>
+                <Position X="-4" Y="0" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child3>
+        <Child4 Name="innerR" Visible="true" ObType="7">
+            <Mesh File="SkeletonArcher/innerR.mesh"/>
+            <Shader File="Block.hlsl"/>
+            <Material File="Monster/Skeleton.mtl"/>
+            <Transform>
+                <Position X="4" Y="0" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child4>
+        <Child5 Name="shoulderC" Visible="true" ObType="0">
+            <Transform>
+                <Position X="0" Y="2.5" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="3"/>
+            <Child0 Name="neck" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="7.1999998" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="head" Visible="true" ObType="7">
+                    <Mesh File="SkeletonArcher/head.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Skeleton.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child0>
+            <Child1 Name="shoulderL" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="-5" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="armL" Visible="true" ObType="7">
+                    <Mesh File="SkeletonArcher/armL.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Skeleton.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="-3" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child1>
+            <Child2 Name="shoulderR" Visible="true" ObType="0">
+                <Mesh File="Pig/armR.mesh"/>
+                <Transform>
+                    <Position X="5" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="armR" Visible="true" ObType="7">
+                    <Mesh File="SkeletonArcher/arm.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="-3" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child2>
+        </Child5>
+        <Child6 Name="waist" Visible="true" ObType="0">
+            <Transform>
+                <Position X="0" Y="-3.5" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="3"/>
+            <Child0 Name="hipC" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="tail" Visible="true" ObType="7">
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child0>
+            <Child1 Name="hipL" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="-2" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legL" Visible="true" ObType="7">
+                    <Mesh File="SkeletonArcher/arm.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Skeleton.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="-8.5" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child1>
+            <Child2 Name="hipR" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="2" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legR" Visible="true" ObType="7">
+                    <Mesh File="SkeletonArcher/arm.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Skeleton.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="-8.5" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child2>
+        </Child6>
+    </Child0>
+</Root>

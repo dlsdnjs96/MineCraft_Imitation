@@ -1,5 +1,6 @@
 #include "stdafx.h"
 
+Player* Player::user = nullptr;
 void Player::Init()
 {
     LoadFile("Player.xml");
@@ -8,11 +9,11 @@ void Player::Init()
     breakingBlock->LoadFile("breakingBlock.xml");
 
 
-    for (int i = -2; i <= 2; i++)
+    for (int i = -3; i <= 3; i++)
     {
-        for (int j = -2; j <= 2; j++)
+        for (int j = -3; j <= 3; j++)
         {
-            for (int k = -2; k <= 2; k++)
+            for (int k = -3; k <= 3; k++)
             {
                 if (i != 0 || j != 0 || k != 0)
                     rayIntersectOrder.push_back({ i, j, k });
@@ -39,6 +40,8 @@ void Player::Init()
     temp->mesh = RESOURCE->meshes.Load("6.blockCollider.mesh");
     temp->shader = RESOURCE->shaders.Load("1.Collider.hlsl");
 
+
+    hp = 20;
 }
 
 void Player::Update()
@@ -66,10 +69,7 @@ void Player::Update()
     ImGui::Text(("renderFace : " + to_string(WORLD->GetBlock(GetWorldPos()).renderFace)).c_str());
     
 
-    if (INPUT->KeyDown(VK_RBUTTON))
-        InteractBlock();
-    //if (INPUT->KeyDown(VK_LBUTTON))
-    //    UninstallBlock();
+
 
 
 
@@ -250,23 +250,36 @@ void Player::Normal()
 {
     if (INPUT->KeyPress(VK_LBUTTON))
     {
-        actState = ACT_STATE::DIGGING;
+        Ray ray = Util::AimToRay(Camera::main);
+        if (MONSTER_MANAGER->AttackWithRay(ray))
+            actState = ACT_STATE::ATTACKING;
+        else
+            actState = ACT_STATE::DIGGING;
+    } else if (INPUT->KeyDown(VK_RBUTTON)) {
+        InteractBlock();
     }
 }
 
 void Player::Acttacking()
 {
+    passedTime += DELTA;
+
+    if (passedTime > 0.5f)
+    {
+        passedTime = 0.f;
+        actState = ACT_STATE::NORMAL;
+        return;
+    }
 }
 
 void Player::Digging()
 {
     static bool firstTime = true;
-    static float passedTime = 0.f;
-    static Int3 prevTarget;
 
     if (not INPUT->KeyPress(VK_LBUTTON)) {
         firstTime = true;
         breakingBlock->visible = false;
+        actState = ACT_STATE::NORMAL;
         return;
     }
 
@@ -416,14 +429,18 @@ void Player::Render()
 
 void Player::InteractBlock()
 {
+    int intersectIndex = FindTarget();
     switch (WORLD->GetBlock(targetInt3).blockType)
     {
     case BlockType::CRAFTING_TABLE:
-        if (not CRAFTING->active)
+        if (not CRAFTING->active) {
             Util::UnLockMouse();
-        else
+            CRAFTING->ShowCraftTable(true);
+        }
+        else {
             Util::LockMouse();
-        CRAFTING->active = !CRAFTING->active;
+            CRAFTING->ShowCraftTable(false);
+        }
         break;
     default:
         InstallBlock();
@@ -447,7 +464,8 @@ int Player::FindTarget()
         if (WORLD->GetBlock(intersectInt3).blockType > BlockType::STILL_WATER)
             //    && Util::IsInScreen())
         {
-            float camToBlock = Vector3::Distance(Camera::main->GetWorldPos(), Find("Collider")->GetWorldPos() + (rayIntersectOrder[i].GetVector3() * 10.f));
+            //float camToBlock = Vector3::Distance(Camera::main->GetWorldPos(), Find("Collider")->GetWorldPos() + (rayIntersectOrder[i].GetVector3() * 10.f));
+            float camToBlock = Vector3::Distance(Camera::main->GetWorldPos(), intersectInt3.GetVector3() * 10.f);
             if (dis > camToBlock) {
                 Find("testCollider")->SetLocalPos(rayIntersectOrder[i].GetVector3() * 10.f);
                 Find("Collider")->Update();
@@ -491,9 +509,24 @@ void Player::UninstallBlock()
     if (intersectIndex != -1) {
         Vector3 temp = targetInt3.GetVector3() * BLOCK_LENGTH;
         temp.y += 5.f;
-        ITEM_MANAGER->Spawn(temp, Item{ int(WORLD->GetBlock(targetInt3).blockType), 1 });
+        ITEM_MANAGER->Spawn(temp, ITEM_MANAGER->GetDropItem(WORLD->GetBlock(targetInt3).blockType));
         WORLD->SetBlockType(targetInt3, BlockType::AIR);
         WORLD->UpdateMesh(targetInt3);
+    }
+}
+
+int Player::GetAttackPoint()
+{
+    return 90;
+}
+
+void Player::AttackByMonster(int damage)
+{
+    hp -= damage;
+    if (hp <= 0)
+    {
+        state = PLAYER_STATE::DEAD;
+        return;
     }
 }
 

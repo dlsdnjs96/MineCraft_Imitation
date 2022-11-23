@@ -9,7 +9,8 @@ enum class PLAYER_STATE
 	FALL = 3,
 	SUPER = 5,
 	SWIM = 6,
-	DIVE = 7
+	DIVE = 7,
+	DEAD = 8
 };
 
 enum class ACT_STATE
@@ -35,45 +36,52 @@ private:
 	float			swimSpeed = 50.f / 3.f;
 	float			jumpSpeed = 50.f;
 	float			jumppedTime = 0.f;
-
+	float			passedTime = 0.f;
 
 	Int3			targetInt3;
+	Int3			prevTarget;
 	Actor*			breakingBlock;
 	vector<Int3>	rayIntersectOrder;
 
+	int				hp;
+
 public:
-	void Init();
-	void Update();
-	void Release();
+	static	Player* user;
+	void	Init();
+	void	Update();
+	void	Release();
 
-	void Idle();
-	void Walk();
-	void Jump();
-	void Fall();
-	void Super();
-	void Swim();
-	void Dive();
+	void	Idle();
+	void	Walk();
+	void	Jump();
+	void	Fall();
+	void	Super();
+	void	Swim();
+	void	Dive();
 
-	void Normal();
-	void Acttacking();
-	void Digging();
+	void	Normal();
+	void	Acttacking();
+	void	Digging();
 
-	bool FourWaysMoving();
-	bool GravityMoving();
-	bool FourWaysFloating();
-	bool GravityFloating();
+	bool	FourWaysMoving();
+	bool	GravityMoving();
+	bool	FourWaysFloating();
+	bool	GravityFloating();
 
-	bool RenderHierarchy();
-	void Render();
+	bool	RenderHierarchy();
+	void	Render();
 
-	void InteractBlock();
-	int FindTarget();
-	void InstallBlock();
-	void UninstallBlock();
+	void	InteractBlock();
+	int		FindTarget();
+	void	InstallBlock();
+	void	UninstallBlock();
 
-	void Collider();
+	int		GetAttackPoint();
+	void	AttackByMonster(int damage);
 
-	const char* StateToString(PLAYER_STATE e);
+	void	Collider();
+
+	const char*		StateToString(PLAYER_STATE e);
 
 };
 

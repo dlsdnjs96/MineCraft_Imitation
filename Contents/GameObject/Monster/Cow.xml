@@ -1,4 +1,9 @@
 <Root Name="Cow" Visible="true" ObType="1">
+    <Collider ColliderType="2" Visible="true">
+        <Position X="0" Y="14" Z="1.85"/>
+        <Scale X="5.0999999" Y="14" Z="11"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Collider>
     <Transform>
         <Position X="0" Y="0" Z="0"/>
         <Scale X="1" Y="1" Z="1"/>
@@ -10,7 +15,7 @@
         <Shader File="Block.hlsl"/>
         <Material File="Monster/Cow.mtl"/>
         <Transform>
-            <Position X="0" Y="7.9000001" Z="0"/>
+            <Position X="0" Y="16" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
             <Rotation X="0" Y="0" Z="0"/>
         </Transform>

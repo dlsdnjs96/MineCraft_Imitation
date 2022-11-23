@@ -2,13 +2,8 @@
 
 LoadingScene::LoadingScene()
 {
-    Cam = Camera::Create();
-    Cam->LoadFile("Cam.xml");
-    //Camera::main = Cam;
+    Init();
 
-
-
-    //SCENE->SetCurrentScene(SCENE->GetScene("INGAME"));
     return;
 }
 
@@ -21,8 +16,18 @@ LoadingScene::~LoadingScene()
 
 void LoadingScene::Init()
 {
-    Camera::main = Cam;
     WORLD_GENERATOR->Init();
+
+    Cam = Camera::Create();
+    Cam->LoadFile("Loading/Cam.xml");
+    Camera::main = Cam;
+
+    stage = Text::Create("Stage");
+    stage->SetLocalPos({ 0.45f, 0.75f, 0.f });
+    stage->scale = { 0.3f, 0.5f, 1.f, };
+
+    backGround = Actor::Create("Background");
+    backGround->LoadFile("Loading/background.xml");
 }
 
 void LoadingScene::Release()
@@ -37,12 +42,16 @@ void LoadingScene::Update()
     ImGui::Begin("Hierarchy");
     WORLD_GENERATOR->RenderHierarchy();
     Cam->RenderHierarchy();
+    stage->RenderHierarchy();
+    backGround->RenderHierarchy();
     ImGui::End();
 
 
     Cam->Update();
-
     WORLD_GENERATOR->Update();
+    stage->ChangeText(WORLD_GENERATOR->GetStageName());
+    stage->Update();
+    backGround->Update();
 }
 
 void LoadingScene::LateUpdate()
@@ -57,6 +66,8 @@ void LoadingScene::Render()
 {
     Cam->Set();
     WORLD_GENERATOR->Render();
+    stage->Render();
+    backGround->Render();
 }
 
 void LoadingScene::ResizeScreen()

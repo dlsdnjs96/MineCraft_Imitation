@@ -36,9 +36,11 @@ void ItemObject::Update()
 void ItemObject::Stay()
 {
 	Int3 curInt3 = Int3(GetWorldPos() / BLOCK_LENGTH);
-	curInt3 = Int3{ curInt3.x, curInt3.y - 1, curInt3.z };
+	//curInt3 = Int3{ curInt3.x, curInt3.y - 1, curInt3.z };
 
-	if (WORLD->GetBlock(curInt3).blockType == BlockType::AIR) {
+	if (WORLD->GetBlock(curInt3).blockType != BlockType::AIR) {
+		MoveLocalPos({ 0.f, DELTA * 30.f, 0.f });
+	} else if (WORLD->GetBlock(Int3{ curInt3.x, curInt3.y - 1, curInt3.z }).blockType == BlockType::AIR) {
 		state = ItemObjectState::FALL;
 	}
 	else {
@@ -57,13 +59,13 @@ void ItemObject::Stay()
 
 void ItemObject::Fall()
 {
-	MoveLocalPos({ 0.f, -DELTA * 20.f, 0.f });
-
 	Int3 curInt3 = Int3(GetWorldPos() / BLOCK_LENGTH);
-	curInt3 = Int3{ curInt3.x, curInt3.y+1, curInt3.z };
+	curInt3 = Int3{ curInt3.x, curInt3.y, curInt3.z };
+
 	if (WORLD->GetBlock(curInt3).blockType != BlockType::AIR) {
 		state = ItemObjectState::STAY;
-	}
+	} else
+		MoveLocalPos({ 0.f, -DELTA * 20.f, 0.f });
 }
 
 void ItemObject::Gain()

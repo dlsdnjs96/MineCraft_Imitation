@@ -12,16 +12,361 @@ void Crafting::LoadData()
 	list1x1.push_back(Craft1x1{ int(BlockType::BIRCH_WOOD), Item{ int(BlockType::BIRCH_WOOD_PLANK), 4 } });
 	list1x1.push_back(Craft1x1{ int(BlockType::JUNGLE_WOOD), Item{ int(BlockType::JUNGLE_WOOD_PLANK), 4 } });
 
+	list2x1.push_back(Craft2x1{ { 
+		{ int(BlockType::OAK_WOOD_PLANK) }, 
+		{ int(BlockType::OAK_WOOD_PLANK) } 
+		}, Item{ GetItemId("stick"), 4 } });
+	list2x1.push_back(Craft2x1{ { 
+		{ int(BlockType::SPRUCE_WOOD_PLANK) },
+		{ int(BlockType::SPRUCE_WOOD_PLANK) }
+		}, Item{ GetItemId("stick"), 4 } });
+	list2x1.push_back(Craft2x1{ { 
+		{ int(BlockType::BIRCH_WOOD_PLANK) },
+		{ int(BlockType::BIRCH_WOOD_PLANK) }
+		}, Item{ GetItemId("stick"), 4 } });
+	list2x1.push_back(Craft2x1{ { 
+		{ int(BlockType::JUNGLE_WOOD_PLANK) },
+		{ int(BlockType::JUNGLE_WOOD_PLANK) }
+		}, Item{ GetItemId("stick"), 4 } });
+
 	list2x2.push_back(Craft2x2{ { 
-		{ int(BlockType::OAK_WOOD_PLANK), 0 }, 
-		{ int(BlockType::OAK_WOOD_PLANK), 0 } 
-		}, Item{ 280, 4 } });
+		{ int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK) },
+		{ int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK) }
+		}, Item{ int(BlockType::CRAFTING_TABLE), 1 } });
+	list2x2.push_back(Craft2x2{ { 
+		{ int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK) },
+		{ int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK) }
+		}, Item{ int(BlockType::CRAFTING_TABLE), 1 } });
+	list2x2.push_back(Craft2x2{ { 
+		{ int(BlockType::BIRCH_WOOD_PLANK), int(BlockType::BIRCH_WOOD_PLANK) },
+		{ int(BlockType::BIRCH_WOOD_PLANK), int(BlockType::BIRCH_WOOD_PLANK) }
+		}, Item{ int(BlockType::CRAFTING_TABLE), 1 } });
+	list2x2.push_back(Craft2x2{ { 
+		{ int(BlockType::JUNGLE_WOOD_PLANK), int(BlockType::JUNGLE_WOOD_PLANK) },
+		{ int(BlockType::JUNGLE_WOOD_PLANK), int(BlockType::JUNGLE_WOOD_PLANK) }
+		}, Item{ int(BlockType::CRAFTING_TABLE), 1 } });
+
+	list2x3.push_back(Craft2x3{ { 
+		{ int(BlockType::WHITE_WOOL), int(BlockType::WHITE_WOOL), int(BlockType::WHITE_WOOL) },
+		{ int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK) }
+		}, Item{ int(BlockType::CRAFTING_TABLE), 1 } });
+	list2x3.push_back(Craft2x3{ { 
+		{ int(BlockType::WHITE_WOOL), int(BlockType::WHITE_WOOL), int(BlockType::WHITE_WOOL) },
+		{ int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK) }
+		}, Item{ int(BlockType::CRAFTING_TABLE), 1 } });
+	list2x3.push_back(Craft2x3{ { 
+		{ int(BlockType::WHITE_WOOL), int(BlockType::WHITE_WOOL), int(BlockType::WHITE_WOOL) },
+		{ int(BlockType::BIRCH_WOOD_PLANK), int(BlockType::BIRCH_WOOD_PLANK), int(BlockType::BIRCH_WOOD_PLANK) }
+		}, Item{ int(BlockType::CRAFTING_TABLE), 1 } });
+	list2x3.push_back(Craft2x3{ { 
+		{ int(BlockType::WHITE_WOOL), int(BlockType::WHITE_WOOL), int(BlockType::WHITE_WOOL) },
+		{ int(BlockType::JUNGLE_WOOD_PLANK), int(BlockType::JUNGLE_WOOD_PLANK), int(BlockType::JUNGLE_WOOD_PLANK) }
+		}, Item{ int(BlockType::CRAFTING_TABLE), 1 } });
+
+	list2x3.push_back(Craft2x3{ { 
+		{ int(BlockType::OAK_WOOD_PLANK), 0, int(BlockType::OAK_WOOD_PLANK) },
+		{ int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK) }
+		}, Item{ GetItemId("oak_boat"), 1 } });
+	list2x3.push_back(Craft2x3{ { 
+		{ int(BlockType::SPRUCE_WOOD_PLANK), 0, int(BlockType::SPRUCE_WOOD_PLANK) },
+		{ int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK) }
+		}, Item{ GetItemId("oak_boat"), 1 } });
+	list2x3.push_back(Craft2x3{ { 
+		{ int(BlockType::BIRCH_WOOD_PLANK), 0, int(BlockType::BIRCH_WOOD_PLANK) },
+		{ int(BlockType::BIRCH_WOOD_PLANK), int(BlockType::BIRCH_WOOD_PLANK), int(BlockType::BIRCH_WOOD_PLANK) }
+		}, Item{ GetItemId("oak_boat"), 1 } });
+	list2x3.push_back(Craft2x3{ { 
+		{ int(BlockType::JUNGLE_WOOD_PLANK), 0, int(BlockType::JUNGLE_WOOD_PLANK) },
+		{ int(BlockType::JUNGLE_WOOD_PLANK), int(BlockType::JUNGLE_WOOD_PLANK), int(BlockType::JUNGLE_WOOD_PLANK) }
+		}, Item{ GetItemId("oak_boat"), 1 } });
 
 	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("stick"), 0, GetItemId("stick") },
+		{ GetItemId("stick"), GetItemId("stick"), GetItemId("stick") },
+		{ GetItemId("stick"), 0, GetItemId("stick") }
+		}, Item{ int(BlockType::LADDER), 3 } });
+
+	list3x3.push_back(Craft3x3{ { 
+		{ int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK) },
+		{ int(BlockType::OAK_WOOD_PLANK), 0, int(BlockType::OAK_WOOD_PLANK) },
+		{ int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK) }
+		}, Item{ int(BlockType::CHEST), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK) },
+		{ int(BlockType::SPRUCE_WOOD_PLANK), 0, int(BlockType::SPRUCE_WOOD_PLANK) },
+		{ int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK) }
+		}, Item{ int(BlockType::CHEST), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ int(BlockType::BIRCH_WOOD_PLANK), int(BlockType::BIRCH_WOOD_PLANK), int(BlockType::BIRCH_WOOD_PLANK) },
+		{ int(BlockType::BIRCH_WOOD_PLANK), 0, int(BlockType::BIRCH_WOOD_PLANK) },
+		{ int(BlockType::BIRCH_WOOD_PLANK), int(BlockType::BIRCH_WOOD_PLANK), int(BlockType::BIRCH_WOOD_PLANK) }
+		}, Item{ int(BlockType::CHEST), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ int(BlockType::JUNGLE_WOOD_PLANK), int(BlockType::JUNGLE_WOOD_PLANK), int(BlockType::JUNGLE_WOOD_PLANK) },
+		{ int(BlockType::JUNGLE_WOOD_PLANK), 0, int(BlockType::JUNGLE_WOOD_PLANK) },
+		{ int(BlockType::JUNGLE_WOOD_PLANK), int(BlockType::JUNGLE_WOOD_PLANK), int(BlockType::JUNGLE_WOOD_PLANK) }
+		}, Item{ int(BlockType::CHEST), 1 } });
+
+	list3x3.push_back(Craft3x3{ { 
+		{ int(BlockType::COBBLESTONE), int(BlockType::COBBLESTONE), int(BlockType::COBBLESTONE) },
+		{ int(BlockType::COBBLESTONE), 0, int(BlockType::COBBLESTONE) },
+		{ int(BlockType::COBBLESTONE), int(BlockType::COBBLESTONE), int(BlockType::COBBLESTONE) }
+		}, Item{ int(BlockType::FURNACE), 1 } });
+
+	list2x1.push_back(Craft2x1{ { 
+		{ GetItemId("coal") },
+		{ GetItemId("stick") }
+		}, Item{ int(BlockType::TORCH), 4 } });
+	
+	list3x1.push_back(Craft3x1{ {
+		{ int(BlockType::OAK_WOOD_PLANK) },
+		{ int(BlockType::OAK_WOOD_PLANK) },
+		{ GetItemId("stick") }
+		}, Item{ GetItemId("wood_sword"), 1 } });
+	list3x1.push_back(Craft3x1{ { 
+		{ int(BlockType::OAK_WOOD_PLANK) },
+		{ GetItemId("stick")},
+		{ GetItemId("stick") }
+		}, Item{ GetItemId("wood_shovel"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK), 0 },
+		{ int(BlockType::OAK_WOOD_PLANK), GetItemId("stick"), 0},
+		{ 0, GetItemId("stick"), 0 }
+		}, Item{ GetItemId("wood_axe"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK), int(BlockType::OAK_WOOD_PLANK) },
+		{ 0, GetItemId("stick"), 0},
+		{ 0, GetItemId("stick"), 0 }
+		}, Item{ GetItemId("wood_pickaxe"), 1 } });
+	
+	list3x1.push_back(Craft3x1{ {
+		{ int(BlockType::STONE) },
+		{ int(BlockType::STONE) },
+		{ GetItemId("stick") }
+		}, Item{ GetItemId("stone_sword"), 1 } });
+	list3x1.push_back(Craft3x1{ { 
+		{ int(BlockType::STONE) },
+		{ GetItemId("stick")},
+		{ GetItemId("stick") }
+		}, Item{ GetItemId("stone_shovel"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ int(BlockType::STONE), int(BlockType::STONE), 0 },
+		{ int(BlockType::STONE), GetItemId("stick"), 0},
+		{ 0, GetItemId("stick"), 0 }
+		}, Item{ GetItemId("stone_axe"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
 		{ int(BlockType::STONE), int(BlockType::STONE), int(BlockType::STONE) },
-		{ 0, 280, 0 },
-		{ 0, 280, 0 }
-		}, Item{ 273, 1 } });
+		{ 0, GetItemId("stick"), 0},
+		{ 0, GetItemId("stick"), 0 }
+		}, Item{ GetItemId("stone_pickaxe"), 1 } });
+	
+	list3x1.push_back(Craft3x1{ {
+		{ GetItemId("iron_ingot") },
+		{ GetItemId("iron_ingot") },
+		{ GetItemId("stick") }
+		}, Item{ GetItemId("iron_sword"), 1 } });
+	list3x1.push_back(Craft3x1{ { 
+		{ GetItemId("iron_ingot") },
+		{ GetItemId("stick")},
+		{ GetItemId("stick") }
+		}, Item{ GetItemId("iron_shovel"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("iron_ingot"), GetItemId("iron_ingot"), 0 },
+		{ GetItemId("iron_ingot"), GetItemId("stick"), 0},
+		{ 0, GetItemId("stick"), 0 }
+		}, Item{ GetItemId("iron_axe"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("iron_ingot"), GetItemId("iron_ingot"), GetItemId("iron_ingot") },
+		{ 0, GetItemId("stick"), 0},
+		{ 0, GetItemId("stick"), 0 }
+		}, Item{ GetItemId("iron_pickaxe"), 1 } });
+	
+	list3x1.push_back(Craft3x1{ {
+		{ GetItemId("gold_ingot") },
+		{ GetItemId("gold_ingot") },
+		{ GetItemId("stick") }
+		}, Item{ GetItemId("golden_sword"), 1 } });
+	list3x1.push_back(Craft3x1{ { 
+		{ GetItemId("gold_ingot") },
+		{ GetItemId("stick")},
+		{ GetItemId("stick") }
+		}, Item{ GetItemId("golden_shovel"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("gold_ingot"), GetItemId("gold_ingot"), 0 },
+		{ GetItemId("gold_ingot"), GetItemId("stick"), 0},
+		{ 0, GetItemId("stick"), 0 }
+		}, Item{ GetItemId("golden_axe"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("gold_ingot"), GetItemId("gold_ingot"), GetItemId("gold_ingot") },
+		{ 0, GetItemId("stick"), 0},
+		{ 0, GetItemId("stick"), 0 }
+		}, Item{ GetItemId("golden_pickaxe"), 1 } });
+	
+	list3x1.push_back(Craft3x1{ {
+		{ GetItemId("diamond") },
+		{ GetItemId("diamond") },
+		{ GetItemId("stick") }
+		}, Item{ GetItemId("golden_sword"), 1 } });
+	list3x1.push_back(Craft3x1{ { 
+		{ GetItemId("diamond") },
+		{ GetItemId("stick")},
+		{ GetItemId("stick") }
+		}, Item{ GetItemId("golden_shovel"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("diamond"), GetItemId("diamond"), 0 },
+		{ GetItemId("diamond"), GetItemId("stick"), 0},
+		{ 0, GetItemId("stick"), 0 }
+		}, Item{ GetItemId("golden_axe"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("diamond"), GetItemId("diamond"), GetItemId("diamond") },
+		{ 0, GetItemId("stick"), 0},
+		{ 0, GetItemId("stick"), 0 }
+		}, Item{ GetItemId("golden_pickaxe"), 1 } });
+
+	list2x3.push_back(Craft2x3{ { 
+		{ GetItemId("iron_ingot"), 0, GetItemId("iron_ingot") },
+		{ 0, GetItemId("iron_ingot"), 0},
+		}, Item{ GetItemId("bucket"), 1 } });
+
+	list3x3.push_back(Craft3x3{ { 
+		{ 0, GetItemId("iron_ingot"), 0 },
+		{ GetItemId("iron_ingot"), GetItemId("redstone"), GetItemId("iron_ingot")},
+		{ 0, GetItemId("iron_ingot"), 0},
+		}, Item{ GetItemId("compass"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ 0, GetItemId("gold_ingot"), 0 },
+		{ GetItemId("gold_ingot"), GetItemId("redstone"), GetItemId("gold_ingot")},
+		{ 0, GetItemId("gold_ingot"), 0},
+		}, Item{ GetItemId("clock"), 1 } });
+
+	list3x3.push_back(Craft3x3{ { 
+		{ 0, 0, GetItemId("stick") },
+		{ 0, GetItemId("stick"), GetItemId("string") },
+		{ GetItemId("stick"), 0, GetItemId("string") },
+		}, Item{ GetItemId("clock"), 1 } });
+
+	list2x2.push_back(Craft2x2{ { 
+		{ GetItemId("iron_ingot"), 0 },
+		{ 0, GetItemId("flint") }
+		}, Item{ GetItemId("flint_and_steel"), 1 } });
+
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("paper"), GetItemId("paper"), GetItemId("paper") },
+		{ GetItemId("paper"), GetItemId("compass"), GetItemId("paper") },
+		{ GetItemId("paper"), GetItemId("paper"), GetItemId("paper") },
+		}, Item{ GetItemId("map"), 1 } });
+
+	list2x2.push_back(Craft2x2{ { 
+		{ 0, GetItemId("iron_ingot") },
+		{ GetItemId("iron_ingot"), 0 }
+		}, Item{ GetItemId("shears"), 1 } });
+
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("gunpowder"), int(BlockType::SAND), GetItemId("gunpowder") },
+		{ int(BlockType::SAND), GetItemId("gunpowder"), int(BlockType::SAND) },
+		{ GetItemId("gunpowder"), int(BlockType::SAND), GetItemId("gunpowder") },
+		}, Item{ int(BlockType::TNT), 1 } });
+
+	list2x1.push_back(Craft2x1{ { 
+		{ int(BlockType::PUMPKIN_CARVED) },
+		{ int(BlockType::TORCH) }
+		}, Item{ int(BlockType::JACK_O_LANTERN), 1 } });
+
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("gunpowder"), int(BlockType::SAND), GetItemId("gunpowder") },
+		{ int(BlockType::SAND), GetItemId("gunpowder"), int(BlockType::SAND) },
+		{ GetItemId("gunpowder"), int(BlockType::SAND), GetItemId("gunpowder") },
+		}, Item{ int(BlockType::TNT), 1 } });
+
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("iron_ingot"), GetItemId("iron_ingot"), GetItemId("iron_ingot") },
+		{ GetItemId("iron_ingot"), GetItemId("iron_ingot"), GetItemId("iron_ingot") },
+		{ GetItemId("iron_ingot"), GetItemId("iron_ingot"), GetItemId("iron_ingot") },
+		}, Item{ int(BlockType::IRON_BLOCK), 1 } });
+
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("gold_ingot"), GetItemId("gold_ingot"), GetItemId("gold_ingot") },
+		{ GetItemId("gold_ingot"), GetItemId("gold_ingot"), GetItemId("gold_ingot") },
+		{ GetItemId("gold_ingot"), GetItemId("gold_ingot"), GetItemId("gold_ingot") },
+		}, Item{ int(BlockType::GOLD_BLOCK), 1 } });
+
+	list2x3.push_back(Craft2x3{ { 
+		{ GetItemId("iron_ingot"), GetItemId("iron_ingot"), GetItemId("iron_ingot") },
+		{ GetItemId("iron_ingot"), 0, GetItemId("iron_ingot") },
+		}, Item{ GetItemId("iron_helmet"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("iron_ingot"), 0, GetItemId("iron_ingot") },
+		{ GetItemId("iron_ingot"), GetItemId("iron_ingot"), GetItemId("iron_ingot") },
+		{ GetItemId("iron_ingot"), GetItemId("iron_ingot"), GetItemId("iron_ingot") },
+		}, Item{ GetItemId("iron_chestplate"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("iron_ingot"), GetItemId("iron_ingot"), GetItemId("iron_ingot") },
+		{ GetItemId("iron_ingot"), 0, GetItemId("iron_ingot") },
+		{ GetItemId("iron_ingot"), 0, GetItemId("iron_ingot") },
+		}, Item{ GetItemId("iron_leggings"), 1 } });
+	list2x3.push_back(Craft2x3{ {
+		{ GetItemId("iron_ingot"), 0, GetItemId("iron_ingot") },
+		{ GetItemId("iron_ingot"), 0, GetItemId("iron_ingot") },
+		}, Item{ GetItemId("iron_boots"), 1 } });
+
+	list2x3.push_back(Craft2x3{ { 
+		{ GetItemId("gold_ingot"), GetItemId("gold_ingot"), GetItemId("gold_ingot") },
+		{ GetItemId("gold_ingot"), 0, GetItemId("gold_ingot") },
+		}, Item{ GetItemId("golden_helmet"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("gold_ingot"), 0, GetItemId("gold_ingot") },
+		{ GetItemId("gold_ingot"), GetItemId("gold_ingot"), GetItemId("gold_ingot") },
+		{ GetItemId("gold_ingot"), GetItemId("gold_ingot"), GetItemId("gold_ingot") },
+		}, Item{ GetItemId("golden_chestplate"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("gold_ingot"), GetItemId("gold_ingot"), GetItemId("gold_ingot") },
+		{ GetItemId("gold_ingot"), 0, GetItemId("gold_ingot") },
+		{ GetItemId("gold_ingot"), 0, GetItemId("gold_ingot") },
+		}, Item{ GetItemId("golden_leggings"), 1 } });
+	list2x3.push_back(Craft2x3{ {
+		{ GetItemId("gold_ingot"), 0, GetItemId("gold_ingot") },
+		{ GetItemId("gold_ingot"), 0, GetItemId("gold_ingot") },
+		}, Item{ GetItemId("golden_boots"), 1 } });
+
+	list2x3.push_back(Craft2x3{ { 
+		{ GetItemId("diamond"), GetItemId("diamond"), GetItemId("diamond") },
+		{ GetItemId("diamond"), 0, GetItemId("diamond") },
+		}, Item{ GetItemId("golden_helmet"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("diamond"), 0, GetItemId("diamond") },
+		{ GetItemId("diamond"), GetItemId("diamond"), GetItemId("diamond") },
+		{ GetItemId("diamond"), GetItemId("diamond"), GetItemId("diamond") },
+		}, Item{ GetItemId("golden_chestplate"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ GetItemId("diamond"), GetItemId("diamond"), GetItemId("diamond") },
+		{ GetItemId("diamond"), 0, GetItemId("diamond") },
+		{ GetItemId("diamond"), 0, GetItemId("diamond") },
+		}, Item{ GetItemId("golden_leggings"), 1 } });
+	list2x3.push_back(Craft2x3{ {
+		{ GetItemId("diamond"), 0, GetItemId("diamond") },
+		{ GetItemId("diamond"), 0, GetItemId("diamond") },
+		}, Item{ GetItemId("golden_boots"), 1 } });
+
+	list2x3.push_back(Craft2x3{ {
+		{ int(BlockType::OAK_WOOD_PLANK), 0, int(BlockType::OAK_WOOD_PLANK) },
+		{ 0, int(BlockType::OAK_WOOD_PLANK), 0 },
+		}, Item{ GetItemId("bowl"), 4 } });
+
+	list1x3.push_back(Craft1x3{ {
+		{ GetItemId("wheat"), GetItemId("wheat"), GetItemId("wheat") }
+		}, Item{ GetItemId("bread"), 1 } });
+
+	list3x3.push_back(Craft3x3{ {
+		{ GetItemId("string"), GetItemId("stick"), 0 },
+		{ GetItemId("string"), 0, GetItemId("stick") },
+		{ GetItemId("string"), GetItemId("stick"), 0 },
+		}, Item{ GetItemId("bow"), 1 } });
+
+	list3x1.push_back(Craft3x1{ {
+		{ GetItemId("flint") },
+		{ GetItemId("stick") },
+		{ GetItemId("feather") },
+		}, Item{ GetItemId("arrow"), 4 } });
 }
 
 Item Crafting::GetCraftItem2x2(Item _table[][2])
@@ -32,7 +377,7 @@ Item Crafting::GetCraftItem2x2(Item _table[][2])
 		{
 			for (int j = 0; j < 2; j++)
 			{
-				if (it.table[0][0] == _table[i][j].itemid && CheckEmptySlot2x2(_table, i, j, 1))
+				if (it.table[0][0] == _table[i][j].itemid && CheckEmptySlot2x2(_table, i, j, Int2{1, 1}))
 					return it.output;
 			}
 		}
@@ -48,9 +393,36 @@ Item Crafting::GetCraftItem2x2(Item _table[][2])
 					chk = false;
 			}
 		}
-		if (chk)
+		if (chk && CheckEmptySlot2x2(_table, 0, 0, Int2{ 2, 2 }))
 			return it.output;
 	}
+	for (auto& it : list2x1)
+	{
+		for (int i = 0; i < 2; i++) {
+			bool chk = true;
+			for (int x = 0; x < 2; x++)
+			{
+				if (it.table[x][0] != _table[x][i + 0].itemid)
+					chk = false;
+			}
+			if (chk && CheckEmptySlot2x2(_table, 0, i, Int2{ 2, 1 }))
+				return it.output;
+		}
+	}
+	for (auto& it : list1x2)
+	{
+		for (int i = 0; i < 2; i++) {
+			bool chk = true;
+			for (int y = 0; y < 2; y++)
+			{
+				if (it.table[0][y] != _table[i + 0][y].itemid)
+					chk = false;
+			}
+			if (chk && CheckEmptySlot2x2(_table, i, 0, Int2{ 1, 2 }))
+				return it.output;
+		}
+	}
+	return Item{ 0, 0 };
 }
 
 Item Crafting::GetCraftItem3x3(Item _table[][3])
@@ -61,7 +433,7 @@ Item Crafting::GetCraftItem3x3(Item _table[][3])
 		{
 			for (int j = 0; j < 3; j++)
 			{
-				if (it.table[0][0] == _table[i][j].itemid)
+				if (it.table[0][0] == _table[i][j].itemid && CheckEmptySlot3x3(_table, i, j, Int2{ 1, 1 }))
 					return it.output;
 			}
 		}
@@ -81,7 +453,147 @@ Item Crafting::GetCraftItem3x3(Item _table[][3])
 							chk = false;
 					}
 				}
-				if (chk)
+				if (chk && CheckEmptySlot3x3(_table, i, j, Int2{ 2, 2 }))
+					return it.output;
+			}
+		}
+	}
+	for (auto& it : list2x1)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < 2; x++)
+				{
+					for (int y = 0; y < 1; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, Int2{ 2, 1 }))
+					return it.output;
+			}
+		}
+	}
+	for (auto& it : list1x2)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < 1; x++)
+				{
+					for (int y = 0; y < 2; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, Int2{ 1, 2 }))
+					return it.output;
+			}
+		}
+	}
+	for (auto& it : list1x2)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < 1; x++)
+				{
+					for (int y = 0; y < 2; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, Int2{ 1, 2 }))
+					return it.output;
+			}
+		}
+	}
+	for (auto& it : list1x3)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 1; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < 1; x++)
+				{
+					for (int y = 0; y < 3; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, Int2{ 1, 3 }))
+					return it.output;
+			}
+		}
+	}
+	for (auto& it : list2x3)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			for (int j = 0; j < 1; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < 2; x++)
+				{
+					for (int y = 0; y < 3; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, Int2{ 2, 3 }))
+					return it.output;
+			}
+		}
+	}
+	for (auto& it : list3x1)
+	{
+		for (int i = 0; i < 1; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < 3; x++)
+				{
+					for (int y = 0; y < 1; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, Int2{ 3, 1 }))
+					return it.output;
+			}
+		}
+	}
+	for (auto& it : list3x2)
+	{
+		for (int i = 0; i < 1; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < 3; x++)
+				{
+					for (int y = 0; y < 2; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, Int2{ 3, 2 }))
 					return it.output;
 			}
 		}
@@ -97,9 +609,10 @@ Item Crafting::GetCraftItem3x3(Item _table[][3])
 					chk = false;
 			}
 		}
-		if (chk)
+		if (chk && CheckEmptySlot3x3(_table, 0, 0, Int2{ 3, 3 }))
 			return it.output;
 	}
+	return Item{ 0, 0 };
 }
 
 void Crafting::MakeCraftItem2x2(Item _table[][2], Item& _outcome)
@@ -110,7 +623,7 @@ void Crafting::MakeCraftItem2x2(Item _table[][2], Item& _outcome)
 		{
 			for (int j = 0; j < 2; j++)
 			{
-				if (it.table[0][0] == _table[i][j].itemid && CheckEmptySlot2x2(_table, i, j, 1))
+				if (it.table[0][0] == _table[i][j].itemid)
 				{
 					_table[i][j].ea--;
 					return;
@@ -138,42 +651,78 @@ void Crafting::MakeCraftItem2x2(Item _table[][2], Item& _outcome)
 			return;
 		}
 	}
+	for (auto& it : list2x1)
+	{
+		for (int i = 0; i < 2; i++) {
+			bool chk = true;
+			for (int x = 0; x < 2; x++)
+			{
+				if (it.table[x][i] != _table[x][i].itemid)
+					chk = false;
+			}
+			if (chk)
+			{
+				for (int x = 0; x < 2; x++)
+					_table[x][i].ea--;
+				return;
+			}
+		}
+	}
+	for (auto& it : list1x2)
+	{
+		for (int i = 0; i < 2; i++) {
+			bool chk = true;
+			for (int y = 0; y < 2; y++)
+			{
+				if (it.table[0][y] != _table[i + 0][y].itemid)
+					chk = false;
+			}
+			if (chk)
+			{
+				for (int y = 0; y < 2; y++)
+					_table[i][y].ea--;
+				return;
+			}
+		}
+	}
 }
 
 void Crafting::MakeCraftItem3x3(Item _table[][3], Item& _outcome)
 {
+	Int2 _size = { 1, 1 };
 	for (auto& it : list1x1)
 	{
 		for (int i = 0; i < 3; i++)
 		{
 			for (int j = 0; j < 3; j++)
 			{
-				if (it.table[0][0] == _table[i][j].itemid) {
+				if (it.table[0][0] == _table[i][j].itemid && CheckEmptySlot3x3(_table, i, j, _size)) {
 					_table[i][j].ea--;
 					return;
 				}
 			}
 		}
 	}
-	for (auto& it : list2x2)
+	_size = { 2, 1 };
+	for (auto& it : list2x1)
 	{
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 4 - _size.x; i++)
 		{
-			for (int j = 0; j < 2; j++)
+			for (int j = 0; j < 4 - _size.y; j++)
 			{
 				bool chk = true;
-				for (int x = 0; x < 2; x++)
+				for (int x = 0; x < _size.x; x++)
 				{
-					for (int y = 0; y < 2; y++)
+					for (int y = 0; y < _size.y; y++)
 					{
 						if (it.table[x][y] != _table[i + x][j + y].itemid)
 							chk = false;
 					}
 				}
-				if (chk) {
-					for (int x = 0; x < 2; x++)
+				if (chk && CheckEmptySlot3x3(_table, i, j, _size)) {
+					for (int x = 0; x < _size.x; x++)
 					{
-						for (int y = 0; y < 2; y++)
+						for (int y = 0; y < _size.y; y++)
 							_table[i + x][j + y].ea--;
 					}
 					return;
@@ -181,83 +730,249 @@ void Crafting::MakeCraftItem3x3(Item _table[][3], Item& _outcome)
 			}
 		}
 	}
+	_size = { 1, 2 };
+	for (auto& it : list1x2)
+	{
+		for (int i = 0; i < 4 - _size.x; i++)
+		{
+			for (int j = 0; j < 4 - _size.y; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < _size.x; x++)
+				{
+					for (int y = 0; y < _size.y; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, _size)) {
+					for (int x = 0; x < _size.x; x++)
+					{
+						for (int y = 0; y < _size.y; y++)
+							_table[i + x][j + y].ea--;
+					}
+					return;
+				}
+			}
+		}
+	}
+	_size = { 2, 2 };
+	for (auto& it : list2x2)
+	{
+		for (int i = 0; i < 4 - _size.x; i++)
+		{
+			for (int j = 0; j < 4 - _size.y; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < _size.x; x++)
+				{
+					for (int y = 0; y < _size.y; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, _size)) {
+					for (int x = 0; x < _size.x; x++)
+					{
+						for (int y = 0; y < _size.y; y++)
+							_table[i + x][j + y].ea--;
+					}
+					return;
+				}
+			}
+		}
+	}
+	_size = { 1, 3 };
+	for (auto& it : list1x3)
+	{
+		for (int i = 0; i < 4 - _size.x; i++)
+		{
+			for (int j = 0; j < 4 - _size.y; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < _size.x; x++)
+				{
+					for (int y = 0; y < _size.y; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, _size)) {
+					for (int x = 0; x < _size.x; x++)
+					{
+						for (int y = 0; y < _size.y; y++)
+							_table[i + x][j + y].ea--;
+					}
+					return;
+				}
+			}
+		}
+	}
+	_size = { 2, 3 };
+	for (auto& it : list2x3)
+	{
+		for (int i = 0; i < 4 - _size.x; i++)
+		{
+			for (int j = 0; j < 4 - _size.y; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < _size.x; x++)
+				{
+					for (int y = 0; y < _size.y; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, _size)) {
+					for (int x = 0; x < _size.x; x++)
+					{
+						for (int y = 0; y < _size.y; y++)
+							_table[i + x][j + y].ea--;
+					}
+					return;
+				}
+			}
+		}
+	}
+	_size = { 3, 1 };
+	for (auto& it : list3x1)
+	{
+		for (int i = 0; i < 4 - _size.x; i++)
+		{
+			for (int j = 0; j < 4 - _size.y; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < _size.x; x++)
+				{
+					for (int y = 0; y < _size.y; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, _size)) {
+					for (int x = 0; x < _size.x; x++)
+					{
+						for (int y = 0; y < _size.y; y++)
+							_table[i + x][j + y].ea--;
+					}
+					return;
+				}
+			}
+		}
+	}
+	_size = { 3, 2 };
+	for (auto& it : list3x2)
+	{
+		for (int i = 0; i < 4 - _size.x; i++)
+		{
+			for (int j = 0; j < 4 - _size.y; j++)
+			{
+				bool chk = true;
+				for (int x = 0; x < _size.x; x++)
+				{
+					for (int y = 0; y < _size.y; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, _size)) {
+					for (int x = 0; x < _size.x; x++)
+					{
+						for (int y = 0; y < _size.y; y++)
+							_table[i + x][j + y].ea--;
+					}
+					return;
+				}
+			}
+		}
+	}
+	_size = { 3, 3 };
 	for (auto& it : list3x3)
 	{
-		bool chk = true;
-		for (int x = 0; x < 3; x++)
+		for (int i = 0; i < 4 - _size.x; i++)
 		{
-			for (int y = 0; y < 3; y++)
+			for (int j = 0; j < 4 - _size.y; j++)
 			{
-				if (it.table[x][y] != _table[x][y].itemid)
-					chk = false;
+				bool chk = true;
+				for (int x = 0; x < _size.x; x++)
+				{
+					for (int y = 0; y < _size.y; y++)
+					{
+						if (it.table[x][y] != _table[i + x][j + y].itemid)
+							chk = false;
+					}
+				}
+				if (chk && CheckEmptySlot3x3(_table, i, j, _size)) {
+					for (int x = 0; x < _size.x; x++)
+					{
+						for (int y = 0; y < _size.y; y++)
+							_table[i + x][j + y].ea--;
+					}
+					return;
+				}
 			}
-		}
-		if (chk) {
-			for (int x = 0; x < 3; x++)
-			{
-				for (int y = 0; y < 3; y++)
-					_table[x][y].ea--;
-			}
-			return;
 		}
 	}
 }
 
-bool Crafting::CheckEmptySlot2x2(Item _table[][2], int _x, int _y, int _size)
+bool Crafting::CheckEmptySlot2x2(Item _table[][2], int _x, int _y, Int2 _size)
 {
-	switch (_size) {
-	case 1:
-		for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < 2; j++)
 		{
-			for (int j = 0; j < 2; j++)
+			if (i < _x || i >= _x + _size.x || j < _y || j >= _y + _size.y)
 			{
-				if (i != _x || j != _y)
-				{
-					if (_table[i][j].itemid != 0)
-						return false;
-				}
+				if (_table[i][j].itemid != 0)
+					return false;
 			}
 		}
-		return true;
-	case 2:
-		return true;
 	}
-	return false;
+	return true;
 }
 
-bool Crafting::CheckEmptySlot3x3(Item _table[][3], int _x, int _y, int _size)
+bool Crafting::CheckEmptySlot3x3(Item _table[][3], int _x, int _y, Int2 _size)
 {
-	switch (_size) {
-	case 1:
-		for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
 		{
-			for (int j = 0; j < 3; j++)
+			if (i < _x || i >= _x + _size.x || j < _y || j >= _y + _size.y)
 			{
-				if (i != _x || j != _y)
-				{
-					if (_table[i][j].itemid != 0)
-						return false;
-				}
+				if (_table[i][j].itemid != 0)
+					return false;
 			}
 		}
-		return true;
-	case 2:
-		for (int i = 0; i < 3; i++)
-		{
-			for (int j = 0; j < 3; j++)
-			{
-				if ((i > _x + 1 && i < _x) || (j > _y + 1 && j < _y))
-				{
-					if (_table[i][j].itemid != 0)
-						return false;
-				}
-			}
-		}
-		return true;
-	case 3:
-		return true;
 	}
-	return false;
+	return true;
+}
+
+void Crafting::ShowCraftTable(bool _on)
+{
+	if (_on)
+	{
+		for (int i = 0; i < 27; i++)
+			INVENTORY->UpdateInven(i, table);
+		for (int i = 1; i <= 9; i++)
+			INVENTORY->UpdateQuickSlot(i, table);
+		UpdateMouse();
+
+		active = true;
+	}
+	else {
+		active = false;
+	}
+}
+
+int Crafting::GetItemId(const char* _itemName)
+{
+	return ITEM_MANAGER->GetItemId(_itemName);
 }
 
 void Crafting::UpdateCombineSlot(int _slotX, int _slotY)
@@ -288,107 +1003,7 @@ void Crafting::UpdateOutcomeSlot()
 	}
 }
 
-Item Crafting::GetOutput(Item _table[][2], int _size)
-{
-	for (auto& it : list1x1)
-	{
-		for (int i = 0; i < _size; i++)
-		{
-			for (int j = 0; j < _size; j++)
-			{
-				if (it.table[0][0] == _table[i][j].itemid)
-					return it.output;
-			}
-		}
-	}
-	for (auto& it : list2x2)
-	{
-		for (int i = 0; i < _size - 1; i++)
-		{
-			for (int j = 0; j < _size - 1; j++)
-			{
-				bool chk = true;
-				for (int x = 0; x < 2; x++)
-				{
-					for (int y = 0; y < 2; y++)
-					{
-						if (it.table[x][y] != _table[i + x][j + y].itemid)
-							chk = false;
-					}
-				}
-				if (chk)
-					return it.output;
-			}
-		}
-	}
-	for (auto& it : list3x3)
-	{
-		for (int i = 0; i < _size - 2; i++)
-		{
-			for (int j = 0; j < _size - 2; j++)
-			{
-				bool chk = true;
-				for (int x = 0; x < 3; x++)
-				{
-					for (int y = 0; y < 3; y++)
-					{
-						if (it.table[x][y] != _table[i + x][j + y].itemid)
-							chk = false;
-					}
-				}
-				if (chk)
-					return it.output;
-			}
-		}
-	}
-	return Item{0,0};
-}
 
-void Crafting::CraftItem(Item _table[][2], int _size, Item& _outcome)
-{
-	for (auto& it : list1x1)
-	{
-		for (int i = 0; i < _size; i++)
-		{
-			for (int j = 0; j < _size; j++)
-			{
-				if (it.table[0][0] == _table[i][j].itemid) {
-					_table[i][j].ea--;
-					_outcome = it.output;
-					return;
-				}
-			}
-		}
-	}
-	for (auto& it : list2x2)
-	{
-		for (int i = 0; i < _size - 1; i++)
-		{
-			for (int j = 0; j < _size - 1; j++)
-			{
-				bool chk = true;
-				for (int x = 0; x < 2; x++)
-				{
-					for (int y = 0; y < 2; y++)
-					{
-						if (it.table[x][y] != _table[i + x][j + y].itemid)
-							chk = false;
-					}
-				}
-				if (chk)
-				{
-					for (int x = 0; x < 2; x++)
-					{
-						for (int y = 0; y < 2; y++)
-							_table[i + x][j + y].ea--;
-					}
-					return;
-				}
-			}
-		}
-	}
-	return;
-}
 
 void Crafting::UpdateMouse()
 {

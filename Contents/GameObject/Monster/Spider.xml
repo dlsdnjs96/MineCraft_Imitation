@@ -1,0 +1,268 @@
+<Root Name="Spider" Visible="true" ObType="1">
+    <Collider ColliderType="2" Visible="true">
+        <Position X="0" Y="10.2" Z="-1.1"/>
+        <Scale X="13.85" Y="4.9499998" Z="10.55"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Collider>
+    <Transform>
+        <Position X="0" Y="0.30000001" Z="0"/>
+        <Scale X="1" Y="1" Z="1"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Transform>
+    <Children Size="1"/>
+    <Child0 Name="body" Visible="true" ObType="7">
+        <Mesh File="Spider/body.mesh"/>
+        <Shader File="Block.hlsl"/>
+        <Material File="Monster/Spider.mtl"/>
+        <Transform>
+            <Position X="0" Y="7.5" Z="0"/>
+            <Scale X="1" Y="1" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="2"/>
+        <Child0 Name="shoulderC" Visible="true" ObType="0">
+            <Transform>
+                <Position X="0" Y="0" Z="5.8499999"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="3"/>
+            <Child0 Name="neck" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="-5.4000001" Z="1.1"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="head" Visible="true" ObType="7">
+                    <Mesh File="Spider/head.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Spider.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="8.1499996" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child0>
+            <Child1 Name="shoulderL" Visible="false" ObType="0">
+                <Transform>
+                    <Position X="-3.5" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="armL" Visible="true" ObType="7">
+                    <Mesh File="Pig/armL.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Spider.mtl"/>
+                    <Transform>
+                        <Position X="0" Y="-4.3499999" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child1>
+            <Child2 Name="shoulderR" Visible="false" ObType="0">
+                <Mesh File="Pig/armR.mesh"/>
+                <Material File="Monster/Spider.mtl"/>
+                <Transform>
+                    <Position X="3.5" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="armR" Visible="true" ObType="7">
+                    <Mesh File="Pig/armL.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="-4.3499999" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child2>
+        </Child0>
+        <Child1 Name="waist" Visible="true" ObType="0">
+            <Transform>
+                <Position X="0" Y="0" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="9"/>
+            <Child0 Name="hipC" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="0" Y="0" Z="-8.3000002"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="tail" Visible="true" ObType="7">
+                    <Mesh File="Spider/tail.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child0>
+            <Child1 Name="hipL" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="-2" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0.61086529" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legL" Visible="true" ObType="7">
+                    <Mesh File="Spider/leg.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Spider.mtl"/>
+                    <Transform>
+                        <Position X="-8" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child1>
+            <Child2 Name="hipL2" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="-2" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0.19198623" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legL2" Visible="true" ObType="0">
+                    <Mesh File="Spider/leg.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Spider.mtl"/>
+                    <Transform>
+                        <Position X="-8" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child2>
+            <Child3 Name="hipL3" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="-2" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="-0.19198623" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legL3" Visible="true" ObType="0">
+                    <Mesh File="Spider/leg.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Spider.mtl"/>
+                    <Transform>
+                        <Position X="-8" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child3>
+            <Child4 Name="hipL4" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="-2" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="-0.59341198" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legL4" Visible="true" ObType="0">
+                    <Mesh File="Spider/leg.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Spider.mtl"/>
+                    <Transform>
+                        <Position X="-8" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child4>
+            <Child5 Name="hipR" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="2" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="-0.61086529" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legR" Visible="true" ObType="7">
+                    <Mesh File="Spider/leg.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Spider.mtl"/>
+                    <Transform>
+                        <Position X="8" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child5>
+            <Child6 Name="hipR2" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="2" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="-0.19198623" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legR2" Visible="true" ObType="7">
+                    <Mesh File="Spider/leg.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Spider.mtl"/>
+                    <Transform>
+                        <Position X="8" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child6>
+            <Child7 Name="hipR3" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="2" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0.19198623" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legR3" Visible="true" ObType="7">
+                    <Mesh File="Spider/leg.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Spider.mtl"/>
+                    <Transform>
+                        <Position X="8" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child7>
+            <Child8 Name="hipR4" Visible="true" ObType="0">
+                <Transform>
+                    <Position X="2" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0.61086529" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="legR4" Visible="true" ObType="7">
+                    <Mesh File="Spider/leg.mesh"/>
+                    <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Spider.mtl"/>
+                    <Transform>
+                        <Position X="8" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child8>
+        </Child1>
+    </Child0>
+</Root>

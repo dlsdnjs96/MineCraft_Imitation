@@ -46,6 +46,8 @@ void Text::ChangeText(string _text)
 	//if (mesh) mesh->~Mesh();
 
     text = _text;
+    if (text == "")
+        return;
 
     VertexPT* vertices;
     UINT vertexCount = text.size() * 4;

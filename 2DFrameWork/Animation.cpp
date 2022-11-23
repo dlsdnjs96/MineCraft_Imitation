@@ -67,6 +67,28 @@ void Animation::SaveFile(string file)
 	out.Close();
 }
 
+void Animation::AddMotion(Matrix* _motion)
+{
+	frameMax++;
+	Matrix** temp = new Matrix * [frameMax];
+	for (UINT i = 0; i < frameMax; i++)
+		temp[i] = new Matrix[boneMax];
+	
+
+	for (UINT i = 0; i < frameMax - 1; i++)
+	{
+		for (UINT j = 0; j < boneMax; j++)
+			temp[i][j] = arrFrameBone[i][j];
+	}
+	for (UINT j = 0; j < boneMax; j++)
+		temp[frameMax - 1][j] = _motion[j];
+
+	delete arrFrameBone;
+	arrFrameBone = temp;
+
+	return;
+}
+
 void Animations::AnimatorUpdate(Animator& Animator)
 {
 	if (Animator.animState == AnimationState::LOOP)

@@ -1,4 +1,9 @@
 <Root Name="Pig" Visible="true" ObType="1">
+    <Collider ColliderType="2" Visible="true">
+        <Position X="0" Y="6" Z="2.7"/>
+        <Scale X="3.8499999" Y="6.5" Z="10.55"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Collider>
     <Transform>
         <Position X="0" Y="0" Z="0"/>
         <Scale X="1" Y="1" Z="1"/>
@@ -10,7 +15,7 @@
         <Shader File="Block.hlsl"/>
         <Material File="Monster/Pig.mtl"/>
         <Transform>
-            <Position X="0" Y="7.9000001" Z="0"/>
+            <Position X="0" Y="7.5" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
             <Rotation X="0" Y="0" Z="0"/>
         </Transform>
