@@ -94,7 +94,7 @@ void MonsterManager::distinguishSectors()
 	}
 }
 
-void MonsterManager::Spawn(MonsterType _monsterType, Vector3 _pos)
+void MonsterManager::Spawn(MonsterType _monsterType, Vector3 _pos, MonsterState _state)
 {
 	Monster* tMonster = MONSTER_FACTORY->GetMonster(_monsterType);
 	
@@ -118,9 +118,13 @@ void MonsterManager::Spawn(MonsterType _monsterType, Vector3 _pos)
 	case MonsterType::ZOMBIE:
 		tMonster = dynamic_cast<Zombie*>(tMonster);
 		break;
+	case MonsterType::SPIDER:
+		tMonster = dynamic_cast<Spider*>(tMonster);
+		break;
 	}
 
 	tMonster->Init(_pos);
+	tMonster->state = _state;
 	Int3 sector = (_pos / BLOCK_LENGTH) / SECTOR_SIZE;
 	monsters[sector.x][sector.z].push_back(tMonster);
 	//if (activeMonsters.find(sector.x) == activeMonsters.end()
@@ -161,7 +165,31 @@ bool MonsterManager::AttackWithRay(Ray& _ray)
 			{
 				if (it2->collider and it2->collider->Intersect(_ray))
 				{
-					it2->HitByPlayer(90);
+					it2->HitByPlayer(Player::user->GetAttackPoint());
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+bool MonsterManager::InteractWithRay(Ray& _ray)
+{
+	Int3 centerSector;
+
+	centerSector = (_ray.position / BLOCK_LENGTH) / SECTOR_SIZE;
+
+	for (int x = centerSector.x - 1; x <= centerSector.x + 1; x++)
+	{
+		for (int z = centerSector.z - 1; z <= centerSector.z + 1; z++)
+		{
+			for (auto& it2 : monsters[x][z])
+			{
+				if (it2->collider and it2->collider->Intersect(_ray))
+				{
+					it2->Interact(INVENTORY->GetPickedItem().itemid);
 					return true;
 				}
 			}
@@ -191,6 +219,10 @@ void MonsterManager::DropItem(MonsterType _monsterType, Vector3 _pos)
 		break;
 	case MonsterType::CHICKEN:
 		ITEM_MANAGER->Spawn(_pos, Item{ ITEM_MANAGER->GetItemId("chicken_raw"), 1 });
+		ITEM_MANAGER->Spawn(_pos, Item{ ITEM_MANAGER->GetItemId("feather"), rand() % 3 });
+		break;
+	case MonsterType::SPIDER:
+		ITEM_MANAGER->Spawn(_pos, Item{ ITEM_MANAGER->GetItemId("spider_eye"), rand() % 2 });
 		ITEM_MANAGER->Spawn(_pos, Item{ ITEM_MANAGER->GetItemId("feather"), rand() % 3 });
 		break;
 	}

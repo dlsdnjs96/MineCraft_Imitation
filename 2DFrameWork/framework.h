@@ -3,6 +3,7 @@
 #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console") 
 
 //C
+#include <WinSock2.h>
 #include <Windows.h>
 #include <assert.h>
 

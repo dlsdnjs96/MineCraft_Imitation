@@ -1,0 +1,33 @@
+<Root Name="Furnace" Visible="true" ObType="4">
+    <Mesh File="6.UI.mesh"/>
+    <Shader File="6.Cube.hlsl"/>
+    <Material File="furnaceBackground.mtl"/>
+    <Transform>
+        <Position X="0" Y="0" Z="0.5"/>
+        <Scale X="0.89999998" Y="1.55" Z="1"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Transform>
+    <Children Size="2"/>
+    <Child0 Name="cover" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="furnaceCover.mtl"/>
+        <Transform>
+            <Position X="0" Y="0" Z="-0.19999999"/>
+            <Scale X="1" Y="1" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="0"/>
+    </Child0>
+    <Child1 Name="fire" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="furnaceFire.mtl"/>
+        <Transform>
+            <Position X="-0.1388889" Y="0.283871" Z="-0.099999994"/>
+            <Scale X="0.1" Y="0.050000001" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="0"/>
+    </Child1>
+</Root>

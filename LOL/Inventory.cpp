@@ -231,6 +231,7 @@ void Inventory::Init()
     SetPickedItem(4, Item{ 275, 10 });
     SetPickedItem(5, Item{ int(BlockType::STONE), 10 });
     SetPickedItem(6, Item{ int(BlockType::CRAFTING_TABLE), 10 });
+    SetPickedItem(7, Item{ 359, 1 });
 
     quickSlots->Update();
     invens->Update();
@@ -285,7 +286,7 @@ void Inventory::Update()
 
         if (INPUT->KeyDown(VK_LBUTTON) && not invens->MouseOver() && mousePick.itemid != 0)
         {
-            ITEM_MANAGER->Spawn(ITEM_MANAGER->user->GetWorldPos(), mousePick);
+            ITEM_MANAGER->Spawn(Player::user->GetWorldPos(), mousePick);
             mousePick.Remove();
             UpdateMouse();
         }

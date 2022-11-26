@@ -3,14 +3,13 @@
 class ItemManager : public Singleton<ItemManager>
 {
 private:
-	list<ItemObject*> objects;
 public:
-	Player* user;
+	list<ItemObject*> objects;
 	void Update();
 	void Render();
 	void RenderHierarchy();
 
-	void Spawn(Vector3 _pos, Item _item);
+	void Spawn(Vector3 _pos, Item _item, ItemObjectState _state = ItemObjectState::FALL);
 
 	const char* GetItemName(int _itemid);
 	int GetItemId(const char* _itemName);

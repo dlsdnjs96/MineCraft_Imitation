@@ -12,7 +12,6 @@ InGameScene::InGameScene()
     player->Init();
     Player::user = player;
 
-    ITEM_MANAGER->user = player;
 
     Camera::main = dynamic_cast<Camera*>(player->Find("camHead"));
     //WORLD->LoadWorld();
@@ -41,6 +40,7 @@ InGameScene::~InGameScene()
     TestBlock->Release();
     ITEM_DETAIL->Release();
     MONSTER_MANAGER->Release();
+    FURNACE_TABLE->Release();
 }
 
 void InGameScene::Init()
@@ -76,6 +76,7 @@ void InGameScene::Init()
     CRAFTING->Init();
     ITEM_DETAIL->Init();
     MONSTER_MANAGER->Init();
+    FURNACE_TABLE->Init();
 }
 
 void InGameScene::Release()
@@ -93,7 +94,13 @@ void InGameScene::Update()
     static bool first_lock = Util::LockMouse();
 
     if (INPUT->KeyDown('T')) {
-        MONSTER_MANAGER->Spawn(MonsterType::CHICKEN, Camera::main->GetWorldPos());
+        MONSTER_MANAGER->Spawn(MonsterType::SPIDER, Camera::main->GetWorldPos());
+    }
+    if (INPUT->KeyDown('Y')) {
+        MONSTER_MANAGER->Spawn(MonsterType::SHEEP, Camera::main->GetWorldPos());
+    }
+    if (INPUT->KeyDown('U')) {
+        MONSTER_MANAGER->Spawn(MonsterType::ZOMBIE, Camera::main->GetWorldPos());
     }
     if (INPUT->KeyDown(VK_ESCAPE)) {
         menuTab = true;
@@ -123,6 +130,7 @@ void InGameScene::Update()
     CRAFTING->RenderHierarchy();
     ITEM_DETAIL->RenderHierarchy();
     MONSTER_MANAGER->RenderHierarchy();
+    FURNACE_TABLE->RenderHierarchy();
 
     resume->RenderHierarchy();
     setting->RenderHierarchy();
@@ -150,6 +158,7 @@ void InGameScene::Update()
     CRAFTING->Update();
     ITEM_DETAIL->Update();
     MONSTER_MANAGER->Update();
+    FURNACE_TABLE->Update();
 
     //if (INPUT->KeyDown(VK_LBUTTON))
     //{
@@ -186,6 +195,7 @@ void InGameScene::Render()
     CRAFTING->Render();
     ITEM_DETAIL->Render();
     MONSTER_MANAGER->Render();
+    FURNACE_TABLE->Render();
 
     if (menuTab)
     {

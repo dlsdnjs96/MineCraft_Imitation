@@ -1278,7 +1278,7 @@ void Crafting::Update()
 
 	if (INPUT->KeyDown(VK_LBUTTON) && not table->MouseOver() && mousePick.itemid != 0)
 	{
-		ITEM_MANAGER->Spawn(ITEM_MANAGER->user->GetWorldPos(), mousePick);
+		ITEM_MANAGER->Spawn(Player::user->GetWorldPos(), mousePick);
 		mousePick.Remove();
 		UpdateMouse();
 	}

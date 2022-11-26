@@ -408,7 +408,6 @@ bool Util::LockMouse()
 		INPUT->fixedMousePos.y = cursor.y;
 		INPUT->prevPosition = INPUT->position;
 		Util::CursorVisible(false);
-		//aim->visible = true;
 		return true;
 	}
 	return false;
@@ -418,7 +417,6 @@ bool Util::UnLockMouse()
 {
 	INPUT->fixedMousePos.x = -1;
 	Util::CursorVisible(true);
-	//aim->visible = false;
 	return false;
 }
 

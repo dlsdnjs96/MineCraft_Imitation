@@ -1,0 +1,250 @@
+<Root Name="PlayerUI" Visible="true" ObType="4">
+    <Transform>
+        <Position X="0" Y="-0.76999998" Z="0.80000001"/>
+        <Scale X="1" Y="1" Z="1"/>
+        <Rotation X="0" Y="0" Z="0"/>
+    </Transform>
+    <Children Size="12"/>
+    <Child0 Name="expBack" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="expBack.mtl"/>
+        <Transform>
+            <Position X="0" Y="0" Z="0"/>
+            <Scale X="1" Y="0.050000001" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="0"/>
+    </Child0>
+    <Child1 Name="expFront" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="expFront.mtl"/>
+        <Transform>
+            <Position X="0" Y="0" Z="0"/>
+            <Scale X="1" Y="0.050000001" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="0"/>
+    </Child1>
+    <Child2 Name="heartB0" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="heartBack.mtl"/>
+        <Transform>
+            <Position X="-0.44999999" Y="0.1" Z="0"/>
+            <Scale X="0.046" Y="0.064999998" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="heartF0" Visible="true" ObType="4">
+            <Mesh File="6.UI.mesh"/>
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="heartFront.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="-0.1"/>
+                <Scale X="0.77770001" Y="0.77770001" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
+    </Child2>
+    <Child3 Name="heartB1" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="heartBack.mtl"/>
+        <Transform>
+            <Position X="-0.40559998" Y="0.1" Z="0"/>
+            <Scale X="0.046" Y="0.064999998" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="heartF1" Visible="true" ObType="4">
+            <Mesh File="6.UI.mesh"/>
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="heartFront.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="-0.1"/>
+                <Scale X="0.77770001" Y="0.77770001" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
+    </Child3>
+    <Child4 Name="heartB2" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="heartBack.mtl"/>
+        <Transform>
+            <Position X="-0.36119998" Y="0.1" Z="0"/>
+            <Scale X="0.046" Y="0.064999998" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="heartF2" Visible="true" ObType="4">
+            <Mesh File="6.UI.mesh"/>
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="heartFront.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="-0.1"/>
+                <Scale X="0.77770001" Y="0.77770001" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
+    </Child4>
+    <Child5 Name="heartB3" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="heartBack.mtl"/>
+        <Transform>
+            <Position X="-0.3168" Y="0.1" Z="0"/>
+            <Scale X="0.046" Y="0.064999998" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="heartF3" Visible="true" ObType="4">
+            <Mesh File="6.UI.mesh"/>
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="heartFront.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="-0.1"/>
+                <Scale X="0.77770001" Y="0.77770001" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
+    </Child5>
+    <Child6 Name="heartB4" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="heartBack.mtl"/>
+        <Transform>
+            <Position X="-0.27239999" Y="0.1" Z="0"/>
+            <Scale X="0.046" Y="0.064999998" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="heartF4" Visible="true" ObType="4">
+            <Mesh File="6.UI.mesh"/>
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="heartFront.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="-0.1"/>
+                <Scale X="0.77770001" Y="0.77770001" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
+    </Child6>
+    <Child7 Name="heartB5" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="heartBack.mtl"/>
+        <Transform>
+            <Position X="-0.22799999" Y="0.1" Z="0"/>
+            <Scale X="0.046" Y="0.064999998" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="heartF5" Visible="true" ObType="4">
+            <Mesh File="6.UI.mesh"/>
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="heartFront.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="-0.1"/>
+                <Scale X="0.77770001" Y="0.77770001" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
+    </Child7>
+    <Child8 Name="heartB6" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="heartBack.mtl"/>
+        <Transform>
+            <Position X="-0.18360001" Y="0.1" Z="0"/>
+            <Scale X="0.046" Y="0.064999998" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="heartF6" Visible="true" ObType="4">
+            <Mesh File="6.UI.mesh"/>
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="heartFront.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="-0.1"/>
+                <Scale X="0.77770001" Y="0.77770001" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
+    </Child8>
+    <Child9 Name="heartB7" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="heartBack.mtl"/>
+        <Transform>
+            <Position X="-0.1392" Y="0.1" Z="0"/>
+            <Scale X="0.046" Y="0.064999998" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="heartF7" Visible="true" ObType="4">
+            <Mesh File="6.UI.mesh"/>
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="heartFront.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="-0.1"/>
+                <Scale X="0.77770001" Y="0.77770001" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
+    </Child9>
+    <Child10 Name="heartB8" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="heartBack.mtl"/>
+        <Transform>
+            <Position X="-0.094799995" Y="0.1" Z="0"/>
+            <Scale X="0.046" Y="0.064999998" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="heartF8" Visible="true" ObType="4">
+            <Mesh File="6.UI.mesh"/>
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="heartFront.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="-0.1"/>
+                <Scale X="0.77770001" Y="0.77770001" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
+    </Child10>
+    <Child11 Name="heartB9" Visible="true" ObType="4">
+        <Mesh File="6.UI.mesh"/>
+        <Shader File="6.Cube.hlsl"/>
+        <Material File="heartBack.mtl"/>
+        <Transform>
+            <Position X="-0.050399989" Y="0.1" Z="0"/>
+            <Scale X="0.046" Y="0.064999998" Z="1"/>
+            <Rotation X="0" Y="0" Z="0"/>
+        </Transform>
+        <Children Size="1"/>
+        <Child0 Name="heartF9" Visible="true" ObType="4">
+            <Mesh File="6.UI.mesh"/>
+            <Shader File="6.Cube.hlsl"/>
+            <Material File="heartFront.mtl"/>
+            <Transform>
+                <Position X="0" Y="0" Z="-0.1"/>
+                <Scale X="0.77770001" Y="0.77770001" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="0"/>
+        </Child0>
+    </Child11>
+</Root>

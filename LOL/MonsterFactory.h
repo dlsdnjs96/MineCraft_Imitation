@@ -7,6 +7,7 @@ private:
 	queue<Monster*> sheeps;
 	queue<Monster*> chickens;
 	queue<Monster*> zombies;
+	queue<Monster*> spiders;
 	queue<Monster*> skeletons;
 public:
 

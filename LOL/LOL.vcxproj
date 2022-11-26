@@ -79,6 +79,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\MySQL\MySQL Server 5.7\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -122,6 +124,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,6 +149,8 @@
     <ClInclude Include="Chicken.h" />
     <ClInclude Include="Cow.h" />
     <ClInclude Include="Crafting.h" />
+    <ClInclude Include="DataBase.h" />
+    <ClInclude Include="Furnace.h" />
     <ClInclude Include="InGameScene.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
@@ -161,10 +166,14 @@
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Pig.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="PlayerModel.h" />
+    <ClInclude Include="PlayerView.h" />
     <ClInclude Include="Sector.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="Sheep.h" />
     <ClInclude Include="SkeletonArcher.h" />
+    <ClInclude Include="Spider.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TextureData.h" />
     <ClInclude Include="World.h" />
@@ -178,6 +187,8 @@
     <ClCompile Include="Chicken.cpp" />
     <ClCompile Include="Cow.cpp" />
     <ClCompile Include="Crafting.cpp" />
+    <ClCompile Include="DataBase.cpp" />
+    <ClCompile Include="Furnace.cpp" />
     <ClCompile Include="InGameScene.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -192,10 +203,14 @@
     <ClCompile Include="MonsterManager.cpp" />
     <ClCompile Include="Pig.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="PlayerModel.cpp" />
+    <ClCompile Include="PlayerView.cpp" />
     <ClCompile Include="Sector.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="Sheep.cpp" />
     <ClCompile Include="SkeletonArcher.cpp" />
+    <ClCompile Include="Spider.cpp" />
     <ClCompile Include="TextureData.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldGenerator.cpp" />

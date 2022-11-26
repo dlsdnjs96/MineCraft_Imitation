@@ -22,14 +22,14 @@
         <Children Size="2"/>
         <Child0 Name="shoulderC" Visible="true" ObType="0">
             <Transform>
-                <Position X="0" Y="0" Z="5.8499999"/>
+                <Position X="0" Y="2.8" Z="0"/>
                 <Scale X="1" Y="1" Z="1"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
             <Children Size="3"/>
             <Child0 Name="neck" Visible="true" ObType="0">
                 <Transform>
-                    <Position X="0" Y="4" Z="-1"/>
+                    <Position X="0" Y="3" Z="5"/>
                     <Scale X="1" Y="1" Z="1"/>
                     <Rotation X="0" Y="0" Z="0"/>
                 </Transform>
@@ -68,7 +68,7 @@
             </Child0>
             <Child1 Name="shoulderL" Visible="true" ObType="0">
                 <Transform>
-                    <Position X="-3.5" Y="0.89999998" Z="-5.5"/>
+                    <Position X="-3.5" Y="0" Z="0"/>
                     <Scale X="1" Y="1" Z="1"/>
                     <Rotation X="0" Y="0" Z="0"/>
                 </Transform>
@@ -78,7 +78,7 @@
                     <Shader File="Block.hlsl"/>
                     <Material File="Monster/Chicken.mtl"/>
                     <Transform>
-                        <Position X="0" Y="0" Z="0"/>
+                        <Position X="0" Y="-2" Z="0"/>
                         <Scale X="1" Y="1" Z="1"/>
                         <Rotation X="0" Y="0" Z="0"/>
                     </Transform>
@@ -88,7 +88,7 @@
             <Child2 Name="shoulderR" Visible="true" ObType="0">
                 <Material File="Monster/Chicken.mtl"/>
                 <Transform>
-                    <Position X="3.5" Y="0.89999998" Z="-5.5"/>
+                    <Position X="3.5" Y="0" Z="0"/>
                     <Scale X="1" Y="1" Z="1"/>
                     <Rotation X="0" Y="0" Z="0"/>
                 </Transform>
@@ -97,7 +97,7 @@
                     <Mesh File="Chicken/arm.mesh"/>
                     <Shader File="Block.hlsl"/>
                     <Transform>
-                        <Position X="0" Y="0" Z="0"/>
+                        <Position X="0" Y="-2" Z="0"/>
                         <Scale X="1" Y="1" Z="1"/>
                         <Rotation X="0" Y="0" Z="0"/>
                     </Transform>

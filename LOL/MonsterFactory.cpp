@@ -42,6 +42,12 @@ Monster* MonsterFactory::GetMonster(MonsterType _monsterType)
 		tMonster = zombies.back();
 		zombies.pop();
 		break;
+	case MonsterType::SPIDER:
+		if (spiders.empty())
+			return new Spider();
+		tMonster = spiders.back();
+		spiders.pop();
+		break;
 	}
 
 	return tMonster;
@@ -68,6 +74,9 @@ void MonsterFactory::ReturnMonster(Monster* _monster)
 		break;
 	case MonsterType::ZOMBIE:
 		zombies.push(dynamic_cast<Zombie*>(_monster));
+		break;
+	case MonsterType::SPIDER:
+		spiders.push(dynamic_cast<Spider*>(_monster));
 		break;
 	}
 }

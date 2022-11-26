@@ -119,3 +119,21 @@ void WorldList::LoadWorldList()
 		}
 	}
 }
+
+void WorldList::LoadWorld()
+{
+	selectedWorld;
+	WORLD->name = selectedWorld;
+	DATABASE->LoadWolrd();
+
+	if (WORLD->id == -1)
+	{
+
+	}
+	else {
+		DATABASE->LoadPlayer();
+		DATABASE->LoadInventory();
+		DATABASE->LoadItemObject();
+		DATABASE->LoadMonster();
+	}
+}

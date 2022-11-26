@@ -9,6 +9,7 @@ enum class MonsterState
 	FALL,
 	RUN_AWAY,
 	HIT,
+	HIT_NO_REACT,
 	FOLLOW,
 	ATTACK,
 	SWIM,
@@ -22,7 +23,8 @@ enum class MonsterType {
 	SHEEP,
 	CHICKEN,
 	SKELETON,
-	ZOMBIE
+	ZOMBIE,
+	SPIDER
 };
 
 class Monster : public Actor
@@ -37,7 +39,9 @@ protected:
 public:
 	Vector3			moveForce;
 	Vector3			dir;
+	Vector3			rotatedDir;
 	float			jumppedTime = 0.f;
+	float			layedTime = 0.f;
 
 	Int3			curInt3;
 	Int3			underInt3;
@@ -58,23 +62,39 @@ public:
 	virtual void	RenderHierarchy() = 0;
 	virtual void	Release() = 0;
 
+	virtual void	Interact(int _itemid) = 0;
 
 	void		HitByPlayer(int damage);
+	void		HitByFallDown(int damage);
 
 	void		Hit();
+	void		HitNoReact();
 	void		Dead();
 
 	void		PreInit();
 	void		PreUpdate();
 
-
+	void		LayEgg();
 	bool		DectectPlayer(float dis);
 	void		FollowPlayer();
+	bool		DectectWheet(float dis);
 	void		FollowWheet();
 	void		CheckBlockHeight();
 	void		CheckFloor();
 	void		HorizontalMove(float boost = 1.f);
-	void		FallingDown();
+	bool		FallingDown();
 	void		BackAndForthDir();
+
+	void		AniFlapping(float duration);
+	void		AniWalking(float duration);
+	void		AniCrawling(float duration);
+	void		AniCrawling8(float duration);
+	void		AniAttacking1(float duration);
+	void		AniAttacking2(float duration);
+
+	virtual void AniReset();
+
+	void		ChangeState(MonsterState _state);
+	void		ChangeShader(string _shader);
 };
 

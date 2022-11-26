@@ -78,6 +78,26 @@ void World::Release()
 
 void World::LoadWorld()
 {
+	LoadWorldBinary();
+	DATABASE->LoadWolrd();
+	DATABASE->LoadPlayer();
+	DATABASE->LoadInventory();
+	DATABASE->LoadItemObject();
+	DATABASE->LoadMonster();
+}
+
+void World::SaveWorld()
+{
+	SaveWorldBinary();
+	DATABASE->UpdateWolrd();
+	DATABASE->SavePlayer();
+	DATABASE->SaveInventory();
+	DATABASE->SaveItemObject();
+	DATABASE->SaveMonster();
+}
+
+void World::LoadWorldBinary()
+{
 	BinaryReader in;
 	wstring path = L"../Contents/Map/" + Util::ToWString(name) + L"/map";
 	UINT sectorSize = 0;
@@ -85,6 +105,7 @@ void World::LoadWorld()
 	in.Open(path);
 
 	sectorSize = in.UInt();
+	sector.clear();
 	for (UINT i = 0; i < sectorSize; i++)
 	{
 		Int2 key = in.Int_2();
@@ -94,7 +115,7 @@ void World::LoadWorld()
 	in.Close();
 }
 
-void World::SaveWorld()
+void World::SaveWorldBinary()
 {
 	BinaryWriter out;
 	wstring path = L"../Contents/Map/" + Util::ToWString(name) + L"/map";
@@ -109,7 +130,7 @@ void World::SaveWorld()
 	for (auto& it : sector)
 	{
 		for (auto& it2 : it.second) {
-			out.Int_2(Int2{it.first, it2.first});
+			out.Int_2(Int2{ it.first, it2.first });
 			it2.second.Save(out);
 		}
 	}

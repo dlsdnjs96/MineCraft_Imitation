@@ -6,7 +6,6 @@ class MonsterManager : public Singleton<MonsterManager>
 {
 private:
 	ObjectPool<Monster> pool;
-	unordered_map<int, unordered_map<int, list<Monster*>>> monsters;
 	unordered_map<int, unordered_map<int, list<Monster*>*>> activeMonsters;
 	vector<pair<int, int>> activeMonster;
 
@@ -16,6 +15,7 @@ private:
 	Int3			currSector = { 1, 1, 1 };
 
 public:
+	unordered_map<int, unordered_map<int, list<Monster*>>> monsters;
 	void	Init();
 	void	Release();
 	void	Update();
@@ -23,11 +23,12 @@ public:
 	void	Render();
 
 	void	distinguishSectors();
-	void	Spawn(MonsterType _monsterType, Vector3 _pos);
+	void	Spawn(MonsterType _monsterType, Vector3 _pos, MonsterState _state = MonsterState::FALL);
 	void	RemoveMonster(Int3& _int3, Monster* _monster);
 	void	AddMonster(Int3& _int3, Monster* _monster);
 
 	bool	AttackWithRay(Ray& _ray);
+	bool	InteractWithRay(Ray& _ray);
 
 	void	DropItem(MonsterType _monsterType, Vector3 _pos);
 };

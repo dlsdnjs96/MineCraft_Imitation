@@ -139,6 +139,7 @@
                 <Child0 Name="legR" Visible="true" ObType="7">
                     <Mesh File="Sheep/legR.mesh"/>
                     <Shader File="Block.hlsl"/>
+                    <Material File="Monster/Sheep.mtl"/>
                     <Transform>
                         <Position X="0" Y="-8.3500004" Z="0"/>
                         <Scale X="1" Y="1" Z="1"/>

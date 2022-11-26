@@ -9,7 +9,7 @@ void Chicken::Init(Vector3 _pos)
 {
 	LoadFile("Monster/Chicken.xml");
 	SetLocalPos(_pos);
-	maxHp = 100;
+	maxHp = 4;
 	PreInit();
 }
 
@@ -17,6 +17,7 @@ void Chicken::Update()
 {
 	PreUpdate();
 
+	LayEgg();
 	switch (state)
 	{
 	case MonsterState::IDLE:
@@ -27,6 +28,9 @@ void Chicken::Update()
 		break;
 	case MonsterState::FALL:
 		Fall();
+		break;
+	case MonsterState::HIT:
+		Hit();
 		break;
 	case MonsterState::RUN_AWAY:
 		RunAway();
@@ -53,13 +57,20 @@ void Chicken::Release()
 	Actor::Release();
 }
 
+void Chicken::Interact(int _itemid)
+{
+}
+
 void Chicken::Idle()
 {
+	AniFlapping(0.3f);
+
+
 	CheckFloor();
 
 	if (leftTime <= 0.f)
 	{
-		state = MonsterState::MOVE;
+		ChangeState(MonsterState::MOVE);
 		leftTime = (float(rand() % 30) * 0.1f) + 1.f;
 		rotation.y = float(float(rand() % 31415) * 0.0001f);
 		return;
@@ -68,6 +79,9 @@ void Chicken::Idle()
 
 void Chicken::Move()
 {
+	AniWalking(0.15f);
+
+
 	CheckFloor();
 
 	HorizontalMove();
@@ -76,7 +90,7 @@ void Chicken::Move()
 
 	if (leftTime <= 0.f)
 	{
-		state = MonsterState::IDLE;
+		ChangeState(MonsterState::IDLE);
 		leftTime = (float(rand() % 10) * 0.1f) + 1.f;
 		return;
 	}
@@ -84,14 +98,20 @@ void Chicken::Move()
 
 void Chicken::Fall()
 {
+	AniFlapping(0.15f);
+
+
 	FallingDown();
 }
 
 void Chicken::RunAway()
 {
+	AniWalking(0.05f);
+
+
 	if (leftTime <= 0.f)
 	{
-		state = MonsterState::IDLE;
+		ChangeState(MonsterState::IDLE);
 		leftTime = 1.f;
 		return;
 	}

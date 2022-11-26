@@ -9,16 +9,8 @@ void Zombie::Init(Vector3 _pos)
 {
 	LoadFile("Monster/Zombie.xml");
 	SetLocalPos(_pos);
-
-	state = MonsterState::FALL;
-	passedTime = 0.f;
-	isAlive = true;
-
-	maxHp = 100;
-	hp = maxHp;
-
-
-	prevSector = (_pos / BLOCK_LENGTH) / SECTOR_SIZE;
+	maxHp = 20;
+	PreInit();
 }
 
 void Zombie::Update()
@@ -64,40 +56,48 @@ void Zombie::Release()
 	Actor::Release();
 }
 
+void Zombie::Interact(int _itemid)
+{
+}
+
 void Zombie::Idle()
 {
 	CheckFloor();
 
 	if (DectectPlayer(500.f))
 	{
-		state = MonsterState::FOLLOW;
+		ChangeState(MonsterState::FOLLOW);
 		return;
 	}
 	if (leftTime <= 0.f)
 	{
-		state = MonsterState::MOVE;
+		ChangeState(MonsterState::MOVE);
 		leftTime = (float(rand() % 30) * 0.1f) + 1.f;
 		rotation.y = float(float(rand() % 31415) * 0.0001f);
+		rotatedDir.y = float(float(rand() % 31415) * 0.0001f);
 		return;
 	}
 }
 
 void Zombie::Move()
 {
+	AniWalking(0.3f);
+
+
 	CheckFloor();
 
 	HorizontalMove();
 
 	CheckBlockHeight();
 
-	if (DectectPlayer(500.f))
+	if (DectectPlayer(100.f))
 	{
-		state = MonsterState::FOLLOW;
+		ChangeState(MonsterState::FOLLOW);
 		return;
 	}
 	if (leftTime <= 0.f)
 	{
-		state = MonsterState::IDLE;
+		ChangeState(MonsterState::IDLE);
 		leftTime = (float(rand() % 10) * 0.1f) + 1.f;
 		return;
 	}
@@ -110,6 +110,9 @@ void Zombie::Fall()
 
 void Zombie::Follow()
 {
+	AniWalking(0.3f);
+
+
 	CheckFloor();
 
 	FollowPlayer();
@@ -117,15 +120,15 @@ void Zombie::Follow()
 	CheckBlockHeight();
 
 
-	if (DectectPlayer(15.f))
+	if (DectectPlayer(30.f))
 	{
-		state = MonsterState::ATTACK;
-		leftTime = 0.f;
+		ChangeState(MonsterState::ATTACK);
+		leftTime = 0.6f;
 		return;
 	}
-	if (not DectectPlayer(500.f))
+	if (not DectectPlayer(100.f))
 	{
-		state = MonsterState::IDLE;
+		ChangeState(MonsterState::IDLE);
 		leftTime = 1.f;
 		return;
 	}
@@ -133,16 +136,28 @@ void Zombie::Follow()
 
 void Zombie::Attack()
 {
+	AniAttacking2(0.6f);
+
 	if (leftTime <= 0.f)
 	{
-		leftTime = 0.5f;
+		Player::user->AttackedByMonster(2);
+		leftTime = 0.6f;
 		return;
 	}
 
-	if (not DectectPlayer(15.f))
+	if (not DectectPlayer(30.f))
 	{
-		state = MonsterState::FOLLOW;
+		ChangeState(MonsterState::FOLLOW);
 		leftTime = 0.f;
 		return;
 	}
+}
+
+void Zombie::AniReset()
+{
+	for (auto& it : obList)
+		it.second->rotation = { 0.f, 0.f, 0.f };
+	Find("shoulderL")->rotation.x = -PI_DIV2;
+	Find("shoulderR")->rotation.x = -PI_DIV2;
+	rotation = rotatedDir;
 }

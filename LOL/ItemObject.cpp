@@ -9,6 +9,7 @@ ItemObject::ItemObject(Item _item, Vector3 _dir)
 	dir = _dir;
 
 	ITEM_MANAGER->SetItemObjectImage(this, _item);
+	scale = { 2.f, 2.f, 2.f };
 }
 
 void ItemObject::Update()
@@ -50,7 +51,7 @@ void ItemObject::Stay()
 		SetLocalPosY(height);
 	}
 
-	if (Vector3::Distance(GetWorldPos(), ITEM_MANAGER->user->GetWorldPos()) < 10.f)
+	if (Vector3::Distance(GetWorldPos(), Player::user->GetWorldPos()) < 10.f)
 	{
 		state = ItemObjectState::GAIN;
 		return;
@@ -70,10 +71,10 @@ void ItemObject::Fall()
 
 void ItemObject::Gain()
 {
-	Vector3 toUser = ITEM_MANAGER->user->GetWorldPos() - GetWorldPos();
+	Vector3 toUser = Player::user->GetWorldPos() - GetWorldPos();
 	toUser.Normalize();
 	MoveWorldPos(toUser * DELTA * 10.f);
-	if (Vector3::Distance(GetWorldPos(), ITEM_MANAGER->user->GetWorldPos()) < 2.f)
+	if (Vector3::Distance(GetWorldPos(), Player::user->GetWorldPos()) < 2.f)
 	{
 		INVENTORY->GainItem(item);
 		item.Remove();

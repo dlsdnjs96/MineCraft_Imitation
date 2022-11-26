@@ -211,4 +211,14 @@ void Animations::RenderDetail()
 			PlayAnimation(AnimationState::LOOP, i);
 		}
 	}
+	if (ImGui::Button("Add Animation"))
+	{
+		shared_ptr<Animation> temp = make_shared<Animation>();
+		temp->file = "test";
+		playList.push_back(temp);
+	}
+	if (ImGui::Button("Play Last Animation"))
+	{
+		PlayAnimation(AnimationState::ONCE, playList.size() - 1);
+	}
 }

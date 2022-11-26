@@ -9,16 +9,8 @@ void Pig::Init(Vector3 _pos)
 {
 	LoadFile("Monster/Pig.xml");
 	SetLocalPos(_pos);
-
-	state = MonsterState::FALL;
-	passedTime = 0.f;
-	isAlive = true;
-
-	maxHp = 100;
-	hp = maxHp;
-
-
-	prevSector = (_pos / BLOCK_LENGTH) / SECTOR_SIZE;
+	maxHp = 10;
+	PreInit();
 }
 
 void Pig::Update()
@@ -35,6 +27,12 @@ void Pig::Update()
 		break;
 	case MonsterState::FALL:
 		Fall();
+		break;
+	case MonsterState::HIT:
+		Hit();
+		break;
+	case MonsterState::HIT_NO_REACT:
+		HitNoReact();
 		break;
 	case MonsterState::RUN_AWAY:
 		RunAway();
@@ -61,21 +59,30 @@ void Pig::Release()
 	Actor::Release();
 }
 
+void Pig::Interact(int _itemid)
+{
+}
+
 void Pig::Idle()
 {
 	CheckFloor();
 
 	if (leftTime <= 0.f)
 	{
-		state = MonsterState::MOVE;
+		ChangeState(MonsterState::MOVE);
 		leftTime = (float(rand() % 30) * 0.1f) + 1.f;
 		rotation.y = float(float(rand() % 31415) * 0.0001f);
 		return;
 	}
+	if (DectectWheet(500.f))
+		ChangeState(MonsterState::FOLLOW);
 }
 
 void Pig::Move()
 {
+	AniCrawling(0.3f);
+
+
 	CheckFloor();
 
 	HorizontalMove();
@@ -84,10 +91,12 @@ void Pig::Move()
 
 	if (leftTime <= 0.f)
 	{
-		state = MonsterState::IDLE;
+		ChangeState(MonsterState::IDLE);
 		leftTime = (float(rand() % 10) * 0.1f) + 1.f;
 		return;
 	}
+	if (DectectWheet(500.f))
+		ChangeState(MonsterState::FOLLOW);
 
 }
 
@@ -97,14 +106,18 @@ void Pig::Jump()
 
 void Pig::Fall()
 {
-	FallingDown();
+	if (FallingDown())
+		HitByFallDown(int(passedTime * 10.f));
 }
 
 void Pig::RunAway()
 {
+	AniCrawling(0.15f);
+
+
 	if (leftTime <= 0.f)
 	{
-		state = MonsterState::IDLE;
+		ChangeState(MonsterState::IDLE);
 		leftTime = 1.f;
 		return;
 	}
@@ -114,6 +127,16 @@ void Pig::RunAway()
 	HorizontalMove(2.f);
 
 	CheckBlockHeight();
+}
+
+void Pig::Follow()
+{
+	if (not DectectWheet(500.f)) {
+		ChangeState(MonsterState::IDLE);
+		leftTime = 1.f;
+		return;
+	}
+	FollowPlayer();
 }
 
 

@@ -2,6 +2,12 @@
 #include "../2DFrameWork/framework.h"
 #pragma comment (lib,"../Build/2DFrameWork/2DFrameWork.lib")
 
+
+
+#include <mysql.h>
+#pragma comment (lib, "../Libs/libmysql.lib")
+//#pragma comment (lib, "C:/Program Files/MySQL/mysql-8.0.31-winx64/lib/libmysql.lib")
+
 #define BLOCK_FACE_UP		0b000001
 #define BLOCK_FACE_DOWN		0b000010
 #define BLOCK_FACE_RIGHT	0b000100
@@ -156,9 +162,10 @@ enum class BlockType
 	BIRCH_DOOR_BLOCK			= 194,
 	JUNGLE_DOOR_BLOCK			= 195,
 	ACACIA_DOOR_BLOCK			= 196,
-	DARK_OAK_DOOR_BLOCK			= 197,
+	DARK_OAK_DOOR_BLOCK			= 197
 };
 
+//#include <my_global.h>
 
 #include "ObjectPool.h"
 #include "Block.h"
@@ -168,13 +175,14 @@ enum class BlockType
 #include "Item.h"
 #include "ItemObject.h"
 #include "Inventory.h"
+#include "ItemManager.h"
 #include "Player.h"
 #include "WorldGenerator.h"
 #include "WorldList.h"
 #include "Setting.h"
 #include "BlockCollider.h"
-#include "ItemManager.h"
 #include "Crafting.h"
+#include "Furnace.h"
 #include "Monster.h"
 #include "Pig.h"
 #include "Cow.h"
@@ -182,9 +190,14 @@ enum class BlockType
 #include "Zombie.h"
 #include "Sheep.h"
 #include "SkeletonArcher.h"
+#include "Spider.h"
 #include "MonsterManager.h"
 #include "ItemDetail.h"
 #include "MonsterFactory.h"
+#include "DataBase.h"
+#include "PlayerModel.h"
+#include "PlayerView.h"
+#include "PlayerController.h"
 
 
 
@@ -204,3 +217,5 @@ enum class BlockType
 #define ITEM_DETAIL ItemDetail::GetInstance()
 #define MONSTER_MANAGER MonsterManager::GetInstance()
 #define MONSTER_FACTORY MonsterFactory::GetInstance()
+#define FURNACE_TABLE Furnace::GetInstance()
+#define DATABASE DataBase::GetInstance()

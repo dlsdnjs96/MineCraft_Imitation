@@ -16,7 +16,12 @@ private:
 
 
 public:
-	string name = "";
+	int		id;
+	string	name = "";
+	string	createdDate = "";
+	string	lastConnected = "";
+
+
 	void Init();
 	void Update();
 	bool RenderHierarchy();
@@ -27,6 +32,8 @@ public:
 
 	void LoadWorld();
 	void SaveWorld();
+	void LoadWorldBinary();
+	void SaveWorldBinary();
 
 	void CreateDumpBlocks();
 	void distinguishSectors();

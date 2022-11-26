@@ -2,6 +2,8 @@
 class Sheep : public Monster
 {
 private:
+	bool shaved;
+	float	shavedTime;
 public:
 	Sheep();
 
@@ -10,11 +12,14 @@ public:
 	void	Render();
 	void	RenderHierarchy();
 	void	Release();
+	void	Interact(int _itemid);
 
 	void	Idle();
 	void	Move();
 	void	Fall();
+	void	RunAway();
 	void	Follow();
-	void	Attack();
+
+	void	CheckWool();
 };
 

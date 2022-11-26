@@ -23,7 +23,8 @@ enum class ACT_STATE
 class Player : public Actor
 {
 private:
-	PLAYER_STATE	state = PLAYER_STATE::SUPER;
+protected:
+public:
 	ACT_STATE		actState = ACT_STATE::NORMAL;
 	Vector3			prevPos;
 	Vector3			moveForce;
@@ -37,16 +38,22 @@ private:
 	float			jumpSpeed = 50.f;
 	float			jumppedTime = 0.f;
 	float			passedTime = 0.f;
+	bool			firstTime = true;
 
 	Int3			targetInt3;
 	Int3			prevTarget;
 	Actor*			breakingBlock;
 	vector<Int3>	rayIntersectOrder;
 
-	int				hp;
 
-public:
+	UI*				pUI;
+
+	int				hp;
+	int				hunger;
+	PLAYER_STATE	state = PLAYER_STATE::SUPER;
 	static	Player* user;
+
+
 	void	Init();
 	void	Update();
 	void	Release();
@@ -77,9 +84,11 @@ public:
 	void	UninstallBlock();
 
 	int		GetAttackPoint();
-	void	AttackByMonster(int damage);
+	void	AttackedByMonster(int damage);
 
 	void	Collider();
+
+	void	UpdatePlayerUI();
 
 	const char*		StateToString(PLAYER_STATE e);
 

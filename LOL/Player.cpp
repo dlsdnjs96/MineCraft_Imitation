@@ -42,10 +42,49 @@ void Player::Init()
 
 
     hp = 20;
+    hunger = 20;
+
+    pUI = UI::Create("PlayerUI");
+    pUI->LoadFile("Ingame/PlayerUI.xml");
+
+    for (int i = 0; i < 10; i++)
+    {
+        UI* temp = UI::Create("heartB" + to_string(i));
+        temp->scale = { 0.046f, 0.065f, 1.f };
+        temp->SetLocalPos({ -0.45f + (i * 0.0444f), 0.1f, 0.f });
+        temp->material = RESOURCE->materials.Load("heartBack.mtl");
+        pUI->AddChild(temp);
+
+        UI* temp2 = UI::Create("heartF" + to_string(i));
+        temp2->scale = { 0.7777f, 0.7777f, 1.f };
+        temp2->SetLocalPos({ 0.f, 0.f, -0.1f });
+        temp2->material = RESOURCE->materials.Load("heartFront.mtl");
+        pUI->Find("heartB" + to_string(i))->AddChild(temp2);
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+        UI* temp = UI::Create("foodB" + to_string(i));
+        temp->scale = { 0.046f, 0.065f, 1.f };
+        temp->SetLocalPos({ 0.45f - (i * 0.0444f), 0.1f, 0.f });
+        temp->material = RESOURCE->materials.Load("foodBack.mtl");
+        pUI->AddChild(temp);
+
+        UI* temp2 = UI::Create("foodF" + to_string(i));
+        temp2->scale = { 0.7777f, 0.7777f, 1.f };
+        temp2->SetLocalPos({ 0.f, 0.f, -0.1f });
+        temp2->material = RESOURCE->materials.Load("foodFront.mtl");
+        pUI->Find("foodB" + to_string(i))->AddChild(temp2);
+    }
 }
 
 void Player::Update()
 {
+    //if (INPUT->KeyDown('1'))
+    //    hp++;
+    //if (INPUT->KeyDown('2'))
+    //    hp--;
+    //UpdatePlayerUI();
     if (INVENTORY->showInven || CRAFTING->active)
         return;
     Actor::Update();
@@ -115,6 +154,7 @@ void Player::Update()
         break;
     }
 
+    pUI->Update();
     return;
 }
 
@@ -122,6 +162,8 @@ void Player::Release()
 {
     breakingBlock->Release();
 }
+
+
 
 void Player::Idle()
 {
@@ -256,7 +298,9 @@ void Player::Normal()
         else
             actState = ACT_STATE::DIGGING;
     } else if (INPUT->KeyDown(VK_RBUTTON)) {
-        InteractBlock();
+        Ray ray = Util::AimToRay(Camera::main);
+        if (not MONSTER_MANAGER->InteractWithRay(ray))
+            InteractBlock();
     }
 }
 
@@ -416,6 +460,7 @@ bool Player::RenderHierarchy()
 {
     Actor::RenderHierarchy();
     breakingBlock->RenderHierarchy();
+    pUI->RenderHierarchy();
 
     return false;
 }
@@ -425,11 +470,15 @@ void Player::Render()
     Actor::Render();
     if (actState == ACT_STATE::DIGGING)
         breakingBlock->Render();
+    pUI->Render();
 }
 
 void Player::InteractBlock()
 {
     int intersectIndex = FindTarget();
+    if (intersectIndex < 0)
+        return;
+
     switch (WORLD->GetBlock(targetInt3).blockType)
     {
     case BlockType::CRAFTING_TABLE:
@@ -442,10 +491,9 @@ void Player::InteractBlock()
             CRAFTING->ShowCraftTable(false);
         }
         break;
-    default:
-        InstallBlock();
-        break;
     }
+    if (INVENTORY->GetPickedItem().itemid < 256)
+        InstallBlock();
 }
 
 int Player::FindTarget()
@@ -517,12 +565,43 @@ void Player::UninstallBlock()
 
 int Player::GetAttackPoint()
 {
-    return 90;
+
+    switch (INVENTORY->GetPickedItem().itemid)
+    {
+    case 270:
+    case 285:
+    case 269:
+    case 284:
+    case 290:
+    case 294:
+        return 2;
+    case 274:
+    case 273:
+    case 291:
+        return 3;
+    case 271:
+    case 286:
+    case 257:
+    case 256:
+    case 292:
+        return 4;
+    case 275:
+    case 278:
+    case 277:
+    case 293:
+        return 5;
+    case 258:
+        return 6;
+    case 279:
+        return 7;
+    }
+    return 1;
 }
 
-void Player::AttackByMonster(int damage)
+void Player::AttackedByMonster(int damage)
 {
     hp -= damage;
+    UpdatePlayerUI();
     if (hp <= 0)
     {
         state = PLAYER_STATE::DEAD;
@@ -542,6 +621,41 @@ void Player::Collider()
     verifiedPos.y = float(curPos.y * 10.f) + 5.f;
     verifiedPos.z = float(curPos.z * 10.f);
     Find("Collider")->SetWorldPos(verifiedPos);
+}
+
+void Player::UpdatePlayerUI()
+{
+    int i;
+    for (i = 0; i < hp / 2; i++) {
+        pUI->Find("heartF" + to_string(i))->visible = true;
+        pUI->Find("heartF" + to_string(i))->material = RESOURCE->materials.Load("heartFront.mtl");
+    }
+    for (; i < 10; i++)
+    {
+        pUI->Find("heartF" + to_string(i))->visible = false;
+        pUI->Find("heartF" + to_string(i))->material = RESOURCE->materials.Load("heartFront.mtl");
+    }
+    if (hp % 2 == 1)
+    {
+        pUI->Find("heartF" + to_string(hp / 2))->visible = true;
+        pUI->Find("heartF" + to_string(hp / 2))->material = RESOURCE->materials.Load("heartHalf.mtl");
+    }
+
+    for (i = 0; i < hunger / 2; i++) {
+        pUI->Find("foodF" + to_string(i))->visible = true;
+        pUI->Find("foodF" + to_string(i))->material = RESOURCE->materials.Load("foodFront.mtl");
+    }
+    for (; i < 10; i++)
+    {
+        pUI->Find("foodF" + to_string(i))->visible = false;
+        pUI->Find("foodF" + to_string(i))->material = RESOURCE->materials.Load("foodFront.mtl");
+    }
+    if (hunger % 2 == 1)
+    {
+        pUI->Find("foodF" + to_string(hunger / 2))->visible = true;
+        pUI->Find("foodF" + to_string(hunger / 2))->material = RESOURCE->materials.Load("foodHalf.mtl");
+    }
+    pUI->Update();
 }
 
 const char* Player::StateToString(PLAYER_STATE e)

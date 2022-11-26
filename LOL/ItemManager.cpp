@@ -25,11 +25,12 @@ void ItemManager::RenderHierarchy()
 		it->RenderHierarchy();
 }
 
-void ItemManager::Spawn(Vector3 _pos, Item _item)
+void ItemManager::Spawn(Vector3 _pos, Item _item, ItemObjectState _state)
 {
 	ItemObject* temp = new ItemObject(_item);
 	_pos.y += BLOCK_LENGTH;
 	temp->SetLocalPos(_pos);
+	temp->state = _state;
 	objects.push_back(temp);
 }
 
@@ -253,6 +254,15 @@ const char* ItemManager::GetItemName(int _itemid)
 int ItemManager::GetItemId(const char* _itemName)
 {
 	const std::map<const char*, int> MyEnumStrings{
+		{ "iron_shovel", 256 },
+		{ "iron_pickaxe", 257 },
+		{ "iron_axe", 258 },
+		{ "flint_and_steel", 259 },
+		{ "apple", 260 },
+		{ "bow", 261 },
+		{ "arrow", 262 },
+		{ "coal", 263 },
+		{ "diamond", 264 },
 		{ "iron_ingot", 265 },
 		{ "gold_ingot", 266 },
 		{ "iron_sword", 267 },
