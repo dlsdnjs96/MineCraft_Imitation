@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-Player* Player::user = nullptr;
+//Player* Player::user = nullptr;
 void Player::Init()
 {
     LoadFile("Player.xml");
@@ -80,6 +80,7 @@ void Player::Init()
 
 void Player::Update()
 {
+    passedTime += DELTA;
     //if (INPUT->KeyDown('1'))
     //    hp++;
     //if (INPUT->KeyDown('2'))

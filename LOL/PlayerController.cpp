@@ -12,6 +12,9 @@ PlayerController::~PlayerController()
 void PlayerController::Update()
 {
     model->moveForce = { 0.f, 0.f, 0.f };
+    if (INVENTORY->showInven || CRAFTING->active)
+        return;
+
     switch (model->state)
     {
     case PLAYER_STATE::IDLE:
@@ -48,6 +51,20 @@ void PlayerController::Update()
     case ACT_STATE::DIGGING:
         Digging();
         break;
+    }
+
+    if (INPUT->KeyDown(VK_F3)) {
+        if (model->theFirstPerson)
+        {
+            model->theFirstPerson = false;
+            Camera::main = dynamic_cast<Camera*>(model->Find("camHead"));
+            model->mainPerson = model->Find("head");
+        }
+        else {
+            model->theFirstPerson = true;
+            Camera::main = dynamic_cast<Camera*>(model->Find("fCam"));
+            model->mainPerson = model->Find("theFirstPerson");
+        }
     }
 }
 
@@ -92,9 +109,9 @@ void PlayerController::Fall()
 
 void PlayerController::Super()
 {
-    Vector3 forward = model->Find("head")->GetForward();
-    Vector3 right = model->Find("head")->GetRight();
-    Vector3 up = model->Find("head")->GetUp();
+    Vector3 forward = model->mainPerson->GetForward();
+    Vector3 right = model->mainPerson->GetRight();
+    Vector3 up = model->mainPerson->GetUp();
     const float moveSpeed = 100.f;
 
     forward.y = 0;
@@ -169,8 +186,8 @@ void PlayerController::Digging()
 bool PlayerController::FourWaysMoving()
 {
     bool moved = false;
-    Vector3 forward = model->Find("head")->GetForward();
-    Vector3 right = model->Find("head")->GetRight();
+    Vector3 forward = model->mainPerson->GetForward();
+    Vector3 right = model->mainPerson->GetRight();
 
     forward.y = 0.f;
     right.y = 0.f;
@@ -198,8 +215,8 @@ bool PlayerController::FourWaysMoving()
 bool PlayerController::FourWaysFloating()
 {
     bool moved = false;
-    Vector3 forward = model->Find("head")->GetForward();
-    Vector3 right = model->Find("head")->GetRight();
+    Vector3 forward = model->mainPerson->GetForward();
+    Vector3 right = model->mainPerson->GetRight();
 
     forward.y = 0.f;
     right.y = 0.f;

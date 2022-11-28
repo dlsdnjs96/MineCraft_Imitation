@@ -184,7 +184,7 @@ bool Util::RayIntersectTriNear(IN Ray WRay, IN GameObject* Target, OUT Vector3& 
 
 int Util::RayIntersectSquareNear(IN Ray WRay, IN GameObject* Target)
 {
-	if (not Target->mesh)return false;
+	if (not Target->mesh)return -1;
 
 	Matrix inverse = Target->W.Invert();
 	WRay.direction = Vector3::TransformNormal(WRay.direction, inverse);

@@ -67,9 +67,9 @@ void MenuScene::Init()
         time_t timer = time(NULL);
         struct tm pLocal;
         localtime_s(&pLocal, &timer);
-        //WORLD->name = "NewWorld_"+to_string(pLocal.tm_year) + to_string(pLocal.tm_mon) + to_string(pLocal.tm_mday)
-        //    + "_" + to_string(pLocal.tm_hour) + to_string(pLocal.tm_min) + to_string(pLocal.tm_sec);
-        WORLD->name = "NewWorld";
+        WORLD->name = "NewWorld_"+to_string(pLocal.tm_year) + to_string(pLocal.tm_mon) + to_string(pLocal.tm_mday)
+            + "_" + to_string(pLocal.tm_hour) + to_string(pLocal.tm_min) + to_string(pLocal.tm_sec);
+        //WORLD->name = "NewWorld";
         DATABASE->SaveWolrd();
         DATABASE->UpdateWolrdId();
         SCENE->ChangeScene("LOADING", 0.1f)->Init(); };

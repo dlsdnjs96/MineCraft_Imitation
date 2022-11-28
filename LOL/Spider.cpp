@@ -140,7 +140,7 @@ void Spider::Attack()
 
 	if (leftTime <= 0.f)
 	{
-		Player::user->AttackedByMonster(3);
+		PlayerModel::user->AttackedByMonster(3);
 		leftTime = 1.f;
 		passedTime = 0.f;
 	}

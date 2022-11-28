@@ -95,22 +95,22 @@ void WorldList::LoadWorldList()
 				temp2->ChangeText(worldName);
 				Find(worldName)->AddChild(temp2);
 
-				Text* temp3 = Text::Create(worldName + "created_date");
-				temp3->fromLeft = true;
-				temp3->SetLocalPos({ -0.3f / 1.2f, 0.f, 0.f });
-				temp3->scale = { 0.3f, 1.1f, 1.f };
-				temp3->shader = RESOURCE->shaders.Load("6.Black.hlsl");
-				temp3->ChangeText(worldName);
-				Find(worldName)->AddChild(temp3);
-
-				Text* temp4 = Text::Create(worldName + "last_cennected");
-				temp4->fromLeft = true;
-				temp4->SetLocalPos({ -0.3f / 1.2f, -0.1f / 0.4f, 0.f });
-				temp4->scale = { 0.3f, 1.1f, 1.f };
-				temp4->shader = RESOURCE->shaders.Load("6.Black.hlsl");
-				temp4->ChangeText(worldName);
-				Find(worldName)->AddChild(temp4);
-				//dynamic_cast<UI*>(Find(worldName))->mouseDown = [=]() { WORLD->name = worldName; WORLD->LoadWorld(); SCENE->ChangeScene("INGAME", 0.1f)->Init(); };
+				//Text* temp3 = Text::Create(worldName + "created_date");
+				//temp3->fromLeft = true;
+				//temp3->SetLocalPos({ -0.3f / 1.2f, 0.f, 0.f });
+				//temp3->scale = { 0.3f, 1.1f, 1.f };
+				//temp3->shader = RESOURCE->shaders.Load("6.Black.hlsl");
+				//temp3->ChangeText(worldName);
+				//Find(worldName)->AddChild(temp3);
+				//
+				//Text* temp4 = Text::Create(worldName + "last_cennected");
+				//temp4->fromLeft = true;
+				//temp4->SetLocalPos({ -0.3f / 1.2f, -0.1f / 0.4f, 0.f });
+				//temp4->scale = { 0.3f, 1.1f, 1.f };
+				//temp4->shader = RESOURCE->shaders.Load("6.Black.hlsl");
+				//temp4->ChangeText(worldName);
+				//Find(worldName)->AddChild(temp4);
+				////dynamic_cast<UI*>(Find(worldName))->mouseDown = [=]() { WORLD->name = worldName; WORLD->LoadWorld(); SCENE->ChangeScene("INGAME", 0.1f)->Init(); };
 				
 
 

@@ -8,12 +8,17 @@ InGameScene::InGameScene()
     Grid = Actor::Create();
     Grid->LoadFile("Grid.xml");
 
-    player = new Player();
-    player->Init();
-    Player::user = player;
+    //player = new Player();
+    //player->Init();
+    //Player::user = player;
 
+    playerModel         = new PlayerModel();
+    playerModel->Init();
+    PlayerModel::user   = playerModel;
+    playerView          = new PlayerView(playerModel);
+    playerController    = new PlayerController(playerModel);
 
-    Camera::main = dynamic_cast<Camera*>(player->Find("camHead"));
+    Camera::main = dynamic_cast<Camera*>(playerModel->Find("camHead"));
     //WORLD->LoadWorld();
     //WORLD->SaveWorld();
     resume = UI::Create("Resume");
@@ -31,7 +36,7 @@ InGameScene::~InGameScene()
 {
     RESOURCE->ReleaseAll();
     Grid->Release();
-    player->Release();
+    //player->Release();
     Cam->Release();
     resume->Release();
     setting->Release();
@@ -45,7 +50,7 @@ InGameScene::~InGameScene()
 
 void InGameScene::Init()
 {
-    Cam = dynamic_cast<Camera*>(player->Find("camHead"));
+    Cam = dynamic_cast<Camera*>(playerModel->Find("camHead"));
     Cam->nearZ = 0.3f;
     Cam->farZ = 5000.f;
     Camera::main = Cam;
@@ -121,7 +126,7 @@ void InGameScene::Update()
     ImGui::Text("FPS: %d", TIMER->GetFramePerSecond());
     ImGui::Begin("Hierarchy");
     Grid->RenderHierarchy();
-    player->RenderHierarchy();
+    playerModel->RenderHierarchy();
     Camera::main->RenderHierarchy();
     TestBlock->RenderHierarchy();
     WORLD->RenderHierarchy();
@@ -152,7 +157,9 @@ void InGameScene::Update()
         aim->Update();
         TestBlock->Update();
     }
-    player->Update();
+    playerController->Update();
+    playerModel->Update();
+    playerView->Update();
     ITEM_MANAGER->Update();
     INVENTORY->Update();
     CRAFTING->Update();
@@ -182,7 +189,7 @@ void InGameScene::Render()
     Camera::main->Set();
     Grid->Render();
 
-    player->Render();
+    playerView->Render();
     WORLD->PreRender();
 
     BLEND->Set(true);

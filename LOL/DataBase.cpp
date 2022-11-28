@@ -102,11 +102,11 @@ void DataBase::LoadPlayer()
     if (mysql_query(conn, query.c_str()) == 0) {
         result = mysql_store_result(conn);
         if ((row = mysql_fetch_row(result)) != NULL) {
-            Player::user->state = PLAYER_STATE(atoi(row[2]));
-            Player::user->SetLocalPos({ float(atof(row[3])), float(atof(row[4])), float(atof(row[5])) });
-            Player::user->rotation =  { float(atof(row[6])), float(atof(row[7])), float(atof(row[8])) };
-            Player::user->hp = atoi(row[6]);
-            Player::user->hunger = atoi(row[10]);
+            PlayerModel::user->state = PLAYER_STATE(atoi(row[2]));
+            PlayerModel::user->SetLocalPos({ float(atof(row[3])), float(atof(row[4])), float(atof(row[5])) });
+            PlayerModel::user->rotation =  { float(atof(row[6])), float(atof(row[7])), float(atof(row[8])) };
+            PlayerModel::user->hp = atoi(row[6]);
+            PlayerModel::user->hunger = atoi(row[10]);
         }
         else
             cout << "fail to fetch" << endl;
@@ -128,10 +128,10 @@ void DataBase::SavePlayer()
 
 
     query = "INSERT INTO player(worldid, state, positionX, positionY, positionZ, rotationX, rotationY, rotationZ, hp, hunger) VALUES(";
-    query += to_string(WORLD->id) + ", " + to_string(int(Player::user->state)) + ", ";
-    query += to_string(Player::user->GetLocalPos().x) + ", " + to_string(Player::user->GetLocalPos().y) + ", " + to_string(Player::user->GetLocalPos().z) + ", ";
-    query += to_string(Player::user->rotation.x) + ", " + to_string(Player::user->rotation.y) + ", " + to_string(Player::user->rotation.z) + ", ";
-    query += to_string(Player::user->hp) + ", " + to_string(Player::user->hunger) + ")";
+    query += to_string(WORLD->id) + ", " + to_string(int(PlayerModel::user->state)) + ", ";
+    query += to_string(PlayerModel::user->GetLocalPos().x) + ", " + to_string(PlayerModel::user->GetLocalPos().y) + ", " + to_string(PlayerModel::user->GetLocalPos().z) + ", ";
+    query += to_string(PlayerModel::user->rotation.x) + ", " + to_string(PlayerModel::user->rotation.y) + ", " + to_string(PlayerModel::user->rotation.z) + ", ";
+    query += to_string(PlayerModel::user->hp) + ", " + to_string(PlayerModel::user->hunger) + ")";
 
 
     if (mysql_query(conn, query.c_str()) != 0)

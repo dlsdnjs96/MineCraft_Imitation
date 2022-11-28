@@ -3,7 +3,7 @@
 PlayerModel* PlayerModel::user = nullptr;
 void PlayerModel::Init()
 {
-    LoadFile("Player.xml");
+    LoadFile("Monster/Steve.xml");
     //LoadFile("Monster/Steve.xml");
     breakingBlock = Actor::Create("breakingBlock");
     breakingBlock->LoadFile("breakingBlock.xml");
@@ -35,11 +35,12 @@ void PlayerModel::Init()
     }
 
 
-    GameObject* temp = GameObject::Create("testCollider");
-    Find("Collider")->AddChild(temp);
-    temp->mesh = RESOURCE->meshes.Load("6.blockCollider.mesh");
-    temp->shader = RESOURCE->shaders.Load("1.Collider.hlsl");
+    //GameObject* temp = GameObject::Create("testCollider");
+    //Find("Collider")->AddChild(temp);
+    Find("testCollider")->mesh = RESOURCE->meshes.Load("6.blockCollider.mesh");
+    Find("testCollider")->shader = RESOURCE->shaders.Load("1.Collider.hlsl");
 
+    mainPerson = Find("theFirstPerson");
 
     hp = 20;
     hunger = 20;
@@ -85,23 +86,32 @@ void PlayerModel::Update()
     //if (INPUT->KeyDown('2'))
     //    hp--;
     //UpdatePlayerUI();
-    if (INVENTORY->showInven || CRAFTING->active)
-        return;
+
     Actor::Update();
     Collider();
 
     if (INPUT->fixedMousePos.x != -1) {
-        Find("head")->rotation.x -= (INPUT->moveNDCPos.y * PI) / 2.f;
-        Find("head")->rotation.y += (INPUT->moveNDCPos.x * PI) / 2.f;
-        //Util::Saturate(Find("head")->rotation.x, -PI / 2.f, PI / 2.f);
-        Util::Saturate(Find("head")->rotation.x, -PI / 2.f, PI * 0.1736f);
+        Find("theFirstPerson")->rotation.x -= (INPUT->moveNDCPos.y * PI) / 2.f;
+        Find("theFirstPerson")->rotation.y += (INPUT->moveNDCPos.x * PI) / 2.f;
+        Util::Saturate(Find("theFirstPerson")->rotation.x, -PI / 2.f, PI * 0.1736f);
+        
+        //rotation.y = mainPerson.y;
+        //if (theFirstPerson) {
+        //    Find("theFirstPerson")->rotation.x = mainPerson.x;
+        //}
+        //else {
+        //    Find("head")->rotation.x = mainPerson.x;
+        //}
+        //Find("head")->rotation.x -= (INPUT->moveNDCPos.y * PI) / 2.f;
+        //Find("head")->rotation.y += (INPUT->moveNDCPos.x * PI) / 2.f;
+        //Util::Saturate(Find("head")->rotation.x, -PI / 2.f, PI * 0.1736f);
     }
 
     Vector3 temp = GetWorldPos() / BLOCK_LENGTH;
     Int3 curPos2 = Int3(temp);
     Int3 curPos = Int3(GetWorldPos() / BLOCK_LENGTH);
     //curPos /= static_cast<int>(BLOCK_LENGTH);
-
+    passedTime += DELTA;
 
 
 
@@ -272,7 +282,7 @@ void PlayerModel::Digging()
         prevTarget = targetInt3;
         firstTime = false;
     }
-    passedTime += DELTA;
+    //passedTime += DELTA;
 
     //printf("%f %d %d %d %d\r\n", passedTime, targetInt3.x, targetInt3.y, targetInt3.z, firstTime);
 
@@ -296,7 +306,7 @@ void PlayerModel::Digging()
 
 bool PlayerModel::FourWaysMoving()
 {
-    bool moved = false;
+    bool moved = true;
 
     Int3 enterBlock = Int3((GetWorldPos() + moveForce) / BLOCK_LENGTH);
     //enterBlock.y++;
@@ -368,10 +378,10 @@ bool PlayerModel::RenderHierarchy()
 
 void PlayerModel::Render()
 {
-    Actor::Render();
-    if (actState == ACT_STATE::DIGGING)
-        breakingBlock->Render();
-    pUI->Render();
+    //Actor::Render();
+    //if (actState == ACT_STATE::DIGGING)
+    //    breakingBlock->Render();
+    //pUI->Render();
 }
 
 void PlayerModel::InteractBlock()
@@ -401,22 +411,26 @@ int PlayerModel::FindTarget()
 {
     Matrix mat = Camera::main->proj;
     Ray rayToAim = Util::AimToRay(Camera::main);
+    //rayToAim.position =  Find("theFirstPerson")->GetWorldPos();
+    //rayToAim.direction = Find("theFirstPerson")->GetForward();
 
     float dis = FLT_MAX;
     int intersectIndex = -1;
 
     Int3 intersectInt3;
+    Int3 fromInt3 = Int3(mainPerson->GetWorldPos() / BLOCK_LENGTH);
 
     for (int i = 0; i < rayIntersectOrder.size(); i++)
     {
-        intersectInt3 = curInt3 + rayIntersectOrder[i];
+        intersectInt3 = fromInt3 + rayIntersectOrder[i];
         if (WORLD->GetBlock(intersectInt3).blockType > BlockType::STILL_WATER)
             //    && Util::IsInScreen())
         {
             //float camToBlock = Vector3::Distance(Camera::main->GetWorldPos(), Find("Collider")->GetWorldPos() + (rayIntersectOrder[i].GetVector3() * 10.f));
             float camToBlock = Vector3::Distance(Camera::main->GetWorldPos(), intersectInt3.GetVector3() * 10.f);
             if (dis > camToBlock) {
-                Find("testCollider")->SetLocalPos(rayIntersectOrder[i].GetVector3() * 10.f);
+                //Find("testCollider")->SetLocalPos(rayIntersectOrder[i].GetVector3() * 10.f);
+                Find("testCollider")->SetWorldPos(intersectInt3.GetVector3() * 10.f);
                 Find("Collider")->Update();
                 Find("testCollider")->scale = { 5.1f, 5.1f, 5.1f };
                 Find("testCollider")->visible = true;
@@ -424,11 +438,14 @@ int PlayerModel::FindTarget()
                 if (mIndex != -1) {
                     intersectIndex = mIndex;
                     dis = camToBlock;
-                    targetInt3 = curInt3 + rayIntersectOrder[i];
+                    targetInt3 = fromInt3 + rayIntersectOrder[i];
                 }
             }
         }
     }
+    Find("testCollider")->SetWorldPos(targetInt3.GetVector3() * 10.f);
+    Find("testCollider")->MoveLocalPos({ 0.f, 5.f, 0.f });
+    Find("testCollider")->Update();
     return intersectIndex;
 }
 
@@ -512,11 +529,12 @@ void PlayerModel::AttackedByMonster(int damage)
 void PlayerModel::Collider()
 {
     Vector3 verifiedPos;
-    verifiedPos.x = float(int(int(GetWorldPos().x + 5) / 10) * 10.f);
-    verifiedPos.y = float(int(GetWorldPos().y / 10) * 10.f) + 5.f;
-    verifiedPos.z = float(int(int(GetWorldPos().z + 5) / 10) * 10.f);
+    verifiedPos.x = float(int(int(Find("head")->GetWorldPos().x + 5) / 10) * 10.f);
+    verifiedPos.y = float(int(Find("head")->GetWorldPos().y / 10) * 10.f) + 5.f;
+    verifiedPos.z = float(int(int(Find("head")->GetWorldPos().z + 5) / 10) * 10.f);
 
-    Int3 curPos = Int3(GetWorldPos() / BLOCK_LENGTH);
+    Int3 curPos = Int3(mainPerson->GetWorldPos() / BLOCK_LENGTH);
+    //Int3 curPos = Int3(Camera::main->GetWorldPos() / BLOCK_LENGTH);
     verifiedPos.x = float(curPos.x * 10.f);
     verifiedPos.y = float(curPos.y * 10.f) + 5.f;
     verifiedPos.z = float(curPos.z * 10.f);

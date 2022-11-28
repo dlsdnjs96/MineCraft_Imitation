@@ -5,12 +5,15 @@ private:
 	PlayerModel*	model;
 	int				hp;
 	int				hunger;
+	float			passedTime;
 public:
 	PlayerView(PlayerModel* _model);
 	~PlayerView();
 
 	void	Update();
+	void	Render();
 
+	void	AniReset();
 
 	void	Idle();
 	void	Walk();

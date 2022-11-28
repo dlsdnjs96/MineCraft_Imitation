@@ -140,7 +140,7 @@ void Zombie::Attack()
 
 	if (leftTime <= 0.f)
 	{
-		Player::user->AttackedByMonster(2);
+		PlayerModel::user->AttackedByMonster(2);
 		leftTime = 0.6f;
 		return;
 	}

@@ -6,6 +6,7 @@ public:
 	ACT_STATE		actState = ACT_STATE::NORMAL;
 	Vector3			prevPos;
 	Vector3			moveForce;
+	GameObject*			mainPerson;
 
 	Int3			curInt3;
 	Int3			underInt3;
@@ -17,6 +18,7 @@ public:
 	float			jumppedTime = 0.f;
 	float			passedTime = 0.f;
 	bool			firstTime = true;
+	bool			theFirstPerson = true;
 
 	Int3			targetInt3;
 	Int3			prevTarget;

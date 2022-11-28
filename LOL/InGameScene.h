@@ -8,7 +8,10 @@ private:
 	Actor* Grid;
 	Actor* TestBlock;
 	Camera* Cam;
-	Player* player;
+	//Player* player;
+	PlayerModel*		playerModel;
+	PlayerView*			playerView;
+	PlayerController*	playerController;
 
 	UI* resume;
 	UI* setting;

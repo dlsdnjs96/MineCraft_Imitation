@@ -165,7 +165,7 @@ bool MonsterManager::AttackWithRay(Ray& _ray)
 			{
 				if (it2->collider and it2->collider->Intersect(_ray))
 				{
-					it2->HitByPlayer(Player::user->GetAttackPoint());
+					it2->HitByPlayer(PlayerModel::user->GetAttackPoint());
 					return true;
 				}
 			}

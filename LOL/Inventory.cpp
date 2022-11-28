@@ -286,7 +286,7 @@ void Inventory::Update()
 
         if (INPUT->KeyDown(VK_LBUTTON) && not invens->MouseOver() && mousePick.itemid != 0)
         {
-            ITEM_MANAGER->Spawn(Player::user->GetWorldPos(), mousePick);
+            ITEM_MANAGER->Spawn(PlayerModel::user->GetWorldPos(), mousePick);
             mousePick.Remove();
             UpdateMouse();
         }

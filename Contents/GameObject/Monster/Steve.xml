@@ -1,21 +1,23 @@
 <Root Name="Player" Visible="true" ObType="1">
     <Transform>
-        <Position X="0" Y="0" Z="0"/>
+        <Position X="50.808876" Y="230" Z="410.12982"/>
         <Scale X="1" Y="1" Z="1"/>
-        <Rotation X="0" Y="0" Z="0"/>
+        <Rotation X="0" Y="-0.23571381" Z="0"/>
     </Transform>
-    <Children Size="2"/>
+    <Children Size="3"/>
     <Child0 Name="Collider" Visible="true" ObType="0">
         <Transform>
-            <Position X="0" Y="0" Z="0"/>
+            <Position X="-0.81682968" Y="25" Z="0.06267643"/>
             <Scale X="1" Y="1" Z="1"/>
             <Rotation X="0" Y="0" Z="0"/>
         </Transform>
         <Children Size="1"/>
         <Child0 Name="testCollider" Visible="true" ObType="0">
+            <Mesh File="6.blockCollider.mesh"/>
+            <Shader File="1.Collider.hlsl"/>
             <Transform>
-                <Position X="0" Y="0" Z="0"/>
-                <Scale X="1" Y="1" Z="1"/>
+                <Position X="-144.36761" Y="-250.00002" Z="-386.98581"/>
+                <Scale X="5.0999999" Y="5.0999999" Z="5.0999999"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
             <Children Size="0"/>
@@ -57,7 +59,7 @@
                     <Children Size="1"/>
                     <Child0 Name="camHead" Visible="true" ObType="2">
                         <Transform>
-                            <Position X="0" Y="0" Z="0"/>
+                            <Position X="0" Y="10.8" Z="-67.25"/>
                             <Scale X="1" Y="1" Z="1"/>
                             <Rotation X="0" Y="0" Z="0"/>
                         </Transform>
@@ -170,4 +172,57 @@
             </Child2>
         </Child1>
     </Child1>
+    <Child2 Name="theFirstPerson" Visible="true" ObType="0">
+        <Transform>
+            <Position X="0" Y="26.799999" Z="0"/>
+            <Scale X="1" Y="1" Z="1"/>
+            <Rotation X="0.48865673" Y="1.5314338" Z="0"/>
+        </Transform>
+        <Children Size="2"/>
+        <Child0 Name="fHead" Visible="true" ObType="0">
+            <Transform>
+                <Position X="0" Y="0" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="1"/>
+            <Child0 Name="fCam" Visible="true" ObType="2">
+                <Transform>
+                    <Position X="0" Y="0" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Camera Ortho="false" Fov="1.047192" Width="1280" Height="720" NearZ="0.3" FarZ="5000" viewportX="0" viewportY="0" viewportW="1280" viewportH="720"/>
+                <Children Size="0"/>
+            </Child0>
+        </Child0>
+        <Child1 Name="theFirstPersonS" Visible="true" ObType="0">
+            <Transform>
+                <Position X="4" Y="0" Z="0"/>
+                <Scale X="1" Y="1" Z="1"/>
+                <Rotation X="0" Y="0" Z="0"/>
+            </Transform>
+            <Children Size="1"/>
+            <Child0 Name="theFirstPersonA" Visible="true" ObType="0">
+                <Mesh File="Player/armR.mesh"/>
+                <Shader File="Block.hlsl"/>
+                <Material File="Monster/Steve.mtl"/>
+                <Transform>
+                    <Position X="0" Y="-10" Z="0"/>
+                    <Scale X="1" Y="1" Z="1"/>
+                    <Rotation X="0" Y="0" Z="0"/>
+                </Transform>
+                <Children Size="1"/>
+                <Child0 Name="theFirstPersonI" Visible="true" ObType="0">
+                    <Shader File="Block.hlsl"/>
+                    <Transform>
+                        <Position X="0" Y="0" Z="0"/>
+                        <Scale X="1" Y="1" Z="1"/>
+                        <Rotation X="0" Y="0" Z="0"/>
+                    </Transform>
+                    <Children Size="0"/>
+                </Child0>
+            </Child0>
+        </Child1>
+    </Child2>
 </Root>

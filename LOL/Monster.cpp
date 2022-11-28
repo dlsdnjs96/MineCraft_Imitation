@@ -125,14 +125,14 @@ void Monster::LayEgg()
 
 bool Monster::DectectPlayer(float dis)
 {
-	if (Vector3::Distance(Player::user->GetWorldPos(), GetWorldPos()) < dis)
+	if (Vector3::Distance(PlayerModel::user->GetWorldPos(), GetWorldPos()) < dis)
 		return true;
 	return false;
 }
 
 void Monster::FollowPlayer()
 {
-	Vector3 forward = Player::user->GetWorldPos() - GetWorldPos();
+	Vector3 forward = PlayerModel::user->GetWorldPos() - GetWorldPos();
 	forward.y = 0.f;
 	forward.Normalize();
 	rotation.y = atan2f(forward.x, forward.z);
@@ -142,7 +142,7 @@ void Monster::FollowPlayer()
 bool Monster::DectectWheet(float dis)
 {
 	if (INVENTORY->GetPickedItem().itemid == ITEM_MANAGER->GetItemId("wheet") 
-		and Vector3::Distance(Player::user->GetWorldPos(), GetWorldPos()) < dis)
+		and Vector3::Distance(PlayerModel::user->GetWorldPos(), GetWorldPos()) < dis)
 		return true;
 	return false;
 }
@@ -151,7 +151,7 @@ bool Monster::DectectWheet(float dis)
 
 void Monster::FollowWheet()
 {
-	Vector3 forward = Player::user->GetWorldPos() - GetWorldPos();
+	Vector3 forward = PlayerModel::user->GetWorldPos() - GetWorldPos();
 	forward.y = 0.f;
 	forward.Normalize();
 	rotation.y = atan2f(forward.x, forward.z);
@@ -332,7 +332,7 @@ void Monster::AniCrawling8(float duration)
 
 void Monster::AniAttacking1(float duration)
 {
-	Vector3 forward = Player::user->GetWorldPos() - GetWorldPos();
+	Vector3 forward = PlayerModel::user->GetWorldPos() - GetWorldPos();
 	rotation.y = atan2f(forward.x, forward.z);
 
 	float tTime = fmod(passedTime, 1.f);
@@ -346,7 +346,7 @@ void Monster::AniAttacking1(float duration)
 
 void Monster::AniAttacking2(float duration)
 {
-	Vector3 forward = Player::user->GetWorldPos() - GetWorldPos();
+	Vector3 forward = PlayerModel::user->GetWorldPos() - GetWorldPos();
 	rotation.y = atan2f(forward.x, forward.z);
 
 	float tTime = fmod(passedTime, duration * 2.f);

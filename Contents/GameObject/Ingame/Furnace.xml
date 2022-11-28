@@ -1,4 +1,4 @@
-<Root Name="Furnace" Visible="true" ObType="4">
+<Root Name="Furnace" Visible="false" ObType="4">
     <Mesh File="6.UI.mesh"/>
     <Shader File="6.Cube.hlsl"/>
     <Material File="furnaceBackground.mtl"/>

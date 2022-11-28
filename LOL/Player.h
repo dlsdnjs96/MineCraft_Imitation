@@ -51,7 +51,7 @@ public:
 	int				hp;
 	int				hunger;
 	PLAYER_STATE	state = PLAYER_STATE::SUPER;
-	static	Player* user;
+	//static	Player* user;
 
 
 	void	Init();

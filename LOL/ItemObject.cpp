@@ -51,7 +51,7 @@ void ItemObject::Stay()
 		SetLocalPosY(height);
 	}
 
-	if (Vector3::Distance(GetWorldPos(), Player::user->GetWorldPos()) < 10.f)
+	if (Vector3::Distance(GetWorldPos(), PlayerModel::user->GetWorldPos()) < 10.f)
 	{
 		state = ItemObjectState::GAIN;
 		return;
@@ -71,10 +71,10 @@ void ItemObject::Fall()
 
 void ItemObject::Gain()
 {
-	Vector3 toUser = Player::user->GetWorldPos() - GetWorldPos();
+	Vector3 toUser = PlayerModel::user->GetWorldPos() - GetWorldPos();
 	toUser.Normalize();
 	MoveWorldPos(toUser * DELTA * 10.f);
-	if (Vector3::Distance(GetWorldPos(), Player::user->GetWorldPos()) < 2.f)
+	if (Vector3::Distance(GetWorldPos(), PlayerModel::user->GetWorldPos()) < 2.f)
 	{
 		INVENTORY->GainItem(item);
 		item.Remove();
