@@ -28,8 +28,10 @@ void WorldList::Init()
 	Find("play")->material = RESOURCE->materials.Load("button0.mtl");
 	Find("delete")->material = RESOURCE->materials.Load("button0.mtl");
 
-	dynamic_cast<UI*>(Find("play"))->mouseDown = [=]() { if (selectedWorld == "") return; WORLD->name = selectedWorld; WORLD->LoadWorld(); SCENE->ChangeScene("INGAME", 0.1f)->Init(); };
-	dynamic_cast<UI*>(Find("delete"))->mouseDown = [=]() { if (selectedWorld == "") return; system(("RD ../Contents/Map/" + selectedWorld).c_str()); system(("rmdir ../Contents/Map/" + selectedWorld).c_str()); };
+	dynamic_cast<UI*>(Find("play"))->mouseDown = [=]() { if (selectedWorld == "") return;
+	SOUND->Play("click"); WORLD->name = selectedWorld; WORLD->LoadWorld(); SCENE->ChangeScene("INGAME", 0.1f)->Init(); };
+	dynamic_cast<UI*>(Find("delete"))->mouseDown = [=]() { if (selectedWorld == "") return;
+	SOUND->Play("click"); system(("RD ../Contents/Map/" + selectedWorld).c_str()); system(("rmdir ../Contents/Map/" + selectedWorld).c_str()); };
 
 	LoadWorldList();
 }
@@ -44,9 +46,9 @@ void WorldList::Update()
 	if (over)
 		scrollBarY += INPUT->wheelMoveValue.z / 10000.f;
 
-	Util::Saturate(scrollBarY, 
-		Find("scrollTab")->GetWorldPos().y - (Find("scrollTab")->scale.y / 2.f) + (Find("scrollBar")->scale.y / 2.f),
-		Find("scrollTab")->GetWorldPos().y + (Find("scrollTab")->scale.y / 2.f) - (Find("scrollBar")->scale.y / 2.f));
+	//Util::Saturate(scrollBarY, 
+	//	Find("scrollTab")->GetWorldPos().y - (Find("scrollTab")->scale.y / 2.f) + (Find("scrollBar")->scale.y / 2.f),
+	//	Find("scrollTab")->GetWorldPos().y + (Find("scrollTab")->scale.y / 2.f) - (Find("scrollBar")->scale.y / 2.f));
 	Find("scrollBar")->SetWorldPosY(scrollBarY);
 	Find("list")->SetWorldPosY(-scrollBarY * 2.f);
 	Find("list")->SetWorldPosY(0.f);
@@ -80,7 +82,8 @@ void WorldList::LoadWorldList()
 				Find(worldName + "_icon")->material = RESOURCE->materials.Load("PreImage/"+to_string(idx%7)+".mtl");
 				Find(worldName + "_icon")->SetLocalPos({ -0.44f / 1.2f, 0.f, -0.1f });
 				Find(worldName + "_icon")->scale = { 0.15f, 0.6f, 1.f };
-				dynamic_cast<UI*>(Find(worldName))->mouseDown = [=]() { 
+				dynamic_cast<UI*>(Find(worldName))->mouseDown = [=]() {
+					SOUND->Play("click");
 					if (dynamic_cast<UI*>(Find("topPlane"))->MouseOver() or dynamic_cast<UI*>(Find("bottomPlane"))->MouseOver())
 						return;
 					selectedWorld = worldName;
@@ -135,5 +138,6 @@ void WorldList::LoadWorld()
 		DATABASE->LoadInventory();
 		DATABASE->LoadItemObject();
 		DATABASE->LoadMonster();
+		DATABASE->LoadFurnace();
 	}
 }

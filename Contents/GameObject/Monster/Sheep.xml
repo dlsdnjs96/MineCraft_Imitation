@@ -67,7 +67,7 @@
             </Child1>
             <Child2 Name="shoulderR" Visible="true" ObType="0">
                 <Mesh File="Pig/armR.mesh"/>
-                <Material File="Monster/Cow.mtl"/>
+                <Material File="Monster/Sheep.mtl"/>
                 <Transform>
                     <Position X="2.5" Y="0" Z="0"/>
                     <Scale X="1" Y="1" Z="1"/>

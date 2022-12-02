@@ -3,6 +3,7 @@
 Cow::Cow()
 {
 	type = MonsterType::COW;
+	kind = "cow";
 }
 
 void Cow::Init(Vector3 _pos)
@@ -75,6 +76,7 @@ void Cow::Idle()
 		ChangeState(MonsterState::MOVE);
 		leftTime = (float(rand() % 30) * 0.1f) + 1.f;
 		rotation.y = float(float(rand() % 31415) * 0.0001f);
+		SOUND->Play("hitCow", Vector3::Distance(GetWorldPos(), PlayerModel::user->GetWorldPos()));
 		return;
 	}
 	if (DectectWheet(500.f))

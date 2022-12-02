@@ -76,7 +76,7 @@ const char* ItemManager::GetItemName(int _itemid)
 		{ 292	, "iron_hoe" },
 		{ 293	, "diamond_hoe" },
 		{ 294	, "golden_hoe" },
-		{ 295	, "wheat_seeds" },
+		{ 295	, "seeds_wheat" },
 		{ 296	, "wheat" },
 		{ 297	, "bread" },
 		{ 298	, "leather_helmet" },
@@ -101,7 +101,7 @@ const char* ItemManager::GetItemName(int _itemid)
 		{ 317	, "golden_boots" },
 		{ 318	, "flint" },
 		{ 319	, "porkchop_raw" },
-		{ 320	, "cooked_porkchop" },
+		{ 320	, "porkchop_cooked" },
 		{ 321	, "painting" },
 		{ 322	, "golden_apple" },
 		{ 323	, "sign" },
@@ -131,7 +131,7 @@ const char* ItemManager::GetItemName(int _itemid)
 		{ 347	, "clock" },
 		{ 348	, "glowstone_dust" },
 		{ 349	, "fish_raw" },
-		{ 350	, "cooked_fish" },
+		{ 350	, "fish_cooked" },
 		{ 351	, "ink_sack" },
 		{ 352	, "bone" },
 		{ 353	, "sugar" },
@@ -147,7 +147,7 @@ const char* ItemManager::GetItemName(int _itemid)
 		{ 363	, "beef_raw" },
 		{ 364	, "steak" },
 		{ 365	, "chicken_raw" },
-		{ 366	, "cooked_chicken" },
+		{ 366	, "chicken_cooked" },
 		{ 367	, "rotten_flesh" },
 		{ 368	, "ender_pearl" },
 		{ 369	, "blaze_rod" },
@@ -192,7 +192,7 @@ const char* ItemManager::GetItemName(int _itemid)
 		{ 409	, "prismarine_shard" },
 		{ 410	, "prismarine_crystals" },
 		{ 411	, "rabbit_raw" },
-		{ 412	, "cooked_rabbit" },
+		{ 412	, "rabbit_cooked" },
 		{ 413	, "rabbit_stew" },
 		{ 414	, "rabbit's_foot" },
 		{ 415	, "rabbit_hide" },
@@ -204,7 +204,7 @@ const char* ItemManager::GetItemName(int _itemid)
 		{ 421	, "name_tag" },
 		{ 422	, "minecart_with_command_block" },
 		{ 423	, "mutton_raw" },
-		{ 424	, "cooked_mutton" },
+		{ 424	, "mutton_cooked" },
 		{ 425	, "banner" },
 		{ 426	, "end_crystal" },
 		{ 427	, "spruce_door" },
@@ -293,7 +293,7 @@ int ItemManager::GetItemId(const char* _itemName)
 		{ "iron_hoe", 292 },
 		{ "diamond_hoe", 293 },
 		{ "golden_hoe", 294 },
-		{ "wheat_seeds", 295 },
+		{ "seeds_wheat", 295 },
 		{ "wheat", 296 },
 		{ "bread", 297 },
 		{ "leather_helmet", 298 },
@@ -318,7 +318,7 @@ int ItemManager::GetItemId(const char* _itemName)
 		{ "golden_boots", 317 },
 		{ "flint", 318 },
 		{ "porkchop_raw", 319 },
-		{ "cooked_porkchop", 320 },
+		{ "porkchop_cooked", 320 },
 		{ "painting", 321 },
 		{ "golden_apple", 322 },
 		{ "sign", 323 },
@@ -348,7 +348,7 @@ int ItemManager::GetItemId(const char* _itemName)
 		{ "clock", 347 },
 		{ "glowstone_dust", 348 },
 		{ "fish_raw", 349 },
-		{ "cooked_fish", 350 },
+		{ "fish_cooked", 350 },
 		{ "ink_sack", 351 },
 		{ "bone", 352 },
 		{ "sugar", 353 },
@@ -364,7 +364,7 @@ int ItemManager::GetItemId(const char* _itemName)
 		{ "beef_raw", 363 },
 		{ "steak", 364 },
 		{ "chicken_raw", 365 },
-		{ "cooked_chicken", 366 },
+		{ "chicken_cooked", 366 },
 		{ "rotten_flesh", 367 },
 		{ "ender_pearl", 368 },
 		{ "blaze_rod", 369 },
@@ -409,7 +409,7 @@ int ItemManager::GetItemId(const char* _itemName)
 		{ "prismarine_shard", 409 },
 		{ "prismarine_crystals", 410 },
 		{ "rabbit_raw", 411 },
-		{ "cooked_rabbit", 412 },
+		{ "rabbit_cooked", 412 },
 		{ "rabbit_stew", 413 },
 		{ "rabbit's_foot", 414 },
 		{ "rabbit_hide", 415 },
@@ -421,7 +421,7 @@ int ItemManager::GetItemId(const char* _itemName)
 		{ "name_tag", 421 },
 		{ "minecart_with_command_block", 422 },
 		{ "mutton_raw", 423 },
-		{ "cooked_mutton", 424 },
+		{ "mutton_cooked", 424 },
 		{ "banner", 425 },
 		{ "end_crystal", 426 },
 		{ "spruce_door", 427 },
@@ -498,8 +498,9 @@ const char* ItemManager::GetBlockName(int _blockid)
 		{ 30	, "COBWEB" },
 		{ 31	, "GRASS" },
 		{ 37	, "DANDELION" },
-		{ 39	, "BROWN_MUSHROOM" },
-		{ 40	, "RED_MUSHROOM" },
+		{ 38	, "ROSE" },
+		{ 39	, "TULIP" },
+		{ 40	, "ORCHID" },
 		{ 41	, "GOLD_BLOCK" },
 		{ 42	, "IRON_BLOCK" },
 		{ 45	, "BRICKS" },
@@ -632,14 +633,20 @@ const char* ItemManager::GetBlockName(int _blockid)
 
 Item ItemManager::GetDropItem(BlockType _blockType)
 {
+	int rnd = 0;
 	switch (_blockType)
 	{
+		case BlockType::GRASS:
+			rnd = rand() % 10;
+			if (rnd < 5)
+				return Item{ GetItemId("seeds_wheat"), 1 };
+			return Item{ 0, 0 };
 		case BlockType::LEAVE:
 		case BlockType::SPRUCE_LEAVES:
 		case BlockType::BIRCH_LEAVES:
 		case BlockType::JUNGLE_LEAVES:
 		{
-			int rnd = rand() % 10;
+			rnd = rand() % 10;
 			if (rnd < 2)
 			{
 				return Item{ GetItemId("apple"), 1 };
@@ -660,25 +667,25 @@ Item ItemManager::GetDropItem(BlockType _blockType)
 			return Item{ int(BlockType::SAND), 1 };
 		case BlockType::GRAVEL:
 		{
-			int rnd = rand() % 3;
+			rnd = rand() % 3;
 			if (rnd == 0)
 			{
 				return Item{ GetItemId("flint"), 1 };
 			}
 			return Item{ int(BlockType::SAND), 1 };
 		}
+		case BlockType::COAL_ORE:
+			return Item{ GetItemId("coal"), 1 };
 		case BlockType::GOLD_ORE:
 		case BlockType::IRON_ORE:
-		case BlockType::COAL_ORE:
 		case BlockType::LAPIS_LAZULI_ORE:
 		case BlockType::LAPIS_LAZULI_BLOCK:
 		case BlockType::DISPENSER:
 		case BlockType::SANDSTONE:
 		case BlockType::COBWEB:
-		case BlockType::GRASS:
 		case BlockType::DANDELION:
-		case BlockType::BROWN_MUSHROOM:
-		case BlockType::RED_MUSHROOM:
+		case BlockType::TULIP:
+		case BlockType::ORCHID:
 		case BlockType::GOLD_BLOCK:
 		case BlockType::IRON_BLOCK:
 		case BlockType::BRICKS:

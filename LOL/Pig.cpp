@@ -3,6 +3,7 @@
 Pig::Pig()
 {
 	type = MonsterType::PIG;
+	kind = "pig";
 }
 
 void Pig::Init(Vector3 _pos)

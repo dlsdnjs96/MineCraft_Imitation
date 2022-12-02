@@ -36,23 +36,23 @@ void Main::Init()
     model->LoadFile("Monster/Spider.xml");
 
     player = Actor::Create("Player2");
+    BlockTexture();
     return;
     //player->LoadFile("Player.xml");
 
     //MESH_FACTORY->ItemMesh();
-    //BlockTexture();
     //TextureToMaterial();
 
-    FILE* fp2 = nullptr;
-    freopen_s(&fp2, "output.txt", "w", stdout);
-    for (int i = 265; i < 3000; i++)
-    {
-        if (ITEM_MANAGER->GetItemName(i) != "Unknown")
-        {
-            printf("{ \"%s\", %d }, \n", ITEM_MANAGER->GetItemName(i), i);
-        }
-    }
-    return;
+    //FILE* fp2 = nullptr;
+    //freopen_s(&fp2, "output.txt", "w", stdout);
+    //for (int i = 265; i < 3000; i++)
+    //{
+    //    if (ITEM_MANAGER->GetItemName(i) != "Unknown")
+    //    {
+    //        printf("{ \"%s\", %d }, \n", ITEM_MANAGER->GetItemName(i), i);
+    //    }
+    //}
+    //return;
 
     FILE* fp1 = nullptr;
     //freopen_s(&fp1, "input.txt", "r", stdin);
@@ -116,7 +116,7 @@ void Main::PreRender()
 void Main::Render()
 {
     cam->Set();
-    Grid->Render();
+    //Grid->Render();
     model->Render();
     player->Render();
 }
@@ -156,31 +156,31 @@ void Main::BlockTexture()
     Actor* actor = Actor::Create("Block");
     for (int i = 1; i < 200; i++)
     {
-        if (TEXTURE_DATA->blockUV.find(BlockType(i)) != TEXTURE_DATA->blockUV.end())
-        {
-            EditObject* editObject = EditObject::Create(to_string(i));
-            editObject->imgSize = { 1.f, 1.f };
-
-
-            editObject->uvUp.first      = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_UP];
-            editObject->uvDown.first    = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_DOWN];
-            editObject->uvRight.first   = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_RIGHT];
-            editObject->uvLeft.first    = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_LEFT];
-            editObject->uvFront.first   = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_FORWARD];
-            editObject->uvBack.first    = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_BEHIND];
-
-            editObject->uvUp.second     = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_UP] + Vector2{ 1.f / 16.f, 1.f / 16.f };
-            editObject->uvDown.second   = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_DOWN] + Vector2{ 1.f / 16.f, 1.f / 16.f };
-            editObject->uvRight.second  = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_RIGHT] + Vector2{ 1.f / 16.f, 1.f / 16.f };
-            editObject->uvLeft.second   = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_LEFT] + Vector2{ 1.f / 16.f, 1.f / 16.f };
-            editObject->uvFront.second  = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_FORWARD] + Vector2{ 1.f / 16.f, 1.f / 16.f };
-            editObject->uvBack.second   = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_BEHIND] + Vector2{ 1.f / 16.f, 1.f / 16.f };
-
-            actor->AddChild(editObject);
-
-            editObject->mesh = editObject->EditMesh();
-            editObject->mesh->SaveFile(editObject->root->name + "/" + editObject->name + ".mesh");
-        }
+        //if (TEXTURE_DATA->blockUV.find(BlockType(i)) != TEXTURE_DATA->blockUV.end())
+        //{
+        //    EditObject* editObject = EditObject::Create(to_string(i));
+        //    editObject->imgSize = { 1.f, 1.f };
+        //
+        //
+        //    editObject->uvUp.first      = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_UP];
+        //    editObject->uvDown.first    = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_DOWN];
+        //    editObject->uvRight.first   = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_RIGHT];
+        //    editObject->uvLeft.first    = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_LEFT];
+        //    editObject->uvFront.first   = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_FORWARD];
+        //    editObject->uvBack.first    = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_BEHIND];
+        //
+        //    editObject->uvUp.second     = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_UP] + Vector2{ 1.f / 16.f, 1.f / 16.f };
+        //    editObject->uvDown.second   = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_DOWN] + Vector2{ 1.f / 16.f, 1.f / 16.f };
+        //    editObject->uvRight.second  = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_RIGHT] + Vector2{ 1.f / 16.f, 1.f / 16.f };
+        //    editObject->uvLeft.second   = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_LEFT] + Vector2{ 1.f / 16.f, 1.f / 16.f };
+        //    editObject->uvFront.second  = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_FORWARD] + Vector2{ 1.f / 16.f, 1.f / 16.f };
+        //    editObject->uvBack.second   = TEXTURE_DATA->blockUV[BlockType(i)][BLOCK_FACE_BEHIND] + Vector2{ 1.f / 16.f, 1.f / 16.f };
+        //
+        //    actor->AddChild(editObject);
+        //
+        //    editObject->mesh = editObject->EditMesh();
+        //    editObject->mesh->SaveFile(editObject->root->name + "/" + editObject->name + ".mesh");
+        //}
     }
 }
 

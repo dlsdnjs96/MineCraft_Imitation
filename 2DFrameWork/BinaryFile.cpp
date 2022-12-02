@@ -61,6 +61,16 @@ void BinaryWriter::Int_2(Int2 data)
 	WriteFile(fileHandle, &data, sizeof(Int2), &size, NULL);
 }
 
+void BinaryWriter::Int_3(Int3 data)
+{
+	WriteFile(fileHandle, &data, sizeof(Int3), &size, NULL);
+}
+
+void BinaryWriter::Int_4(Int4 data)
+{
+	WriteFile(fileHandle, &data, sizeof(Int4), &size, NULL);
+}
+
 void BinaryWriter::UInt(UINT data)
 {
 	WriteFile(fileHandle, &data, sizeof(UINT), &size, NULL);
@@ -128,6 +138,8 @@ void BinaryWriter::Byte(void * data, UINT dataSize)
 {
 	WriteFile(fileHandle, data, dataSize, &size, NULL);
 }
+
+
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -206,6 +218,22 @@ Int2 BinaryReader::Int_2()
 {
 	Int2 temp = {0,0};
 	ReadFile(fileHandle, &temp, sizeof(Int2), &size, NULL);
+
+	return temp;
+}
+
+Int3 BinaryReader::Int_3()
+{
+	Int3 temp = {0,0,0};
+	ReadFile(fileHandle, &temp, sizeof(Int3), &size, NULL);
+
+	return temp;
+}
+
+Int4 BinaryReader::Int_4()
+{
+	Int4 temp = {0,0,0,0};
+	ReadFile(fileHandle, &temp, sizeof(Int4), &size, NULL);
 
 	return temp;
 }

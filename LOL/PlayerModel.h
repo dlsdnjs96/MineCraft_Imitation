@@ -6,7 +6,7 @@ public:
 	ACT_STATE		actState = ACT_STATE::NORMAL;
 	Vector3			prevPos;
 	Vector3			moveForce;
-	GameObject*			mainPerson;
+	GameObject*		mainPerson;
 
 	Int3			curInt3;
 	Int3			underInt3;
@@ -17,12 +17,13 @@ public:
 	float			jumpSpeed = 50.f;
 	float			jumppedTime = 0.f;
 	float			passedTime = 0.f;
+	float			diggedTime = 0.f;
 	bool			firstTime = true;
 	bool			theFirstPerson = true;
 
 	Int3			targetInt3;
 	Int3			prevTarget;
-	Actor* breakingBlock;
+	Actor*			breakingBlock;
 	vector<Int3>	rayIntersectOrder;
 
 

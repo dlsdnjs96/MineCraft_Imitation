@@ -7,7 +7,7 @@ private:
 
 	MYSQL mysql;
 	MYSQL* conn;
-
+	
 	MYSQL_RES* result;
 	MYSQL_ROW row;
 public:
@@ -30,5 +30,8 @@ public:
 
 	void	LoadMonster();
 	void	SaveMonster();
+
+	void	LoadFurnace();
+	void	SaveFurnace();
 };
 

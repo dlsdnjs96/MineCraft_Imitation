@@ -1,162 +1,187 @@
-#include "Framework.h"
+#include "framework.h"
 
 Sound::Sound()
 {
     //사운드 시스템 생성
-    //System_Create(&system);
+    System_Create(&system);
     //사운드 채널 동적할당
-    //system->init(32, FMOD_INIT_NORMAL, nullptr);
+    system->init(32, FMOD_INIT_NORMAL, nullptr);
 
 }
 
 Sound::~Sound()
 {
-    //for (auto iter = SoundList.begin(); iter != SoundList.end(); iter++)
-    //{
-    //    iter->second->channel->stop();
-    //    iter->second->sound->release();
-    //    delete iter->second;
-    //}
-    //system->release();
-    //system->close();
-    //SoundList.clear();
+    for (auto iter = SoundList.begin(); iter != SoundList.end(); iter++)
+    {
+        iter->second->channel->stop();
+        iter->second->sound->release();
+        delete iter->second;
+    }
+    system->release();
+    system->close();
+    SoundList.clear();
 
 }
 
 bool Sound::AddSound(string File, string Key, bool loop)
 {
 
-    //string path = "../Contents/Sound/" + File;
+    string path = "../Contents/Sound/" + File;
 
-    ////key 중복 허용x
-    //auto iter = SoundList.find(Key);
+    //key 중복 허용x
+    auto iter = SoundList.find(Key);
 
-    ////중복된게 있다.
-    //if (iter != SoundList.end())
-    //{
-    //    return false;
-    //}
-    ////중복된게 없다.
-    //SoundNode* temp = new SoundNode();
-    //system->createSound
-    //(
-    //    path.c_str(),
-    //    FMOD_DEFAULT,
-    //    nullptr,
-    //    &temp->sound
-    //);
-    //if (loop)
-    //{
-    //    temp->sound->setMode(FMOD_LOOP_NORMAL);
-    //}
-    //else
-    //{
-    //    temp->sound->setMode(FMOD_LOOP_OFF);
-    //}
+    //중복된게 있다.
+    if (iter != SoundList.end())
+    {
+        return false;
+    }
+    //중복된게 없다.
+    SoundNode* temp = new SoundNode();
+    system->createSound
+    (
+        path.c_str(),
+        FMOD_DEFAULT,
+        nullptr,
+        &temp->sound
+    );
+    if (loop)
+    {
+        temp->sound->setMode(FMOD_LOOP_NORMAL);
+    }
+    else
+    {
+        temp->sound->setMode(FMOD_LOOP_OFF);
+    }
 
-    ////맵에 할당한 배열 원소넣기
-    //SoundList[Key] = temp;
+    //맵에 할당한 배열 원소넣기
+    SoundList[Key] = temp;
 
     return true;
 }
 
+void Sound::LoadSounds()
+{
+}
+
 bool Sound::DeleteSound(string Key)
 {
-    //auto iter = SoundList.find(Key);
+    auto iter = SoundList.find(Key);
 
-    ////중복된게 없다.
-    //if (iter == SoundList.end())
-    //{
-    //    return false;
-    //}
-    ////first가 키, second 밸류
-    //iter->second->channel->stop();
-    //iter->second->sound->release();
-    //delete iter->second;
+    //중복된게 없다.
+    if (iter == SoundList.end())
+    {
+        return false;
+    }
+    //first가 키, second 밸류
+    iter->second->channel->stop();
+    iter->second->sound->release();
+    delete iter->second;
 
-    ////맵에서도 삭제
-    //SoundList.erase(iter);
+    //맵에서도 삭제
+    SoundList.erase(iter);
 
     return true;
 }
 
 void Sound::Play(string Key)
 {
-    //auto iter = SoundList.find(Key);
+    auto iter = SoundList.find(Key);
 
-    ////중복된게 있을때
-    //if (iter != SoundList.end())
-    //{
-    //    bool isplay;
-    //    iter->second->channel->isPlaying(&isplay);
-    //    if (!isplay)
-    //    {
-    //   
-    //        system->playSound(
-    //            iter->second->sound, nullptr,
-    //            false,
-    //            &iter->second->channel);
-    //        iter->second->channel->setVolume(iter->second->volume
-    //            * App.soundScale);
-    //    }
-    //}
+    //중복된게 있을때
+    if (iter != SoundList.end())
+    {
+        bool isplay;
+        iter->second->channel->isPlaying(&isplay);
+        if (!isplay)
+        {
+       
+            system->playSound(
+                iter->second->sound, nullptr,
+                false,
+                &iter->second->channel);
+            iter->second->channel->setVolume(iter->second->volume * App.soundScale);
+        }
+    }
+}
+
+void Sound::Play(string Key, float distance)
+{
+    auto iter = SoundList.find(Key);
+
+    Util::Saturate(distance, 10.f, 500.f);
+    //중복된게 있을때
+    if (iter != SoundList.end())
+    {
+        bool isplay;
+        iter->second->channel->isPlaying(&isplay);
+        if (!isplay)
+        {
+
+            system->playSound(
+                iter->second->sound, nullptr,
+                false,
+                &iter->second->channel);
+            iter->second->channel->setVolume(iter->second->volume * App.soundScale * ((500.f - distance) * 0.002f));
+        }
+    }
 }
 
 void Sound::Stop(string Key)
 {
-    //auto iter = SoundList.find(Key);
+    auto iter = SoundList.find(Key);
 
-    ////중복된게 있을때
-    //if (iter != SoundList.end())
-    //{
-    //    iter->second->channel->stop();
-    //}
+    //중복된게 있을때
+    if (iter != SoundList.end())
+    {
+        iter->second->channel->stop();
+    }
 }
 
 void Sound::Pause(string Key)
 {
-    //auto iter = SoundList.find(Key);
+    auto iter = SoundList.find(Key);
 
-    ////중복된게 있을때
-    //if (iter != SoundList.end())
-    //{
-    //    iter->second->channel->setPaused(true);
-    //}
+    //중복된게 있을때
+    if (iter != SoundList.end())
+    {
+        iter->second->channel->setPaused(true);
+    }
 }
 
 void Sound::Resume(string Key)
 {
-    //auto iter = SoundList.find(Key);
+    auto iter = SoundList.find(Key);
 
-    ////중복된게 있을때
-    //if (iter != SoundList.end())
-    //{
-    //    iter->second->channel->setPaused(false);
-    //}
+    //중복된게 있을때
+    if (iter != SoundList.end())
+    {
+        iter->second->channel->setPaused(false);
+    }
 }
 
 void Sound::SetVolume(string Key, float scale)
 {
-    //auto iter = SoundList.find(Key);
+    auto iter = SoundList.find(Key);
 
-    ////중복된게 있을때
-    //if (iter != SoundList.end())
-    //{
-    //    iter->second->volume = scale;
-    //    iter->second->channel->setVolume(scale * App.soundScale);
-    //}
+    //중복된게 있을때
+    if (iter != SoundList.end())
+    {
+        iter->second->volume = scale;
+        iter->second->channel->setVolume(scale * App.soundScale);
+    }
 }
 
 void Sound::SetMasterVolume()
 {
-    //for (auto iter = SoundList.begin(); iter != SoundList.end(); iter++)
-    //{
-    //    iter->second->channel->setVolume(iter->second->volume 
-    //        * App.soundScale);
-    //}
+    for (auto iter = SoundList.begin(); iter != SoundList.end(); iter++)
+    {
+        iter->second->channel->setVolume(iter->second->volume 
+            * App.soundScale);
+    }
 }
 
 void Sound::Update()
 {
-    //system->update();
+    system->update();
 }

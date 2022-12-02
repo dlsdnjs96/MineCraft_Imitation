@@ -58,12 +58,12 @@ void PlayerController::Update()
         {
             model->theFirstPerson = false;
             Camera::main = dynamic_cast<Camera*>(model->Find("camHead"));
-            model->mainPerson = model->Find("head");
+            //model->mainPerson = model->Find("body");
         }
         else {
             model->theFirstPerson = true;
             Camera::main = dynamic_cast<Camera*>(model->Find("fCam"));
-            model->mainPerson = model->Find("theFirstPerson");
+            //model->mainPerson = model->Find("theFirstPerson");
         }
     }
 }
@@ -71,8 +71,10 @@ void PlayerController::Update()
 
 void PlayerController::Idle()
 {
-    if (INPUT->KeyDown('W') or INPUT->KeyDown('S') or INPUT->KeyDown('D') or INPUT->KeyDown('A'))
+    if (INPUT->KeyDown('W') or INPUT->KeyDown('S') or INPUT->KeyDown('D') or INPUT->KeyDown('A')) {
         model->state = PLAYER_STATE::WALK;
+        SOUND->Play("walk");
+    }
 
     if (INPUT->KeyDown(VK_SPACE))
     {
@@ -87,12 +89,15 @@ void PlayerController::Idle()
 void PlayerController::Walk()
 {
 
-    if (not FourWaysMoving())
+    if (not FourWaysMoving()) {
         model->state = PLAYER_STATE::IDLE;
+        SOUND->Stop("walk");
+    }
 
     if (INPUT->KeyDown(VK_SPACE))
     {
         model->state = PLAYER_STATE::JUMP;
+        SOUND->Stop("walk");
         model->jumppedTime = 0.f;
     }
 }
@@ -237,6 +242,7 @@ bool PlayerController::FourWaysFloating()
     if (WORLD->GetBlock(enterBlock).blockType == BlockType::AIR)
     {
         model->state = PLAYER_STATE::FALL;
+        SOUND->Stop("walk");
     }
     if (int(WORLD->GetBlock(enterBlock).blockType) < 2)
     {

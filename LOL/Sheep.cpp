@@ -3,6 +3,7 @@
 Sheep::Sheep()
 {
 	type = MonsterType::SHEEP;
+	kind = "sheep";
 }
 
 void Sheep::Init(Vector3 _pos)

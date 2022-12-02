@@ -30,7 +30,6 @@ PixelInput VS(VertexInput input)
 
 float4 PS(PixelInput input) : SV_TARGET
 {
-    
     float4 BaseColor = TextureD.Sample(SamplerD, input.Uv);
     
     if (!any(BaseColor.a))

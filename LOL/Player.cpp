@@ -76,6 +76,15 @@ void Player::Init()
         temp2->material = RESOURCE->materials.Load("foodFront.mtl");
         pUI->Find("foodB" + to_string(i))->AddChild(temp2);
     }
+
+    for (int i = WORLD_HEIGHT - 1; i >= 0; i--)
+    {
+        if (WORLD->GetBlock(Int3{ 10, i, 10 }).blockType != BlockType::AIR)
+        {
+            SetWorldPos({ 100.f, 10.f * float(i), 100.f });
+            break;
+        }
+    }
 }
 
 void Player::Update()

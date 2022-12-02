@@ -79,12 +79,35 @@ void Sector::UpdateBlockMesh()
 			{
 				if (blocks[from.x][from.y][from.z].renderFace == 0)
 					continue;
-				if (int(blocks[from.x][from.y][from.z].blockType) < 2)
+				if (blocks[from.x][from.y][from.z].blockType < BlockType::STILL_WATER)
 					continue;
 
-				for (int i = 0; i < 6; i++) {
-					if ((blocks[from.x][from.y][from.z].renderFace & sixFaces[i]) != 0)
-						AddMeshFace(vertexBuffer, from, sixFaces[i], blocks[from.x][from.y][from.z].blockType);
+				switch(blocks[from.x][from.y][from.z].blockType) {
+					case BlockType::LEAVE:
+					case BlockType::BIRCH_LEAVES:
+					case BlockType::JUNGLE_LEAVES:
+					case BlockType::SPRUCE_LEAVES:
+					case BlockType::GLASS:
+						for (int i = 0; i < 6; i++) {
+							if ((blocks[from.x][from.y][from.z].renderFace & sixFaces[i]) != 0)
+								AddDoubleFace(vertexBuffer, indexBuffer, from, sixFaces[i], blocks[from.x][from.y][from.z].blockType);
+						}
+					break;
+					case BlockType::GRASS:
+					case BlockType::DANDELION:
+					case BlockType::ROSE:
+					case BlockType::TULIP:
+					case BlockType::ORCHID:
+						for (int i = 0; i < 6; i++) {
+							if ((blocks[from.x][from.y][from.z].renderFace & sixFaces[i]) != 0)
+								AddCrossFace(vertexBuffer, indexBuffer, from, sixFaces[i], blocks[from.x][from.y][from.z].blockType);
+						}
+						break;
+					default:
+						for (int i = 0; i < 6; i++) {
+							if ((blocks[from.x][from.y][from.z].renderFace & sixFaces[i]) != 0)
+								AddMeshFace(vertexBuffer, indexBuffer, from, sixFaces[i], blocks[from.x][from.y][from.z].blockType);
+						}
 				}
 			}
 		}
@@ -93,12 +116,12 @@ void Sector::UpdateBlockMesh()
 	if (vertexBuffer.size() == 0)
 		return;
 
-	int arr[6] = { 0, 1, 2, 0, 2, 3 };
-	for (int i = 0; i < vertexBuffer.size() * 3 / 2; i++)
-	{
-		for (int j = 0; j < 6; j++)
-			indexBuffer.push_back(arr[j] + (i * 4));
-	}
+	//int arr[6] = { 0, 1, 2, 0, 2, 3 };
+	//for (int i = 0; i < vertexBuffer.size() * 3 / 2; i++)
+	//{
+	//	for (int j = 0; j < 6; j++)
+	//		indexBuffer.push_back(arr[j] + (i * 4));
+	//}
 
 
 	VertexPTN* vertices;
@@ -140,7 +163,7 @@ void Sector::UpdateWaterMesh()
 
 				for (int i = 0; i < 6; i++) {
 					if ((blocks[from.x][from.y][from.z].renderFace & sixFaces[i]) != 0)
-						AddMeshFace(vertexBuffer, from, sixFaces[i], blocks[from.x][from.y][from.z].blockType);
+						AddMeshFace(vertexBuffer, indexBuffer, from, sixFaces[i], blocks[from.x][from.y][from.z].blockType);
 				}
 			}
 		}
@@ -149,12 +172,12 @@ void Sector::UpdateWaterMesh()
 	if (vertexBuffer.size() == 0)
 		return;
 
-	int arr[6] = { 0, 1, 2, 0, 2, 3 };
-	for (int i = 0; i < vertexBuffer.size() * 3 / 2; i++)
-	{
-		for (int j = 0; j < 6; j++)
-			indexBuffer.push_back(arr[j] + (i * 4));
-	}
+	//int arr[6] = { 0, 1, 2, 0, 2, 3 };
+	//for (int i = 0; i < vertexBuffer.size() * 3 / 2; i++)
+	//{
+	//	for (int j = 0; j < 6; j++)
+	//		indexBuffer.push_back(arr[j] + (i * 4));
+	//}
 
 
 	VertexPTN* vertices;
@@ -176,9 +199,10 @@ void Sector::UpdateWaterMesh()
 
 
 
-void Sector::AddMeshFace(vector<VertexPTN>& vertices, Int3& pos, const int& renderFace, BlockType& blockType)
+void Sector::AddMeshFace(vector<VertexPTN>& vertices, vector<UINT>& indexBuffer, Int3& pos, const int& renderFace, BlockType& blockType)
 {
 	const Vector2 uvCube[4] = { { 0.f, 1.f / 16.f }, { 0.f, 0.f }, { 1.f / 16.f, 0.f }, { 1.f / 16.f, 1.f / 16.f } };
+	const int arr[6] = { 0, 1, 2, 0, 2, 3 };
 	UINT vIndex = vertices.size();
 
 	for (int i = 0;i < 4;i++)
@@ -249,10 +273,153 @@ void Sector::AddMeshFace(vector<VertexPTN>& vertices, Int3& pos, const int& rend
 	for (int i = 0; i < 4; i++)
 		vertices[vIndex + i].uv += TEXTURE_DATA->blockUV[blockType][renderFace];
 
-	//for (int i = 1; i <= 4; i++)
-	//	printf("%.1f %.1f %.1f\r\n", vertices[vIndex - i].position.x, vertices[vIndex - i].position.y, vertices[vIndex - i].position.z);
-	//printf("\r\n");
-	//printf("\r\n");
+	for (int j = 0; j < 6; j++)
+		indexBuffer.push_back(arr[j] + vertices.size() - 4);
+}
+void Sector::AddDoubleFace(vector<VertexPTN>& vertices, vector<UINT>& indexBuffer, Int3& pos, const int& renderFace, BlockType& blockType)
+{
+	const Vector2 uvCube[4] = { { 0.f, 1.f / 16.f }, { 0.f, 0.f }, { 1.f / 16.f, 0.f }, { 1.f / 16.f, 1.f / 16.f } };
+	const int arr[6] = { 0, 1, 2, 0, 2, 3 };
+	UINT vIndex = vertices.size();
+
+	for (int i = 0; i < 4; i++)
+		vertices.push_back({ { float(pos.x), float(pos.y),  float(pos.z) }, uvCube[i], { 0.f, 0.f, 0.f } });
+
+
+	switch (renderFace) {
+	case BLOCK_FACE_UP:
+	{
+		vertices[vIndex + 0].position += { -0.5f, 0.5f, -0.5f };
+		vertices[vIndex + 1].position += { -0.5f, 0.5f, 0.5f };
+		vertices[vIndex + 2].position += { 0.5f, 0.5f, 0.5f };
+		vertices[vIndex + 3].position += { 0.5f, 0.5f, -0.5f };
+		break;
+	}
+	case BLOCK_FACE_DOWN:
+	{
+		vertices[vIndex + 0].position += { 0.5f, -0.5f, -0.5f };
+		vertices[vIndex + 1].position += { 0.5f, -0.5f, 0.5f };
+		vertices[vIndex + 2].position += { -0.5f, -0.5f, 0.5f };
+		vertices[vIndex + 3].position += { -0.5f, -0.5f, -0.5f };
+		break;
+	}
+	case BLOCK_FACE_RIGHT:
+	{
+		vertices[vIndex + 0].position += { 0.5f, -0.5f, -0.5f };
+		vertices[vIndex + 1].position += { 0.5f, 0.5f, -0.5f };
+		vertices[vIndex + 2].position += { 0.5f, 0.5f, 0.5f };
+		vertices[vIndex + 3].position += { 0.5f, -0.5f, 0.5f };
+		break;
+	}
+	case BLOCK_FACE_LEFT:
+	{
+		vertices[vIndex + 0].position += { -0.5f, -0.5f, 0.5f };
+		vertices[vIndex + 1].position += { -0.5f, 0.5f, 0.5f };
+		vertices[vIndex + 2].position += { -0.5f, 0.5f, -0.5f };
+		vertices[vIndex + 3].position += { -0.5f, -0.5f, -0.5f };
+		break;
+	}
+	case BLOCK_FACE_FORWARD:
+	{
+		vertices[vIndex + 0].position += { -0.5f, -0.5f, -0.5f };
+		vertices[vIndex + 1].position += { -0.5f, 0.5f, -0.5f };
+		vertices[vIndex + 2].position += { 0.5f, 0.5f, -0.5f };
+		vertices[vIndex + 3].position += { 0.5f, -0.5f, -0.5f };
+		break;
+	}
+	case BLOCK_FACE_BEHIND:
+	{
+		vertices[vIndex + 0].position += { 0.5f, -0.5f, 0.5f };
+		vertices[vIndex + 1].position += { 0.5f, 0.5f, 0.5f };
+		vertices[vIndex + 2].position += { -0.5f, 0.5f, 0.5f };
+		vertices[vIndex + 3].position += { -0.5f, -0.5f, 0.5f };
+		break;
+	}
+	}
+
+	vertices[vIndex + 0].position *= BLOCK_LENGTH;
+	vertices[vIndex + 1].position *= BLOCK_LENGTH;
+	vertices[vIndex + 2].position *= BLOCK_LENGTH;
+	vertices[vIndex + 3].position *= BLOCK_LENGTH;
+
+	vertices[vIndex + 0].uv = { 0.f, 1.f / 16.f };
+	vertices[vIndex + 1].uv = { 0.f, 0.f };
+	vertices[vIndex + 2].uv = { 1.f / 16.f, 0.f };
+	vertices[vIndex + 3].uv = { 1.f / 16.f, 1.f / 16.f };
+
+	for (int i = 0; i < 4; i++)
+		vertices[vIndex + i].uv += TEXTURE_DATA->blockUV[blockType][renderFace];
+
+	for (int j = 0; j < 6; j++)
+		indexBuffer.push_back(arr[j] + vertices.size() - 4);
+	for (int j = 0; j < 6; j++)
+		indexBuffer.push_back(arr[5 - j] + vertices.size() - 4);
+}
+void Sector::AddCrossFace(vector<VertexPTN>& vertices, vector<UINT>& indexBuffer, Int3& pos, const int& renderFace, BlockType& blockType)
+{
+	const Vector2 uvCube[4] = { { 0.f, 1.f / 16.f }, { 0.f, 0.f }, { 1.f / 16.f, 0.f }, { 1.f / 16.f, 1.f / 16.f } };
+	const int arr[6] = { 0, 1, 2, 0, 2, 3 };
+	UINT vIndex = vertices.size();
+
+	if (renderFace == BLOCK_FACE_UP || renderFace == BLOCK_FACE_DOWN)
+		return;
+
+	for (int i = 0; i < 4; i++)
+		vertices.push_back({ { float(pos.x), float(pos.y),  float(pos.z) }, uvCube[i], { 0.f, 0.f, 0.f } });
+
+
+	switch (renderFace) {
+	case BLOCK_FACE_RIGHT:
+	{
+		vertices[vIndex + 0].position += { 0.5f, -0.5f, -0.5f };
+		vertices[vIndex + 1].position += { 0.5f, 0.5f, -0.5f };
+		vertices[vIndex + 2].position += { -0.5f, 0.5f, 0.5f };
+		vertices[vIndex + 3].position += { -0.5f, -0.5f, 0.5f };
+		break;
+	}
+	case BLOCK_FACE_LEFT:
+	{
+		vertices[vIndex + 0].position += { -0.5f, -0.5f, 0.5f };
+		vertices[vIndex + 1].position += { -0.5f, 0.5f, 0.5f };
+		vertices[vIndex + 2].position += { 0.5f, 0.5f, -0.5f };
+		vertices[vIndex + 3].position += { 0.5f, -0.5f, -0.5f };
+		break;
+	}
+	case BLOCK_FACE_FORWARD:
+	{
+		vertices[vIndex + 0].position += { -0.5f, -0.5f, -0.5f };
+		vertices[vIndex + 1].position += { -0.5f, 0.5f, -0.5f };
+		vertices[vIndex + 2].position += { 0.5f, 0.5f, 0.5f };
+		vertices[vIndex + 3].position += { 0.5f, -0.5f, 0.5f };
+		break;
+	}
+	case BLOCK_FACE_BEHIND:
+	{
+		vertices[vIndex + 0].position += { 0.5f, -0.5f, 0.5f };
+		vertices[vIndex + 1].position += { 0.5f, 0.5f, 0.5f };
+		vertices[vIndex + 2].position += { -0.5f, 0.5f, -0.5f };
+		vertices[vIndex + 3].position += { -0.5f, -0.5f, -0.5f };
+		break;
+	}
+	}
+
+	vertices[vIndex + 0].position *= BLOCK_LENGTH;
+	vertices[vIndex + 1].position *= BLOCK_LENGTH;
+	vertices[vIndex + 2].position *= BLOCK_LENGTH;
+	vertices[vIndex + 3].position *= BLOCK_LENGTH;
+
+	vertices[vIndex + 0].uv = { 0.f, 1.f / 16.f };
+	vertices[vIndex + 1].uv = { 0.f, 0.f };
+	vertices[vIndex + 2].uv = { 1.f / 16.f, 0.f };
+	vertices[vIndex + 3].uv = { 1.f / 16.f, 1.f / 16.f };
+
+	for (int i = 0; i < 4; i++)
+		vertices[vIndex + i].uv += TEXTURE_DATA->blockUV[blockType][renderFace];
+
+	for (int j = 0; j < 6; j++)
+		indexBuffer.push_back(arr[j] + vertices.size() - 4);
+	for (int j = 0; j < 6; j++)
+		indexBuffer.push_back(arr[5 - j] + vertices.size() - 4);
 }
 //
 //void Sector::AddMeshFace(vector<VertexPTN>& vertices, Int3& pos, const int& renderFace, BlockType& blockType)
@@ -352,4 +519,22 @@ void Sector::Load(BinaryReader& in)
 			}
 		}
 	}
+}
+
+int Sector::GetBlockSize()
+{
+	int count = 0;
+	for (int i = 0; i < SECTOR_SIZE; i++)
+	{
+		for (int j = 0; j < WORLD_HEIGHT; j++)
+		{
+			for (int k = 0; k < SECTOR_SIZE; k++)
+			{
+				if (blocks[i][j][k].blockType != BlockType::AIR)
+					count++;
+			}
+		}
+	}
+	return 0;
+
 }

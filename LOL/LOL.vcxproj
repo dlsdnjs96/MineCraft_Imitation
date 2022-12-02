@@ -151,6 +151,7 @@
     <ClInclude Include="Crafting.h" />
     <ClInclude Include="DataBase.h" />
     <ClInclude Include="Furnace.h" />
+    <ClInclude Include="FurnaceManager.h" />
     <ClInclude Include="InGameScene.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Crafting.cpp" />
     <ClCompile Include="DataBase.cpp" />
     <ClCompile Include="Furnace.cpp" />
+    <ClCompile Include="FurnaceManager.cpp" />
     <ClCompile Include="InGameScene.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />

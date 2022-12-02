@@ -19,7 +19,7 @@
 
 #define BLOCK_LENGTH 10.f
 #define SECTOR_SIZE 16
-#define WORLD_HEIGHT 64
+#define WORLD_HEIGHT 128
 #define WATER_HEIGHT 20
 
 
@@ -49,11 +49,14 @@ enum class BlockType
 	LAPIS_LAZULI_BLOCK			= 23,
 	DISPENSER					= 24,
 	SANDSTONE					= 25,
+	SANDSTONE_SHAVED			= 27,
+	SNOW_DIRT					= 26,
 	COBWEB						= 30,
 	GRASS						= 31,
 	DANDELION					= 37,
-	BROWN_MUSHROOM				= 39,
-	RED_MUSHROOM				= 40,
+	ROSE						= 38,
+	TULIP						= 39,
+	ORCHID						= 40,
 	GOLD_BLOCK					= 41,
 	IRON_BLOCK					= 42,
 	BRICKS						= 45,
@@ -183,6 +186,7 @@ enum class BlockType
 #include "BlockCollider.h"
 #include "Crafting.h"
 #include "Furnace.h"
+#include "FurnaceManager.h"
 #include "Monster.h"
 #include "Pig.h"
 #include "Cow.h"
@@ -201,7 +205,6 @@ enum class BlockType
 
 
 
-
 #include "LoadingScene.h"
 #include "InGameScene.h"
 #include "MenuScene.h"
@@ -217,5 +220,5 @@ enum class BlockType
 #define ITEM_DETAIL ItemDetail::GetInstance()
 #define MONSTER_MANAGER MonsterManager::GetInstance()
 #define MONSTER_FACTORY MonsterFactory::GetInstance()
-#define FURNACE_TABLE Furnace::GetInstance()
+#define FURNACE_MANAGER FurnaceManager::GetInstance()
 #define DATABASE DataBase::GetInstance()

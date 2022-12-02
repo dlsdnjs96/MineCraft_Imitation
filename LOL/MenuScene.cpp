@@ -5,6 +5,19 @@ MenuScene::MenuScene()
 {
     Init();
     DATABASE;
+
+    if (filesystem::exists("../Contents/Sound"))
+    {
+        for (filesystem::path const& path : filesystem::recursive_directory_iterator("../Contents/Sound"))
+        {
+            if (filesystem::is_regular_file(path))
+            {
+                string fileName = path.string().substr(path.string().find_last_of('\\') + 1);
+                string keyStr = fileName.substr(0, fileName.find_last_of('.'));
+                SOUND->AddSound(fileName, keyStr, false);
+            }
+        }
+    }
 }
 
 MenuScene::~MenuScene()
@@ -37,14 +50,14 @@ void MenuScene::Init()
 
     singlePlay->mouseOver = [=]() { singlePlay->material = RESOURCE->materials.Load("button2.mtl"); };
     singlePlay->mouseNotOver = [=]() { singlePlay->material = RESOURCE->materials.Load("button1.mtl"); };
-    singlePlay->mouseDown = [=]() { ChangePage(2); };
+    singlePlay->mouseDown = [=]() { SOUND->Play("click");  ChangePage(2); };
 
     setting->mouseOver = [=]() { setting->material = RESOURCE->materials.Load("button2.mtl"); };
     setting->mouseNotOver = [=]() { setting->material = RESOURCE->materials.Load("button1.mtl"); };
 
     exit->mouseOver = [=]() { exit->material = RESOURCE->materials.Load("button2.mtl"); };
     exit->mouseNotOver = [=]() { exit->material = RESOURCE->materials.Load("button1.mtl"); };
-    exit->mouseDown = [=]() { PostQuitMessage(0); };
+    exit->mouseDown = [=]() { SOUND->Play("click");  PostQuitMessage(0); };
 
 
     //phase 2///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,6 +77,7 @@ void MenuScene::Init()
     createWorld->mouseOver = [=]() { createWorld->material = RESOURCE->materials.Load("button2.mtl"); };
     createWorld->mouseNotOver = [=]() { createWorld->material = RESOURCE->materials.Load("button1.mtl"); };
     createWorld->mouseDown = [=]() { 
+        SOUND->Play("click");
         time_t timer = time(NULL);
         struct tm pLocal;
         localtime_s(&pLocal, &timer);
@@ -76,7 +90,7 @@ void MenuScene::Init()
 
     prev->mouseOver = [=]() { prev->material = RESOURCE->materials.Load("button2.mtl"); };
     prev->mouseNotOver = [=]() { prev->material = RESOURCE->materials.Load("button1.mtl"); };
-    prev->mouseDown = [=]() { ChangePage(1); };
+    prev->mouseDown = [=]() {  SOUND->Play("click"); ChangePage(1); };
 
     ChangePage(1);
 }

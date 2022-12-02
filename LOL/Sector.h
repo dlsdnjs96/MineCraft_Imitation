@@ -56,9 +56,12 @@ public:
 
 	void UpdateBlockMesh();
 	void UpdateWaterMesh();
-	void AddMeshFace(vector<VertexPTN>& vertices, Int3& pos, const int& renderFace, BlockType& blockType);
+	void AddMeshFace(vector<VertexPTN>& vertices, vector<UINT>& indexBuffer, Int3& pos, const int& renderFace, BlockType& blockType);
+	void AddDoubleFace(vector<VertexPTN>& vertices, vector<UINT>& indexBuffer, Int3& pos, const int& renderFace, BlockType& blockType);
+	void AddCrossFace(vector<VertexPTN>& vertices, vector<UINT>& indexBuffer, Int3& pos, const int& renderFace, BlockType& blockType);
 
 	void Save(BinaryWriter& out);
 	void Load(BinaryReader& in);
+	int	 GetBlockSize();
 };
 

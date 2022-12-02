@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+
+
 DataBase::DataBase()
 {
     conn = nullptr;
@@ -280,4 +282,60 @@ void DataBase::SaveMonster()
         }
     }
     MONSTER_MANAGER->monsters.clear();
+}
+
+
+
+void DataBase::LoadFurnace()
+{
+    string query = "SELECT * FROM furnace WHERE worldid = " + to_string(WORLD->id);
+
+
+    if (mysql_query(conn, query.c_str()) == 0) {
+        result = mysql_store_result(conn);
+        while ((row = mysql_fetch_row(result)) != NULL) {
+            Furnace* furnace = new Furnace();
+            furnace->fire_time = atof(row[4]);
+            furnace->progress_time = atof(row[5]);
+            furnace->inputSlot = Item{ atoi(row[6]), atoi(row[7]) };
+            furnace->outputSlot = Item{ atoi(row[8]), atoi(row[9]) };
+            furnace->fuelSlot = Item{ atoi(row[10]), atoi(row[11]) };
+            FURNACE_MANAGER->AddFurnace(Int3{ atoi(row[1]), atoi(row[2]), atoi(row[3]) }, furnace);
+        }
+
+        mysql_free_result(result);
+    }
+    else {
+        cout << "fail to select" << endl;
+    }
+}
+
+void DataBase::SaveFurnace()
+{
+    string query = "";
+
+
+    query = "DELETE FROM furnace WHERE worldid = " + to_string(WORLD->id);
+    if (mysql_query(conn, query.c_str()) != 0)
+        cout << "fail to delete" << endl;
+
+
+    for (auto& it : FURNACE_MANAGER->furnaces)
+    {
+        for (auto& it2 : it.second) {
+            for (auto& it3 : it2.second) {
+                query = "INSERT INTO furnace(worldid, posX, posY, posZ, fireT, progressT, inputId, inputEa, outputId, outputEa, fuelId, fuelEa) VALUES(";
+                query += to_string(WORLD->id) + ", " + to_string(it.first) + ", " + to_string(it2.first) + ", " + to_string(it3.first) + ", ";
+                query += to_string(it3.second->fire_time) + ", " + to_string(it3.second->progress_time) + ", ";
+                query += to_string(it3.second->inputSlot.itemid) + ", " + to_string(it3.second->inputSlot.ea) + ", ";
+                query += to_string(it3.second->outputSlot.itemid) + ", " + to_string(it3.second->outputSlot.ea) + ", ";
+                query += to_string(it3.second->fuelSlot.itemid) + ", " + to_string(it3.second->fuelSlot.ea) + ")";
+
+
+                if (mysql_query(conn, query.c_str()) != 0)
+                    cout << "fail to insert" << endl;
+            }
+        }
+    }
+    FURNACE_MANAGER->furnaces.clear();
 }

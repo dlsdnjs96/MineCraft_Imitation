@@ -229,9 +229,10 @@ void Inventory::Init()
     SetPickedItem(2, Item{ 102, 10 });
     SetPickedItem(3, Item{ 260, 10 });
     SetPickedItem(4, Item{ 275, 10 });
-    SetPickedItem(5, Item{ int(BlockType::STONE), 10 });
+    SetPickedItem(5, Item{ int(BlockType::FURNACE), 100 });
     SetPickedItem(6, Item{ int(BlockType::CRAFTING_TABLE), 10 });
     SetPickedItem(7, Item{ 359, 1 });
+    SetPickedItem(8, Item{ 319, 10 });
 
     quickSlots->Update();
     invens->Update();

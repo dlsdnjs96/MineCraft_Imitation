@@ -1,13 +1,13 @@
 <Root Name="Player" Visible="true" ObType="1">
     <Transform>
-        <Position X="50.808876" Y="230" Z="410.12982"/>
+        <Position X="-469.68771" Y="296.32056" Z="-906.88379"/>
         <Scale X="1" Y="1" Z="1"/>
-        <Rotation X="0" Y="-0.23571381" Z="0"/>
+        <Rotation X="0" Y="0" Z="0"/>
     </Transform>
-    <Children Size="3"/>
-    <Child0 Name="Collider" Visible="true" ObType="0">
+    <Children Size="4"/>
+    <Child0 Name="Collider" Visible="false" ObType="0">
         <Transform>
-            <Position X="-0.81682968" Y="25" Z="0.06267643"/>
+            <Position X="-0.31228638" Y="-1.3205566" Z="-3.1162109"/>
             <Scale X="1" Y="1" Z="1"/>
             <Rotation X="0" Y="0" Z="0"/>
         </Transform>
@@ -16,7 +16,7 @@
             <Mesh File="6.blockCollider.mesh"/>
             <Shader File="1.Collider.hlsl"/>
             <Transform>
-                <Position X="-144.36761" Y="-250.00002" Z="-386.98581"/>
+                <Position X="-10" Y="30" Z="10"/>
                 <Scale X="5.0999999" Y="5.0999999" Z="5.0999999"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
@@ -93,7 +93,7 @@
                 <Transform>
                     <Position X="6" Y="0" Z="0"/>
                     <Scale X="1" Y="1" Z="1"/>
-                    <Rotation X="0" Y="0" Z="0"/>
+                    <Rotation X="-2.1326575" Y="0" Z="0"/>
                 </Transform>
                 <Children Size="1"/>
                 <Child0 Name="armR" Visible="true" ObType="7">
@@ -172,16 +172,24 @@
             </Child2>
         </Child1>
     </Child1>
-    <Child2 Name="theFirstPerson" Visible="true" ObType="0">
+    <Child2 Name="mainPerson" Visible="true" ObType="0">
         <Transform>
-            <Position X="0" Y="26.799999" Z="0"/>
+            <Position X="0" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
-            <Rotation X="0.48865673" Y="1.5314338" Z="0"/>
+            <Rotation X="-0.2574251" Y="5.2101259" Z="0"/>
+        </Transform>
+        <Children Size="0"/>
+    </Child2>
+    <Child3 Name="theFirstPerson" Visible="true" ObType="0">
+        <Transform>
+            <Position X="0" Y="20" Z="0"/>
+            <Scale X="1" Y="1" Z="1"/>
+            <Rotation X="-0.2574251" Y="5.2101259" Z="0"/>
         </Transform>
         <Children Size="2"/>
         <Child0 Name="fHead" Visible="true" ObType="0">
             <Transform>
-                <Position X="0" Y="0" Z="0"/>
+                <Position X="0" Y="6" Z="0"/>
                 <Scale X="1" Y="1" Z="1"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
@@ -192,15 +200,15 @@
                     <Scale X="1" Y="1" Z="1"/>
                     <Rotation X="0" Y="0" Z="0"/>
                 </Transform>
-                <Camera Ortho="false" Fov="1.047192" Width="1280" Height="720" NearZ="0.3" FarZ="5000" viewportX="0" viewportY="0" viewportW="1280" viewportH="720"/>
+                <Camera Ortho="false" Fov="1.047192" Width="1280" Height="720" NearZ="0.30000001" FarZ="5000" viewportX="0" viewportY="0" viewportW="1280" viewportH="720"/>
                 <Children Size="0"/>
             </Child0>
         </Child0>
         <Child1 Name="theFirstPersonS" Visible="true" ObType="0">
             <Transform>
-                <Position X="4" Y="0" Z="0"/>
+                <Position X="3" Y="0" Z="0"/>
                 <Scale X="1" Y="1" Z="1"/>
-                <Rotation X="0" Y="0" Z="0"/>
+                <Rotation X="-2.1326575" Y="0" Z="0"/>
             </Transform>
             <Children Size="1"/>
             <Child0 Name="theFirstPersonA" Visible="true" ObType="0">
@@ -208,7 +216,7 @@
                 <Shader File="Block.hlsl"/>
                 <Material File="Monster/Steve.mtl"/>
                 <Transform>
-                    <Position X="0" Y="-10" Z="0"/>
+                    <Position X="0" Y="-8" Z="0"/>
                     <Scale X="1" Y="1" Z="1"/>
                     <Rotation X="0" Y="0" Z="0"/>
                 </Transform>
@@ -224,5 +232,5 @@
                 </Child0>
             </Child0>
         </Child1>
-    </Child2>
+    </Child3>
 </Root>

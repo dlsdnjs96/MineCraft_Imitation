@@ -13,6 +13,8 @@ private:
 	PlayerView*			playerView;
 	PlayerController*	playerController;
 
+	Sky* sky;
+
 	UI* resume;
 	UI* setting;
 	UI* exit;

@@ -270,4 +270,49 @@ struct Int3
 		z /= rv;
 		return *this;
 	}
+
+};
+
+struct Int4
+{
+	int x, y, z, w;
+	Int4()
+	{
+		x = 0;
+		y = 0;
+		z = 0;
+		w = 0;
+	}
+	Int4(int x, int y, int z, int w)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+		this->w = w;
+	}
+	bool operator ==(Int4 dest)
+	{
+		return (x == dest.x && y == dest.y && z == dest.z && w == dest.w);
+	}
+	bool operator !=(Int4 dest)
+	{
+		return (x != dest.x || y != dest.y || z != dest.z || w != dest.w);
+		//return !(*this == dest);
+	}
+	const Int4 operator * (const int rv)
+	{
+		x *= rv;
+		y *= rv;
+		z *= rv;
+		w *= rv;
+		return *this;
+	}
+	const Int4 operator / (const int rv)
+	{
+		x /= rv;
+		y /= rv;
+		z /= rv;
+		w /= rv;
+		return *this;
+	}
 };

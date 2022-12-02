@@ -1,18 +1,15 @@
 #pragma once
-class Furnace : public Singleton<Furnace>
+class Furnace
 {
 private:
-	UI*		ui;
-	float	fire_time;
-
 public:
-	void	Init();
-	void	Update();
-	void	Render();
-	void	RenderHierarchy();
-	void	Release();
+	Int3	pos;
+	float	fire_time;
+	float	progress_time;
+	Item	fuelSlot, inputSlot, outputSlot;
+	bool	onFire, changed;
 
-	void	SetFire(int _fire);
-	void	SetProgress(int _progress);
+	Furnace();
+	void	Update();
 };
 

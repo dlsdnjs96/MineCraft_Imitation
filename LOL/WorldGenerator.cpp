@@ -86,14 +86,14 @@ void WorldGenerator::OceanMap()
     case 4:
     case 6:
     {
-        oceanMap[1] = LerpMap(oceanMap[0]);
+        oceanMap[1] = ExtendMap(oceanMap[0]);
         OceanToMesh(oceanMap[1]);
         break;
     }
     case 3:
     case 5:
     {
-        oceanMap[0] = LerpMap(oceanMap[1]);
+        oceanMap[0] = ExtendMap(oceanMap[1]);
         OceanToMesh(oceanMap[0]);
         break;
     }
@@ -117,7 +117,7 @@ void WorldGenerator::ClimateMap()
     stageName = "Making ClimateMap... (" + to_string(loadingStage) + "/7)";
     Int2 sectorSize = mapSize;
 
-    //srand(time(NULL));
+    srand(time(NULL));
 
     static int _x = rand(), _y = rand();
 
@@ -235,10 +235,7 @@ void WorldGenerator::BiomeMap()
             int rnd = rand();
 
             if (climateMap[0][i][j] == 1) {
-                if (rnd % 4 == 0)
-                    biomeType = BiomeType::TUNDRA_OF_SNOW;
-                else
-                    biomeType = BiomeType::TUNDRA;
+                biomeType = BiomeType::TUNDRA;
             }
             else if (climateMap[0][i][j] == 2) {
                 if (rnd % 4 == 0)
@@ -251,18 +248,13 @@ void WorldGenerator::BiomeMap()
                     biomeType = BiomeType::PLAIN;
             }
             else if (climateMap[0][i][j] == 3) {
-                if (rnd % 2 == 0)
+                if (rnd % 3 == 0)
                     biomeType = BiomeType::DESERT;
-                else if (rnd % 30 <= 10)
-                    biomeType = BiomeType::SAVANA;
                 else
                     biomeType = BiomeType::PLAIN;
             }
             else if (climateMap[0][i][j] == 4) {
-                if (rnd % 2 == 0)
-                    biomeType = BiomeType::DESERT;
-                else
-                    biomeType = BiomeType::SAVANA;
+                biomeType = BiomeType::DESERT;
             }
             else
             {
@@ -279,7 +271,7 @@ void WorldGenerator::BiomeMap()
                 pair<int, int> top = que.back();
                 que.pop_back();
 
-                if (oceanMap[1][top.first][top.second] < 20)
+                if (oceanMap[1][top.first][top.second] < WATER_HEIGHT)
                     continue;
                 
                 biomeMap[top.first][top.second] = static_cast<char>(biomeType);
@@ -324,14 +316,20 @@ void WorldGenerator::HeightMap()
             for (int i = 0; i < mapSize.x; i++)
                 heightMap[1][i].resize(mapSize.y);
 
+            float noise;
             for (int i = 0; i < mapSize.x; i++)
             {
                 for (int j = 0; j < mapSize.y; j++)
                 {
-                    float noise = Util::SmoothNoise(_x + i, _y + j) + 1.f;
-                    noise *= 20.f;
-
-                    heightMap[0][i][j] = static_cast<char>(abs(noise));
+                    if (oceanMap[1][i][j] < WATER_HEIGHT || riverDepthMap[i][j] > 0) {
+                        heightMap[0][i][j] = WATER_HEIGHT;
+                        continue;
+                    }
+                    noise = Util::SmoothNoise(_x + i, _y + j);
+                    noise += 4.f;
+                    //noise = (noise + 4.f) / 8.f;
+                    //noise *= GetBiomeDeviation(BiomeType(biomeMap[i][j]));
+                    heightMap[0][i][j] = GetBiomeHeight(BiomeType(biomeMap[i][j])) + static_cast<char>(noise);
                 }
             }
             HeightToMesh(heightMap[0]);
@@ -340,6 +338,8 @@ void WorldGenerator::HeightMap()
         case 2:
         case 4:
         case 6:
+        case 8:
+        case 10:
         {
             heightMap[1] = LerpMap(heightMap[0]);
             HeightToMesh(heightMap[1]);
@@ -347,17 +347,26 @@ void WorldGenerator::HeightMap()
         }
         case 3:
         case 5:
+        case 7:
+        case 9:
         {
+            for (int i = 0; i < mapSize.x; i++)
+            {
+                for (int j = 0; j < mapSize.y; j++)
+                {
+                    if (oceanMap[1][i][j] < WATER_HEIGHT || riverDepthMap[i][j] > 0)
+                        heightMap[1][i][j] = 0;
+                }
+            }
             heightMap[0] = LerpMap(heightMap[1]);
             HeightToMesh(heightMap[0]);
             break;
         }
-        case 7:
+        case 11:
         {
-            loadingFunction = &WorldGenerator::TreeMap;
             HeightToMesh(heightMap[1]);
-
             loadingStage = 0;
+            loadingFunction = &WorldGenerator::TreeMap;
             break;
         }
     }
@@ -374,43 +383,42 @@ void WorldGenerator::TreeMap()
     for (int i = 0; i < mapSize.x; i++)
         treeMap[i].resize(mapSize.y);
     
-    //for (int i = 0; i < mapSize.x; i+=16)
-    //{
-    //    for (int j = 0; j < mapSize.y; j+=16)
-    //    {
-    //            
-    //        for (int k = 0; k < 10; k++)
-    //        {
-    //            int x = static_cast<int>(rand() % 16);
-    //            int y = static_cast<int>(rand() % 16);
-    //
-    //            if (heightMap[1][i + x][j + y] > WATER_HEIGHT && treeMap[i + x][j + y] == 0)
-    //            {
-    //                char leafBoundary = (2 + (rand() % 2));
-    //                char treeHeight = 5 + (rand() % 3);
-    //
-    //                for (int _x = 0; _x < leafBoundary; _x++)
-    //                {
-    //                    for (int _y = 0; _y < leafBoundary; _y++)
-    //                    {
-    //                        if ((i + x) + _x >= mapSize.x || (i + x) - _x < 0
-    //                            || (j + y) + _y >= mapSize.y || (j + y) - _y < 0)
-    //                            continue;
-    //                        treeMap[(i + x) + _x][(j + y) + _y] = 1;
-    //                        treeMap[(i + x) + _x][(j + y) - _y] = 1;
-    //                        treeMap[(i + x) - _x][(j + y) + _y] = 1;
-    //                        treeMap[(i + x) - _x][(j + y) - _y] = 1;
-    //                    }
-    //                }
-    //                treeMap[i + x][j + y] = treeHeight;
-    //            }
-    //        }
-    //    }
-    //}
+    for (int i = 0; i < mapSize.x; i+=16)
+    {
+        for (int j = 0; j < mapSize.y; j+=16)
+        {
+                
+            for (int k = 0; k < 10; k++)
+            {
+                int x = static_cast<int>(rand() % 16);
+                int y = static_cast<int>(rand() % 16);
+    
+                if (heightMap[1][i + x][j + y] > WATER_HEIGHT && treeMap[i + x][j + y] == 0)
+                {
+                    char leafBoundary = (2 + (rand() % 2));
+                    char treeHeight = 5 + (rand() % 3);
+    
+                    for (int _x = 0; _x < leafBoundary; _x++)
+                    {
+                        for (int _y = 0; _y < leafBoundary; _y++)
+                        {
+                            if ((i + x) + _x >= mapSize.x || (i + x) - _x < 0
+                                || (j + y) + _y >= mapSize.y || (j + y) - _y < 0)
+                                continue;
+                            treeMap[(i + x) + _x][(j + y) + _y] = 1;
+                            treeMap[(i + x) + _x][(j + y) - _y] = 1;
+                            treeMap[(i + x) - _x][(j + y) + _y] = 1;
+                            treeMap[(i + x) - _x][(j + y) - _y] = 1;
+                        }
+                    }
+                    treeMap[i + x][j + y] = treeHeight;
+                }
+            }
+        }
+    }
 
-    //loadingStage = 0;
-    //loadingFunction = &WorldGenerator::RiverMap;
-
+    loadingStage = 0;
+    loadingFunction = &WorldGenerator::HeightMap;
 
     MapToWorld();
 }
@@ -456,104 +464,285 @@ void WorldGenerator::RiverMap()
         }
         case 7:
         {
-            loadingFunction = &WorldGenerator::RiverMap;
-            RiverToMesh(riverMap[1]);
+            riverMap[0] = ExtendMap(riverMap[1]);
+            loadingFunction = &WorldGenerator::RiverDepthMap;
+            RiverToMesh(riverMap[0]);
             //loadingStage = 0;
-            MapToWorld();
             break;
         }
      }
     loadingStage++;
 }
 
+void WorldGenerator::RiverDepthMap()
+{
+    stageName = "Making RiverDepthMap... ";
+
+    riverDepthMap.resize(mapSize.x);
+    for (int i = 0; i < mapSize.x; i++)
+        riverDepthMap[i].resize(mapSize.y);
+
+    vector<vector<bool>>* _map = &riverMap[0];
+
+
+    for (int i = 0; i < (*_map).size() - 1; i++)
+    {
+        for (int j = 0; j < (*_map)[0].size() - 1; j++) {
+            if ((*_map)[i][j] == (*_map)[i + 1][j] && (*_map)[i][j] == (*_map)[i][j + 1])
+                continue;
+
+
+            for (int k = -1; k <= 1; k++)
+            {
+                for (int l = -1; l <= 1; l++)
+                {
+                    if (i + k >= 0 && i + k < mapSize.x && j + l >= 0 && j + l < mapSize.y)
+                        riverDepthMap[i + k][j + l] += 1 - min(abs(k), abs(l));
+                }
+            }
+        }
+    }
+    loadingFunction = &WorldGenerator::FlowerMap;
+    loadingStage = 0;
+}
+
+void WorldGenerator::FlowerMap()
+{
+    stageName = "Making FlowerMap... ";
+
+    flowerMap.resize(mapSize.x);
+    for (int i = 0; i < mapSize.x; i++)
+        flowerMap[i].resize(mapSize.y);
+
+
+
+    for (int i = 0; i < flowerMap.size(); i += SECTOR_SIZE)
+    {
+        for (int j = 0; j < flowerMap[0].size(); j += SECTOR_SIZE) {
+
+            int count = 0, x = 0, y = 0, fType;
+            fType = rand() % 4;
+
+            while (count < 64)
+            {
+                count++;
+                if (rand() % 128 > count + 64)
+                    break;
+                x = rand() % 16;
+                y = rand() % 16;
+
+                if (oceanMap[1][i + x][j + y] < WATER_HEIGHT || riverDepthMap[i + x][j + y] > 0
+                    || (BiomeType(climateMap[1][i + x][j + y]) != BiomeType::MOUNTAIN
+                        && BiomeType(climateMap[1][i + x][j + y]) != BiomeType::PLAIN
+                        && BiomeType(climateMap[1][i + x][j + y]) != BiomeType::FOREST
+                        && BiomeType(climateMap[1][i + x][j + y]) != BiomeType::FOREST_BIRCH))
+                    continue;
+                flowerMap[i + x][j + y] = 37 + fType;
+            }                                                                               
+                
+        }
+    }
+    loadingFunction = &WorldGenerator::GrassMap;
+    loadingStage = 0;
+}
+
+void WorldGenerator::GrassMap()
+{
+    stageName = "Making GrassMap... ";
+
+    grassMap.resize(mapSize.x);
+    for (int i = 0; i < mapSize.x; i++)
+        grassMap[i].resize(mapSize.y);
+
+
+
+    for (int i = 0; i < grassMap.size(); i++)
+    {
+        for (int j = 0; j < grassMap[0].size(); j++) {
+
+            switch (BiomeType(biomeMap[i][j])) {
+                case BiomeType::FOREST:
+                case BiomeType::FOREST_DARK:
+                case BiomeType::PLAIN:
+                case BiomeType::FOREST_BIRCH:
+                    if (rand() % 4 == 0)
+                        grassMap[i][j] = true;
+            }
+                
+        }
+    }
+
+    loadingFunction = &WorldGenerator::HeightMap;
+    loadingStage = 0;
+}
+
 void WorldGenerator::MapToWorld()
 {
+    //BlockType arr[100] = { BlockType::GRASS_DIRT,
+    //    BlockType::DIRT,
+    //    BlockType::STILL_WATER
+    //    , BlockType::OAK_WOOD
+    //    , BlockType::LEAVE
+    //    , BlockType::STONE
+    //    , BlockType::OAK_WOOD_PLANK
+    //    , BlockType::BRICKS
+    //    , BlockType::TNT
+    //    , BlockType::COBBLESTONE
+    //    , BlockType::BEDROCK
+    //    , BlockType::SAND
+    //    , BlockType::GRAVEL
+    //    , BlockType::IRON_BLOCK
+    //    , BlockType::GOLD_BLOCK
+    //    , BlockType::DIAMOND_BLOCK
+    //    , BlockType::GOLD_ORE
+    //    , BlockType::IRON_ORE
+    //    , BlockType::COAL_ORE
+    //    , BlockType::BOOKSHELF
+    //    , BlockType::OBSIDIAN
+    //    , BlockType::CRAFTING_TABLE
+    //    , BlockType::FURNACE
+    //    , BlockType::BURNING_FURNACE
+    //    , BlockType::WHITE_WOOL
+    //    , BlockType::SNOW_BLOCK
+    //    , BlockType::ICE
+    //    , BlockType::FARMLAND
+    //    , BlockType::FARMLAND_WET
+    //    , BlockType::PUMPKIN
+    //    , BlockType::PUMPKIN_CARVED
+    //    , BlockType::JUNGLE_WOOD
+    //    , BlockType::SPRUCE_WOOD
+    //    , BlockType::BIRCH_WOOD
+    //    , BlockType::LAPIS_LAZULI_ORE
+    //    , BlockType::SANDSTONE
+    //    , BlockType::GLOWSTONE
+    //    , BlockType::JUNGLE_LEAVES
+    //    , BlockType::SPRUCE_LEAVES
+    //    , BlockType::BIRCH_LEAVES
+    //    , BlockType::BIRCH_LEAVES
+    //, BlockType::SPRUCE_WOOD_PLANK 
+    //, BlockType::JUNGLE_WOOD_PLANK
+    //, BlockType::GLASS
+    //, BlockType::SNOW_DIRT
+    //, BlockType::GRASS
+    //, BlockType::DANDELION
+    //, BlockType::ROSE
+    //, BlockType::BROWN_MUSHROOM
+    //, BlockType::RED_MUSHROOM
+    //};
+    //
+    //for (int i = 0;i < 50;i++)
+    //    WORLD->SetBlockType({ i * 2, 10, 1 }, arr[i]);
+    //
+    //WORLD->CreateDumpBlocks();
+    //WORLD->distinguishBlocks({ 0, 0, 0 }, mapSize.x / 2);
+    //SCENE->ChangeScene("INGAME", 0.f)->Init();
+    //return;
+
     // Biome Map
     printf("Biome Map to World\r\n");
     {
         for (int i = 0; i < biomeMap.size(); i++)
         {
             for (int j = 0; j < biomeMap[0].size(); j++) {
-                switch (BiomeType(biomeMap[i][j]))
-                {
-                case BiomeType::TUNDRA:
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::STONE);
-                    break;
-                case BiomeType::TUNDRA_OF_SNOW:
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::SNOW);
-                    break;
-                case BiomeType::FOREST:
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::OAK_WOOD);
-                    break;
-                case BiomeType::FOREST_DARK:
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::SPRUCE_WOOD);
-                    break;
-                case BiomeType::MOUNTAIN:
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::GRASS_DIRT);
-                    break;
-                case BiomeType::PLAIN:
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::DIRT);
-                    break;
-                case BiomeType::FOREST_BIRCH:
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::BIRCH_WOOD);
-                    break;
-                case BiomeType::DESERT:
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::SAND);
-                    break;
-                case BiomeType::SAVANA:
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::SANDSTONE);
-                    break;
-                case BiomeType::JUNGLE:
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::JUNGLE_WOOD);
-                    break;
-                case BiomeType::TAIGA:
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::STONE);
-                    break;
-                }
-                if (oceanMap[1][i][j] < 20)
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::STILL_WATER);
-            }
-        }
-    }
-
-    // River Map
-    printf("River Map to World\r\n");
-    {
-        for (int i = 0; i < riverMap[1].size() - 1; i++)
-        {
-            for (int j = 0; j < riverMap[1][0].size() - 1; j++) {
-                if (riverMap[1][i][j] != riverMap[1][i + 1][j] || riverMap[1][i][j] != riverMap[1][i][j + 1])
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::DIAMOND_BLOCK);
-            }
-        }
-    }
-    
-
-    WORLD->CreateDumpBlocks();
-    WORLD->distinguishBlocks({ 0, 0, 0 }, mapSize.x / 2);
-    //SCENE->SetCurrentScene(SCENE->GetScene("INGAME"))->Init();
-    SCENE->ChangeScene("INGAME", 0.f)->Init();
-    return;
-
-    // Height Map
-    printf("Height Map to World\r\n");
-    {
-        for (int i = 0; i < heightMap[1].size(); i++)
-        {
-            for (int j = 0; j < heightMap[1][0].size(); j++) {
-                for (int k = 0; k < heightMap[1][i][j]; k++)
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STONE);
-                if (char(heightMap[1][i][j]) < WATER_HEIGHT) {
+                if (heightMap[1][i][j] < WATER_HEIGHT) {
                     for (int k = 0; k < heightMap[1][i][j]; k++)
-                        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::DIRT);
-                    for (int k = heightMap[1][i][j]; k <= WATER_HEIGHT; k++)
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::SAND);
+                    for (int k = heightMap[1][i][j]; k < WATER_HEIGHT; k++)
                         WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STILL_WATER);
                 }
-                else
-                    WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j], j - (mapSize.y / 2) }, BlockType::GRASS_DIRT);
+                //else if (oceanMap[1][i][j] < WATER_HEIGHT) {
+                //    for (int k = 0; k < oceanMap[1][i][j]; k++)
+                //        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::SAND);
+                //    for (int k = oceanMap[1][i][j]; k < WATER_HEIGHT; k++)
+                //        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STILL_WATER);
+                //}
+                //else if (riverDepthMap[i][j] > 0) {
+                //    for (int k = 0; k < WATER_HEIGHT - riverDepthMap[i][j] - 2; k++)
+                //        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STONE);
+                //    for (int k = WATER_HEIGHT - riverDepthMap[i][j] - 2; k < WATER_HEIGHT - riverDepthMap[i][j]; k++)
+                //        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::SAND);
+                //    for (int k = WATER_HEIGHT - riverDepthMap[i][j]; k < WATER_HEIGHT; k++)
+                //        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STILL_WATER);
+                //}
+                else {
+                    switch (BiomeType(biomeMap[i][j]))
+                    {
+                    case BiomeType::TUNDRA:
+                        for (int k = 0; k < heightMap[1][i][j] - 3; k++)
+                            WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STONE);
+                        if (heightMap[1][i][j] - 3 > 0) {
+                            for (int k = heightMap[1][i][j] - 3; k < heightMap[1][i][j]; k++)
+                                WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::SANDSTONE_SHAVED);
+                        }
+                        break;
+                    case BiomeType::DESERT:
+                        for (int k = 0; k < heightMap[1][i][j] - 3; k++)
+                            WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STONE);
+                        if (heightMap[1][i][j] - 3 > 0) {
+                            for (int k = heightMap[1][i][j] - 3; k < heightMap[1][i][j]; k++)
+                                WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::SANDSTONE_SHAVED);
+                        }
+                        break;
+                    default:
+                        for (int k = 0; k < heightMap[1][i][j] - 3; k++)
+                            WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STONE);
+                        if (heightMap[1][i][j] - 3 > 0) {
+                            for (int k = heightMap[1][i][j] - 3; k < heightMap[1][i][j]; k++)
+                                WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::DIRT);
+                        }
+                    }
+
+                    switch (BiomeType(biomeMap[i][j]))
+                    {
+                    case BiomeType::TUNDRA:
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j], j - (mapSize.y / 2) }, BlockType::SNOW_DIRT);
+                        break;
+                    case BiomeType::FOREST:
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j], j - (mapSize.y / 2) }, BlockType::GRASS_DIRT);
+                        break;
+                    case BiomeType::FOREST_DARK:
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j], j - (mapSize.y / 2) }, BlockType::GRASS_DIRT);
+                        break;
+                    case BiomeType::MOUNTAIN:
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j], j - (mapSize.y / 2) }, BlockType::GRASS_DIRT);
+                        break;
+                    case BiomeType::PLAIN:
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j], j - (mapSize.y / 2) }, BlockType::GRASS_DIRT);
+                        break;
+                    case BiomeType::FOREST_BIRCH:
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j], j - (mapSize.y / 2) }, BlockType::GRASS_DIRT);
+                        break;
+                    case BiomeType::DESERT:
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j], j - (mapSize.y / 2) }, BlockType::SAND);
+                        break;
+                    case BiomeType::JUNGLE:
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j], j - (mapSize.y / 2) }, BlockType::JUNGLE_LEAVES);
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j]+1, j - (mapSize.y / 2) }, BlockType::JUNGLE_LEAVES);
+                        break;
+                    default:
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j], j - (mapSize.y / 2) }, BlockType::GRASS_DIRT);
+                    }
+                    switch (BiomeType(biomeMap[i][j]))
+                    {
+                    case BiomeType::FOREST:
+                    case BiomeType::FOREST_DARK:
+                    case BiomeType::MOUNTAIN:
+                    case BiomeType::PLAIN:
+                    case BiomeType::FOREST_BIRCH:
+                        if (grassMap[i][j])
+                            WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j] + 1, j - (mapSize.y / 2) }, BlockType::GRASS);
+                        if (flowerMap[i][j] > 0)
+                            WORLD->SetBlockType({ i - (mapSize.x / 2), heightMap[1][i][j] + 1, j - (mapSize.y / 2) }, BlockType(flowerMap[i][j]));
+                        break;
+                    }
+
+                }
+
+                //WORLD->SetBlockType({ i - (mapSize.x / 2), 1, j - (mapSize.y / 2) }, BlockType::STONE);
             }
         }
     }
+
 
     // Tree Map
     printf("Tree Map to World\r\n");
@@ -561,51 +750,114 @@ void WorldGenerator::MapToWorld()
         for (int i = 0; i < mapSize.x; i++)
         {
             for (int j = 0; j < mapSize.y; j++) {
-                if (treeMap[i][j] > 1) {
-                    int groundHeight = heightMap[1][i][j] + 1;
-                    int leafRadius = 3;
+                if (treeMap[i][j] <= 1 || heightMap[1][i][j] < WATER_HEIGHT)
+                    continue;
 
-                    for (int k = 0; k < treeMap[i][j]; k++)
-                        WORLD->SetBlockType({ i - (mapSize.x / 2), groundHeight + k, j - (mapSize.y / 2) }, BlockType::OAK_WOOD);
+                BlockType root = BlockType::OAK_WOOD;
+                BlockType leaves = BlockType::LEAVE;
+                int rootHeight = 2;
+                int treeHeight = 2;
+                int leafRadius = 3;
 
-                    for (int _x = 0; _x < leafRadius; _x++)
-                    {
-                        for (int _z = 0; _z < leafRadius; _z++)
-                        {
-                            if (_x == 0 && _z == 0)
-                                continue;
-                            for (int _y = treeMap[i][j] - 2; _y < treeMap[i][j]; _y++) {
-                                WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, BlockType::LEAVE);
-                                WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, BlockType::LEAVE);
-                                WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, BlockType::LEAVE);
-                                WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, BlockType::LEAVE);
-                            }
-                        }
+                switch (BiomeType(biomeMap[i][j]))
+                {
+                case BiomeType::FOREST:
+                case BiomeType::PLAIN:
+                    root = BlockType::OAK_WOOD;
+                    leaves = BlockType::LEAVE;
+                    treeHeight = (rand() % 3) + 4;
+                    rootHeight = (rand() % 2) + 2;
+                    leafRadius = 2 + (rand() % 2);
+                    break;
+                case BiomeType::FOREST_DARK:
+                    root = BlockType::SPRUCE_WOOD;
+                    leaves = BlockType::SPRUCE_LEAVES;
+                    treeHeight = (rand() % 3) + 6;
+                    rootHeight = (rand() % 2) + 4;
+                    leafRadius = 4 + (rand()%2);
+                    break;
+                case BiomeType::FOREST_BIRCH:
+                    root = BlockType::BIRCH_WOOD;
+                    leaves = BlockType::BIRCH_LEAVES;
+                    treeHeight = (rand() % 2) + 3;
+                    rootHeight = (rand() % 2) + 2;
+                    leafRadius = 2 + (rand() % 2);
+                    break;
+                case BiomeType::JUNGLE:
+                    root = BlockType::JUNGLE_WOOD;
+                    leaves = BlockType::JUNGLE_LEAVES;
+                    treeHeight = (rand() % 7) + 13;
+                    rootHeight = (rand() % 3) + 10;
+                    leafRadius = 5 + (rand() % 2);
+                    break;
+                default:
+                    continue;
+                }
+                treeMap[i][j] = treeHeight;
+                int groundHeight = heightMap[1][i][j] + 1;
+
+                if (BiomeType(biomeMap[i][j]) == BiomeType::JUNGLE)
+                {
+                    for (int k = 0; k < treeMap[i][j]; k++) {
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), groundHeight + k, j - (mapSize.y / 2) }, root);
+                        WORLD->SetBlockType({ i - (mapSize.x / 2) + 1, groundHeight + k, j - (mapSize.y / 2) }, root);
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), groundHeight + k, j - (mapSize.y / 2) + 1 }, root);
+                        WORLD->SetBlockType({ i - (mapSize.x / 2) + 1, groundHeight + k, j - (mapSize.y / 2) + 1 }, root);
                     }
-                    for (int _x = 0; _x < leafRadius-1; _x++)
+                }
+                else {
+                    for (int k = 0; k < treeMap[i][j]; k++)
+                        WORLD->SetBlockType({ i - (mapSize.x / 2), groundHeight + k, j - (mapSize.y / 2) }, root);
+                }
+
+                for (int _x = 0; _x < leafRadius; _x++)
+                {
+                    for (int _z = 0; _z < leafRadius; _z++)
                     {
-                        for (int _z = 0; _z < leafRadius - 1; _z++)
-                        {
-                            for (int _y = treeMap[i][j]; _y < treeMap[i][j] + 2; _y++) {
-                                WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, BlockType::LEAVE);
-                                WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, BlockType::LEAVE);
-                                WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, BlockType::LEAVE);
-                                WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, BlockType::LEAVE);
-                            }
+                        if (_x == 0 && _z == 0)
+                            continue;
+                        for (int _y = rootHeight; _y < treeMap[i][j]; _y++) {
+                            WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, leaves);
+                            WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, leaves);
+                            WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, leaves);
+                            WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, leaves);
                         }
                     }
                 }
+                for (int _x = 0; _x < leafRadius-1; _x++)
+                {
+                    for (int _z = 0; _z < leafRadius - 1; _z++)
+                    {
+                        for (int _y = treeMap[i][j]; _y < treeMap[i][j] + 2; _y++) {
+                            WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, leaves);
+                            WORLD->SetBlockType({ i + _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, leaves);
+                            WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j + _z - (mapSize.y / 2) }, leaves);
+                            WORLD->SetBlockType({ i - _x - (mapSize.x / 2), groundHeight + _y, j - _z - (mapSize.y / 2) }, leaves);
+                        }
+                    }
+                }
+                
             }
         }
     }
+
+    oceanMap[0].clear();
+    oceanMap[1].clear();
+    climateMap[0].clear();;
+    climateMap[1].clear();;
     heightMap[0].clear();
     heightMap[1].clear();
     riverMap[0].clear();
     riverMap[1].clear();
+    biomeMap.clear();
+    riverDepthMap.clear();
     treeMap.clear();
+    flowerMap.clear();
+
     WORLD->CreateDumpBlocks();
     WORLD->distinguishBlocks({ 0, 0, 0 }, mapSize.x / 2);
-    SCENE->SetCurrentScene(SCENE->GetScene("INGAME"));
+    SCENE->ChangeScene("INGAME", 0.f)->Init();
+    return;
 }
 
 
@@ -735,9 +987,6 @@ void WorldGenerator::BiomeToMesh(vector<vector<char>>& map)
             case BiomeType::TUNDRA:
                 cc = { 235.f / 255.f, 235.f / 255.f, 235.f / 255.f };
                 break;
-            case BiomeType::TUNDRA_OF_SNOW:
-                cc = { 255.f / 255.f, 255.f / 255.f, 255.f / 255.f };
-                break;
             case BiomeType::FOREST:
                 cc = { 36.f / 255.f, 103.f / 255.f, 11.f / 255.f };
                 break;
@@ -756,14 +1005,8 @@ void WorldGenerator::BiomeToMesh(vector<vector<char>>& map)
             case BiomeType::DESERT:
                 cc = { 255.f / 255.f, 215.f / 255.f, 0.f / 255.f };
                 break;
-            case BiomeType::SAVANA:
-                cc = { 167.f / 255.f, 120.f / 255.f, 9.f / 255.f };
-                break;
             case BiomeType::JUNGLE:
                 cc = { 0.f / 255.f, 30.f / 255.f, 0.f / 255.f };
-                break;
-            case BiomeType::TAIGA:
-                cc = { 215.f / 255.f, 215.f / 255.f, 215.f / 255.f };
                 break;
             }
             
@@ -820,12 +1063,12 @@ void WorldGenerator::HeightToMesh(vector<vector<char>>& map)
         for (int j = 0; j < mapSize.y; j++)
         {
             if (map[i][j] < WATER_HEIGHT) {
-                colorRGB = static_cast<float>(map[i][j] / 20.f) + 0.1;
+                colorRGB = static_cast<float>((WATER_HEIGHT - map[i][j]) / 40.f) + 0.5f;
                 cc = { 0.f, 0.f, colorRGB };
             }
             else
             {
-                colorRGB = static_cast<float>((map[i][j] - WATER_HEIGHT) / 80.f) + 0.1;
+                colorRGB = (static_cast<float>(map[i][j]) / (22.f)) + 0.5f;
                 cc = { 0.f, colorRGB, 0.f };
             }
 
@@ -877,9 +1120,10 @@ void WorldGenerator::RiverToMesh(vector<vector<bool>>& map)
     {
         for (int j = 0; j < mapSize.y; j++)
         {
-            if (oceanMap[1][i][j] < 20)
-                cc = { 1.f, 1.f, 1.f };
-            else if (map[i][j])
+            //if (oceanMap[1][i][j] < 20)
+            //    cc = { 1.f, 1.f, 1.f };
+            //else 
+                if (map[i][j])
                 cc = { 0.5f, 0.5f, 0.5f };
             else
                 cc = { 0.f, 0.f, 0.f };
@@ -960,6 +1204,52 @@ vector<vector<char>> WorldGenerator::LerpMapClimate(vector<vector<char>>& map)
     }
 
     return resultMap;
+}
+
+int WorldGenerator::GetBiomeHeight(BiomeType _biomeType)
+{
+    switch (_biomeType) {
+        case BiomeType::TUNDRA:
+            return 20;
+        case BiomeType::FOREST:
+            return 30;
+        case BiomeType::FOREST_DARK:
+            return 33;
+        case BiomeType::MOUNTAIN:
+            return 50;
+        case BiomeType::PLAIN:
+            return 27;
+        case BiomeType::FOREST_BIRCH:
+            return 31;
+        case BiomeType::DESERT:
+            return 25;
+        case BiomeType::JUNGLE:
+            return 41;
+    }
+    return 0;
+}
+
+int WorldGenerator::GetBiomeDeviation(BiomeType _biomeType)
+{
+    switch (_biomeType) {
+        case BiomeType::TUNDRA:
+            return 5;
+        case BiomeType::FOREST:
+            return 10;
+        case BiomeType::FOREST_DARK:
+            return 8;
+        case BiomeType::MOUNTAIN:
+            return 40;
+        case BiomeType::PLAIN:
+            return 17;
+        case BiomeType::FOREST_BIRCH:
+            return 13;
+        case BiomeType::DESERT:
+            return 7;
+        case BiomeType::JUNGLE:
+            return 22;
+    }
+    return 0;
 }
 
 template<typename T>

@@ -2,6 +2,8 @@
 
 InGameScene::InGameScene()
 {
+    sky = Sky::Create();
+    sky->texCube->LoadFile("sky3.dds");
     TestBlock = Actor::Create();
     TestBlock->LoadFile("TestBlock.xml");
 
@@ -12,13 +14,8 @@ InGameScene::InGameScene()
     //player->Init();
     //Player::user = player;
 
-    playerModel         = new PlayerModel();
-    playerModel->Init();
-    PlayerModel::user   = playerModel;
-    playerView          = new PlayerView(playerModel);
-    playerController    = new PlayerController(playerModel);
 
-    Camera::main = dynamic_cast<Camera*>(playerModel->Find("camHead"));
+
     //WORLD->LoadWorld();
     //WORLD->SaveWorld();
     resume = UI::Create("Resume");
@@ -30,6 +27,8 @@ InGameScene::InGameScene()
 
     aim = UI::Create("Aim");
     aim->LoadFile("Ingame/Aim.xml");
+
+    Init();
 }
 
 InGameScene::~InGameScene()
@@ -45,21 +44,28 @@ InGameScene::~InGameScene()
     TestBlock->Release();
     ITEM_DETAIL->Release();
     MONSTER_MANAGER->Release();
-    FURNACE_TABLE->Release();
+    FURNACE_MANAGER->Release();
+    sky->Release();
 }
 
 void InGameScene::Init()
 {
-    Cam = dynamic_cast<Camera*>(playerModel->Find("camHead"));
-    Cam->nearZ = 0.3f;
-    Cam->farZ = 5000.f;
-    Camera::main = Cam;
+    playerModel = new PlayerModel();
+    playerModel->Init();
+    PlayerModel::user = playerModel;
+    playerView = new PlayerView(playerModel);
+    playerController = new PlayerController(playerModel);
+
+    Camera::main->nearZ = 0.3f;
+    Camera::main->farZ = 5000.f;
+
     WORLD->Init();
     menuTab = false;
 
     resume->mouseOver = [=]() { resume->material = RESOURCE->materials.Load("button2.mtl"); };
     resume->mouseNotOver = [=]() { resume->material = RESOURCE->materials.Load("button1.mtl"); };
     resume->mouseDown = [=]() {
+        SOUND->Play("click");
         POINT cursor;
         if (GetCursorPos(&cursor)) {
             INPUT->fixedMousePos.x = cursor.x;
@@ -75,13 +81,15 @@ void InGameScene::Init()
 
     exit->mouseOver = [=]() { exit->material = RESOURCE->materials.Load("button2.mtl"); };
     exit->mouseNotOver = [=]() { exit->material = RESOURCE->materials.Load("button1.mtl"); };
-    exit->mouseDown = [=]() { WORLD->SaveWorld(); SCENE->ChangeScene("MENU", 0.1f)->Init(); };
+    exit->mouseDown = [=]() { SOUND->Play("click"); WORLD->SaveWorld(); SCENE->ChangeScene("MENU", 0.1f)->Init(); };
 
     INVENTORY->Init();
     CRAFTING->Init();
     ITEM_DETAIL->Init();
     MONSTER_MANAGER->Init();
-    FURNACE_TABLE->Init();
+    FURNACE_MANAGER->Init();
+
+    //SOUND->AddSound("Henesys.wav", "Henesys", false);
 }
 
 void InGameScene::Release()
@@ -96,16 +104,16 @@ void InGameScene::Release()
 
 void InGameScene::Update()
 {
-    static bool first_lock = Util::LockMouse();
+    //static bool first_lock = Util::LockMouse();
 
     if (INPUT->KeyDown('T')) {
-        MONSTER_MANAGER->Spawn(MonsterType::SPIDER, Camera::main->GetWorldPos());
+        MONSTER_MANAGER->Spawn(MonsterType::COW, Camera::main->GetWorldPos());
     }
     if (INPUT->KeyDown('Y')) {
         MONSTER_MANAGER->Spawn(MonsterType::SHEEP, Camera::main->GetWorldPos());
     }
     if (INPUT->KeyDown('U')) {
-        MONSTER_MANAGER->Spawn(MonsterType::ZOMBIE, Camera::main->GetWorldPos());
+        MONSTER_MANAGER->Spawn(MonsterType::PIG, Camera::main->GetWorldPos());
     }
     if (INPUT->KeyDown(VK_ESCAPE)) {
         menuTab = true;
@@ -135,7 +143,8 @@ void InGameScene::Update()
     CRAFTING->RenderHierarchy();
     ITEM_DETAIL->RenderHierarchy();
     MONSTER_MANAGER->RenderHierarchy();
-    FURNACE_TABLE->RenderHierarchy();
+    FURNACE_MANAGER->RenderHierarchy();
+    sky->RenderHierarchy();
 
     resume->RenderHierarchy();
     setting->RenderHierarchy();
@@ -165,7 +174,8 @@ void InGameScene::Update()
     CRAFTING->Update();
     ITEM_DETAIL->Update();
     MONSTER_MANAGER->Update();
-    FURNACE_TABLE->Update();
+    FURNACE_MANAGER->Update();
+    sky->Update();
 
     //if (INPUT->KeyDown(VK_LBUTTON))
     //{
@@ -187,6 +197,7 @@ void InGameScene::PreRender()
 void InGameScene::Render()
 {
     Camera::main->Set();
+    sky->Render();
     Grid->Render();
 
     playerView->Render();
@@ -202,7 +213,7 @@ void InGameScene::Render()
     CRAFTING->Render();
     ITEM_DETAIL->Render();
     MONSTER_MANAGER->Render();
-    FURNACE_TABLE->Render();
+    FURNACE_MANAGER->Render();
 
     if (menuTab)
     {

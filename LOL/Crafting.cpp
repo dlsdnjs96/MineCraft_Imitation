@@ -1123,6 +1123,7 @@ void Crafting::Init()
 		dynamic_cast<UI*>(table->Find("slot" + to_string(i)))->mouseOver = [=]() { table->Find("slot" + to_string(i))->SetLocalPosZ(-0.05f); };
 		dynamic_cast<UI*>(table->Find("slot" + to_string(i)))->mouseNotOver = [=]() { table->Find("slot" + to_string(i))->SetLocalPosZ(0.05f); };
 		dynamic_cast<UI*>(table->Find("slot" + to_string(i)))->mouseDown = [=]() {
+			SOUND->Play("click");
 			if (INVENTORY->GetInvenItem(i).itemid == mousePick.itemid)
 			{
 				INVENTORY->GetInvenItem(i).ea += mousePick.ea;
@@ -1134,6 +1135,7 @@ void Crafting::Init()
 			UpdateMouse(); };
 
 		dynamic_cast<UI*>(table->Find("slot" + to_string(i)))->mouseDownR = [=]() {
+			SOUND->Play("click");
 			if (INVENTORY->GetInvenItem(i).itemid == 0 and mousePick.itemid != 0)
 			{
 				INVENTORY->GetInvenItem(i).itemid = mousePick.itemid;
@@ -1160,6 +1162,7 @@ void Crafting::Init()
 		dynamic_cast<UI*>(table->Find("qSlot" + to_string(i)))->mouseOver = [=]() { table->Find("qSlot" + to_string(i))->SetLocalPosZ(-0.05f); };
 		dynamic_cast<UI*>(table->Find("qSlot" + to_string(i)))->mouseNotOver = [=]() { table->Find("qSlot" + to_string(i))->SetLocalPosZ(0.f); };
 		dynamic_cast<UI*>(table->Find("qSlot" + to_string(i)))->mouseDown = [=]() {
+			SOUND->Play("click");
 			if (INVENTORY->GetQuickItem(i).itemid == mousePick.itemid)
 			{
 				INVENTORY->GetQuickItem(i).ea += mousePick.ea;
@@ -1171,6 +1174,7 @@ void Crafting::Init()
 			UpdateMouse(); };
 
 		dynamic_cast<UI*>(table->Find("qSlot" + to_string(i)))->mouseDownR = [=]() {
+			SOUND->Play("click");
 			if (INVENTORY->GetQuickItem(i).itemid == 0 and mousePick.itemid != 0)
 			{
 				INVENTORY->GetQuickItem(i).itemid = mousePick.itemid;
@@ -1197,6 +1201,7 @@ void Crafting::Init()
 		dynamic_cast<UI*>(table->Find("cSlot" + to_string(i)))->mouseOver = [=]() { table->Find("cSlot" + to_string(i))->SetLocalPosZ(-0.05f); };
 		dynamic_cast<UI*>(table->Find("cSlot" + to_string(i)))->mouseNotOver = [=]() { table->Find("cSlot" + to_string(i))->SetLocalPosZ(0.f); };
 		dynamic_cast<UI*>(table->Find("cSlot" + to_string(i)))->mouseDown = [=]() {
+			SOUND->Play("click");
 			if (combineSlot[i / 3][i % 3].itemid == mousePick.itemid)
 			{
 				combineSlot[i / 3][i % 3].ea += mousePick.ea;
@@ -1210,6 +1215,7 @@ void Crafting::Init()
 			UpdateMouse(); };
 
 		dynamic_cast<UI*>(table->Find("cSlot" + to_string(i)))->mouseDownR = [=]() {
+			SOUND->Play("click");
 			if (combineSlot[i / 3][i % 3].itemid == 0 and mousePick.itemid != 0)
 			{
 				combineSlot[i / 3][i % 3].itemid = mousePick.itemid;
@@ -1237,6 +1243,7 @@ void Crafting::Init()
 	dynamic_cast<UI*>(table->Find("outcome"))->mouseOver = [=]() { table->Find("outcome")->SetLocalPosZ(-0.05f); };
 	dynamic_cast<UI*>(table->Find("outcome"))->mouseNotOver = [=]() { table->Find("outcome")->SetLocalPosZ(0.f); };
 	dynamic_cast<UI*>(table->Find("outcome"))->mouseDown = [=]() {
+		SOUND->Play("click");
 		if (outcomeSlot.itemid != 0 && mousePick.itemid == 0) {
 			MakeCraftItem3x3(combineSlot, outcomeSlot);
 			Util::Swap(outcomeSlot, mousePick);
@@ -1290,7 +1297,8 @@ void Crafting::Render()
 		return;
 
 	table->Render();
-	mouse->Render();
+	if (mousePick.itemid != 0)
+		mouse->Render();
 }
 
 void Crafting::RenderHierarchy()

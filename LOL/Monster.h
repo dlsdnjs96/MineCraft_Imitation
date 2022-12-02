@@ -49,6 +49,7 @@ public:
 	Int3			currSector;
 	MonsterState	state;
 	MonsterType		type;
+	string			kind;
 	float			passedTime;
 	bool			isAlive;
 	float			leftTime = 0.f;

@@ -6,6 +6,7 @@ void Monster::HitByPlayer(int damage)
 {
 	hp -= damage;
 
+	SOUND->Play(kind, Vector3::Distance(GetWorldPos(), PlayerModel::user->GetWorldPos()));
 	ChangeState(MonsterState::HIT);
 	leftTime = 1.f;
 
@@ -135,7 +136,7 @@ void Monster::FollowPlayer()
 	Vector3 forward = PlayerModel::user->GetWorldPos() - GetWorldPos();
 	forward.y = 0.f;
 	forward.Normalize();
-	rotation.y = atan2f(forward.x, forward.z);
+	rotation.y = atan2f(-forward.z, forward.x);
 	moveForce += forward * DELTA * moveSpeed;
 }
 
@@ -369,6 +370,8 @@ void Monster::ChangeState(MonsterState _state)
 	state = _state;
 	passedTime = 0.f;
 	AniReset();
+	if (_state == MonsterState::MOVE)
+		SOUND->Play(kind, Vector3::Distance(GetWorldPos(), PlayerModel::user->GetWorldPos()));
 }
 
 void Monster::ChangeShader(string _shader)

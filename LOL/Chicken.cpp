@@ -3,6 +3,7 @@
 Chicken::Chicken()
 {
 	type = MonsterType::CHICKEN;
+	kind = "chicken";
 }
 
 void Chicken::Init(Vector3 _pos)

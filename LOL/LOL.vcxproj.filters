@@ -107,9 +107,6 @@
     <ClCompile Include="Spider.cpp">
       <Filter>Monster</Filter>
     </ClCompile>
-    <ClCompile Include="Furnace.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="DataBase.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -122,6 +119,10 @@
     <ClCompile Include="PlayerView.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Furnace.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="FurnaceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -213,9 +214,6 @@
     <ClInclude Include="Spider.h">
       <Filter>Monster</Filter>
     </ClInclude>
-    <ClInclude Include="Furnace.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="DataBase.h">
       <Filter>System</Filter>
     </ClInclude>
@@ -228,6 +226,10 @@
     <ClInclude Include="PlayerView.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Furnace.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FurnaceManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini">

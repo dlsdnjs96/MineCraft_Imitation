@@ -400,32 +400,29 @@ void Util::CursorVisible(bool _on)
 	}
 }
 
-bool Util::LockMouse()
+void Util::LockMouse()
 {
 	POINT cursor;
-	if (GetCursorPos(&cursor)) {
-		INPUT->fixedMousePos.x = cursor.x;
-		INPUT->fixedMousePos.y = cursor.y;
-		INPUT->prevPosition = INPUT->position;
-		Util::CursorVisible(false);
-		return true;
-	}
-	return false;
+	GetCursorPos(&cursor);
+	INPUT->fixedMousePos = cursor;
+	INPUT->prevPosition = INPUT->position;
+	Util::CursorVisible(false);
+	return;
 }
 
-bool Util::UnLockMouse()
+void Util::UnLockMouse()
 {
-	INPUT->fixedMousePos.x = -1;
+	INPUT->fixedMousePos = { -1, -1 };
 	Util::CursorVisible(true);
-	return false;
+	return;
 }
 
 
 
 
-float Util::SmoothNoise(int x, int y)
+float Util::SmoothNoise(int x, int y) // -4.f ~ 4.f
 {
-	return (noise2(x - 1, y - 1) + noise2(x + 1, y - 1) + noise2(x - 1, y + 1) + noise2(x + 1, y + 1));
+	return (noise2(x - 1, y - 1) + noise2(x + 1, y - 1) + noise2(x - 1, y + 1) + noise2(x + 1, y + 1))
 	+((noise2(x - 1, y) + noise2(x + 1, y) + noise2(x, y + 1) + noise2(x, y - 1)) / 8.f)
 		+ (noise2(x, y) / 4.f);
 }

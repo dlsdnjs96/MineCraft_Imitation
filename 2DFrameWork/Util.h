@@ -91,6 +91,6 @@ namespace Util
 	void ClipWindow(bool on);
 
 	void CursorVisible(bool _on);
-	bool LockMouse();
-	bool UnLockMouse();
+	void LockMouse();
+	void UnLockMouse();
 }

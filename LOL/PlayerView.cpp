@@ -6,6 +6,7 @@ PlayerView::PlayerView(PlayerModel* _model)
     hp = 0;
     hunger = 0;
     passedTime = 0.f;
+    AniReset();
 }
 
 PlayerView::~PlayerView()
@@ -100,8 +101,12 @@ void PlayerView::Render()
 
 void PlayerView::AniReset()
 {
-    for (auto& it : model->obList)
-        it.second->rotation = { 0.f, 0.f, 0.f };
+    model->Find("hipL")->rotation = { 0.f, 0.f, 0.f };
+    model->Find("hipR")->rotation = { 0.f, 0.f, 0.f };
+    model->Find("shoulderR")->rotation = { 0.f, 0.f, 0.f };
+    model->Find("shoulderL")->rotation = { 0.f, 0.f, 0.f };
+
+    model->Find("theFirstPersonS")->rotation.x = -PI_DIV2;
 }
 
 void PlayerView::Idle()
@@ -161,11 +166,13 @@ void PlayerView::Normal()
             tTime = fmod(tTime, duration * 2.f);
 
             model->Find("shoulderR")->rotation.x = -(1.5f * PI_DIV2) + ((tTime - duration) * 2.f);
+            model->Find("theFirstPersonS")->rotation.x = -(1.5f * PI_DIV2) + ((tTime - duration) * 2.f);
         }
         else {
             tTime = fmod(tTime, duration * 2.f);
 
             model->Find("shoulderR")->rotation.x = -(1.5f * PI_DIV2) + ((duration - tTime) * 2.f);
+            model->Find("theFirstPersonS")->rotation.x = -(1.5f * PI_DIV2) + ((duration - tTime) * 2.f);
         }
     }
 }
@@ -179,11 +186,13 @@ void PlayerView::Acttacking()
         tTime = fmod(tTime, duration * 2.f);
 
         model->Find("shoulderR")->rotation.x = -(1.5f * PI_DIV2) + ((tTime - duration) * 2.f);
+        model->Find("theFirstPersonS")->rotation.x = -(1.5f * PI_DIV2) + ((tTime - duration) * 2.f);
     }
     else {
         tTime = fmod(tTime, duration * 2.f);
 
         model->Find("shoulderR")->rotation.x = -(1.5f * PI_DIV2) + ((duration - tTime) * 2.f);
+        model->Find("theFirstPersonS")->rotation.x = -(1.5f * PI_DIV2) + ((duration - tTime) * 2.f);
     }
 }
 
@@ -196,11 +205,13 @@ void PlayerView::Digging()
         tTime = fmod(tTime, duration * 2.f);
 
         model->Find("shoulderR")->rotation.x = -(1.5f * PI_DIV2) + ((tTime - duration) * 2.f);
+        model->Find("theFirstPersonS")->rotation.x = -(1.5f * PI_DIV2) + ((tTime - duration) * 2.f);
     }
     else {
         tTime = fmod(tTime, duration * 2.f);
 
         model->Find("shoulderR")->rotation.x = -(1.5f * PI_DIV2) + ((duration - tTime) * 2.f);
+        model->Find("theFirstPersonS")->rotation.x = -(1.5f * PI_DIV2) + ((duration - tTime) * 2.f);
     }
 }
 

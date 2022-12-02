@@ -163,7 +163,7 @@ void GameObject::Render(class Shader* otherShader)
 		else
 			axis->W = axis->S * T * parent->W;
 
-		axis->Render();
+		//axis->Render();
 	}
 
 }

@@ -3,6 +3,7 @@
 Spider::Spider()
 {
 	type = MonsterType::SPIDER;
+	kind = "spider";
 }
 
 void Spider::Init(Vector3 _pos)
@@ -33,6 +34,9 @@ void Spider::Update()
 		break;
 	case MonsterState::ATTACK:
 		Attack();
+		break;
+	case MonsterState::HIT:
+		Hit();
 		break;
 	case MonsterState::DEAD:
 		Dead();

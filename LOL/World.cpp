@@ -94,6 +94,7 @@ void World::SaveWorld()
 	DATABASE->SaveInventory();
 	DATABASE->SaveItemObject();
 	DATABASE->SaveMonster();
+	DATABASE->SaveFurnace();
 }
 
 void World::LoadWorldBinary()
@@ -125,13 +126,23 @@ void World::SaveWorldBinary()
 	UINT sectorSize = 0;
 
 	sectorSize = 0;
-	for (auto& it : sector) { for (auto& it2 : it.second) sectorSize++; }
+	for (auto& it : sector) { for (auto& it2 : it.second) sectorSize += it2.second.GetBlockSize(); }
 	out.UInt(sectorSize);
+
 	for (auto& it : sector)
 	{
 		for (auto& it2 : it.second) {
-			out.Int_2(Int2{ it.first, it2.first });
-			it2.second.Save(out);
+			for (int i = 0; i < SECTOR_SIZE; i++)
+			{
+				for (int j = 0; j < WORLD_HEIGHT; j++)
+				{
+					for (int k = 0; k < SECTOR_SIZE; k++)
+					{
+						if (it2.second.blocks[i][j][k].blockType != BlockType::AIR)
+							out.Int_4(Int4{ (it.first * 10) + i, j, (it2.first * 10) + k, int(it2.second.blocks[i][j][k].blockType) });
+					}
+				}
+			}
 		}
 	}
 	out.Close();
@@ -251,6 +262,8 @@ void World::distinguishBlock(Int3 from)
 			Int3 temp = from + sixPos[i];
 			if (unsigned char(GetBlock(from + sixPos[i]).blockType) < 10)
 				renderFace |= sixFaces[i];
+			if (unsigned char(GetBlock(from + sixPos[i]).blockType) > 10)
+				renderFace |= sixFaces[i];
 		}
 
 		SetBlockDectec(from, renderFace);
@@ -340,7 +353,7 @@ void World::SetBlockType(Int3 pos, BlockType bt)
 		blockZ = int((pos.z - (floor(float(pos.z) / SECTOR_SIZE) * SECTOR_SIZE)));
 	}
 
-	sector[sectorX][sectorZ].blocks[blockX][pos.y % WORLD_HEIGHT][blockZ].blockType = bt;
+	sector[sectorX][sectorZ].blocks[blockX][pos.y][blockZ].blockType = bt;
 
 	return;
 }

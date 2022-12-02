@@ -9,11 +9,11 @@ void PlayerModel::Init()
     breakingBlock->LoadFile("breakingBlock.xml");
 
 
-    for (int i = -3; i <= 3; i++)
+    for (int i = -4; i <= 4; i++)
     {
-        for (int j = -3; j <= 3; j++)
+        for (int j = -4; j <= 4; j++)
         {
-            for (int k = -3; k <= 3; k++)
+            for (int k = -4; k <= 4; k++)
             {
                 if (i != 0 || j != 0 || k != 0)
                     rayIntersectOrder.push_back({ i, j, k });
@@ -40,7 +40,7 @@ void PlayerModel::Init()
     Find("testCollider")->mesh = RESOURCE->meshes.Load("6.blockCollider.mesh");
     Find("testCollider")->shader = RESOURCE->shaders.Load("1.Collider.hlsl");
 
-    mainPerson = Find("theFirstPerson");
+    //mainPerson = Find("theFirstPerson");
 
     hp = 20;
     hunger = 20;
@@ -77,6 +77,11 @@ void PlayerModel::Init()
         temp2->material = RESOURCE->materials.Load("foodFront.mtl");
         pUI->Find("foodB" + to_string(i))->AddChild(temp2);
     }
+    theFirstPerson = true;
+    Camera::main = dynamic_cast<Camera*>(Find("fCam"));
+    mainPerson = Find("mainPerson");
+    //mainPerson = GameObject::Create("mainPerson");
+    //root->AddChild(mainPerson);
 }
 
 void PlayerModel::Update()
@@ -91,9 +96,22 @@ void PlayerModel::Update()
     Collider();
 
     if (INPUT->fixedMousePos.x != -1) {
-        Find("theFirstPerson")->rotation.x -= (INPUT->moveNDCPos.y * PI) / 2.f;
-        Find("theFirstPerson")->rotation.y += (INPUT->moveNDCPos.x * PI) / 2.f;
-        Util::Saturate(Find("theFirstPerson")->rotation.x, -PI / 2.f, PI * 0.1736f);
+        if (theFirstPerson) {
+            Find("theFirstPerson")->rotation.x -= (INPUT->moveNDCPos.y * PI) / 2.f;
+            Find("theFirstPerson")->rotation.y += (INPUT->moveNDCPos.x * PI) / 2.f;
+            Util::Saturate(Find("theFirstPerson")->rotation.x, -PI_DIV2, PI_DIV2);
+
+            mainPerson->rotation.x = Find("theFirstPerson")->rotation.x;
+            mainPerson->rotation.y = Find("theFirstPerson")->rotation.y;
+        }
+        else {
+            Find("head")->rotation.x -= (INPUT->moveNDCPos.y * PI) / 2.f;
+            Find("body")->rotation.y += (INPUT->moveNDCPos.x * PI) / 2.f;
+            Util::Saturate(Find("head")->rotation.x, -PI_DIV2, PI_DIV2);
+
+            mainPerson->rotation.x = Find("head")->rotation.x;
+            mainPerson->rotation.y = Find("body")->rotation.y;
+        }
         
         //rotation.y = mainPerson.y;
         //if (theFirstPerson) {
@@ -173,13 +191,16 @@ void PlayerModel::Idle()
 void PlayerModel::Walk()
 {
 
-    if (not FourWaysMoving())
+    if (not FourWaysMoving()) {
         state = PLAYER_STATE::IDLE;
+        SOUND->Stop("walk");
+    }
 
 
     if (WORLD->GetBlock(underInt3).blockType == BlockType::AIR)
     {
         state = PLAYER_STATE::FALL;
+        SOUND->Stop("walk");
         jumppedTime = jumpSpeed / gravity;
     }
 
@@ -267,7 +288,7 @@ void PlayerModel::Digging()
 
     if (firstTime)
     {
-        passedTime = 0.f;
+        diggedTime = 0.f;
         int intersectIndex = FindTarget();
         if (intersectIndex == -1)
         {
@@ -285,20 +306,22 @@ void PlayerModel::Digging()
     //passedTime += DELTA;
 
     //printf("%f %d %d %d %d\r\n", passedTime, targetInt3.x, targetInt3.y, targetInt3.z, firstTime);
-
-
-    if (passedTime > 0.9f)
+    if (WORLD->GetBlock(targetInt3).blockType == BlockType::GRASS)
+        diggedTime += 1.f;
+    diggedTime += DELTA;
+    if (diggedTime > 0.9f)
     {
+        SOUND->Play("destroyBlock01");
         UninstallBlock();
-        passedTime = 0.f;
+        diggedTime = 0.f;
         firstTime = true;
         breakingBlock->visible = false;
         actState = ACT_STATE::NORMAL;
         return;
     }
-    if (int(passedTime / 0.1f) != int((passedTime - DELTA) / 0.1f))
+    if (int(diggedTime / 0.1f) != int((diggedTime - DELTA) / 0.1f))
     {
-        breakingBlock->material = RESOURCE->materials.Load("breakingBlock/" + to_string(int(passedTime / 0.1f)) + ".mtl");
+        breakingBlock->material = RESOURCE->materials.Load("breakingBlock/" + to_string(int(diggedTime / 0.1f)) + ".mtl");
     }
     if (FindTarget() == -1)
         actState = ACT_STATE::NORMAL;
@@ -402,9 +425,16 @@ void PlayerModel::InteractBlock()
             CRAFTING->ShowCraftTable(false);
         }
         break;
+    case BlockType::FURNACE:
+    case BlockType::BURNING_FURNACE:
+        Util::UnLockMouse();
+        FURNACE_MANAGER->OnFurnace(targetInt3);
+        break;
     }
-    if (INVENTORY->GetPickedItem().itemid < 256)
+    if (INVENTORY->GetPickedItem().itemid < 256) {
         InstallBlock();
+        SOUND->Play("installBlock");
+    }
 }
 
 int PlayerModel::FindTarget()
@@ -533,7 +563,7 @@ void PlayerModel::Collider()
     verifiedPos.y = float(int(Find("head")->GetWorldPos().y / 10) * 10.f) + 5.f;
     verifiedPos.z = float(int(int(Find("head")->GetWorldPos().z + 5) / 10) * 10.f);
 
-    Int3 curPos = Int3(mainPerson->GetWorldPos() / BLOCK_LENGTH);
+    Int3 curPos = Int3(Find("mainPerson")->GetWorldPos() / BLOCK_LENGTH);
     //Int3 curPos = Int3(Camera::main->GetWorldPos() / BLOCK_LENGTH);
     verifiedPos.x = float(curPos.x * 10.f);
     verifiedPos.y = float(curPos.y * 10.f) + 5.f;
