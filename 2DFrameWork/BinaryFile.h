@@ -15,6 +15,7 @@ public:
 	void Int_2(Int2 data);
 	void Int_3(Int3 data);
 	void Int_4(Int4 data);
+	void Char_4(Char4 data);
 	void UInt(UINT data);
 	void Float(float data);
 	void Double(double data);
@@ -53,6 +54,7 @@ public:
 	Int2 Int_2();
 	Int3 Int_3();
 	Int4 Int_4();
+	Char4 Char_4();
 	UINT UInt();
 	float Float();
 	double Double();

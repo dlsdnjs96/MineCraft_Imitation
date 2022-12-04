@@ -1,6 +1,6 @@
 <Root Name="Player" Visible="true" ObType="1">
     <Transform>
-        <Position X="-469.68771" Y="296.32056" Z="-906.88379"/>
+        <Position X="100" Y="296.32056" Z="100"/>
         <Scale X="1" Y="1" Z="1"/>
         <Rotation X="0" Y="0" Z="0"/>
     </Transform>

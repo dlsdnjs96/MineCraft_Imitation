@@ -316,3 +316,47 @@ struct Int4
 		return *this;
 	}
 };
+
+struct Char4
+{
+	char x, y, z, w;
+	Char4()
+	{
+		x = 0;
+		y = 0;
+		z = 0;
+		w = 0;
+	}
+	Char4(char x, char y, char z, char w)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+		this->w = w;
+	}
+	bool operator ==(Char4 dest)
+	{
+		return (x == dest.x && y == dest.y && z == dest.z && w == dest.w);
+	}
+	bool operator !=(Char4 dest)
+	{
+		return (x != dest.x || y != dest.y || z != dest.z || w != dest.w);
+		//return !(*this == dest);
+	}
+	const Char4 operator * (const char rv)
+	{
+		x *= rv;
+		y *= rv;
+		z *= rv;
+		w *= rv;
+		return *this;
+	}
+	const Char4 operator / (const char rv)
+	{
+		x /= rv;
+		y /= rv;
+		z /= rv;
+		w /= rv;
+		return *this;
+	}
+};

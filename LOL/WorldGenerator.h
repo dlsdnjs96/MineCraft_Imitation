@@ -103,6 +103,9 @@ public:
 	void	BiomeToMesh(vector<vector<char>>& map);
 	void	HeightToMesh(vector<vector<char>>& map);
 	void	RiverToMesh(vector<vector<bool>>& map);
+	void	RiverDepthToMesh(vector<vector<char>>& map);
+	void	TreeToMesh(vector<vector<char>>& map);
+	void	FlowerToMesh(vector<vector<char>>& map);
 
 	int GetBiomeHeight(BiomeType _biomeType);
 	int GetBiomeDeviation(BiomeType _biomeType);

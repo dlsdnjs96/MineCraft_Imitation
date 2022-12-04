@@ -275,7 +275,7 @@ void FurnaceManager::Init()
 	UpdateInputSlot();
 	UpdateOutputSlot();
 	UpdateFuelSlot();
-	active = true;
+	active = false;
 }
 
 void FurnaceManager::Update()
@@ -410,6 +410,10 @@ int FurnaceManager::IsBurnable(int _itemid)
 	{
 	case 319:
 		return 320;
+	case int(BlockType::SAND):
+		return int(BlockType::GLASS);
+	case int(BlockType::COBBLESTONE):
+		return int(BlockType::STONE);
 	}
 	return 0;
 }

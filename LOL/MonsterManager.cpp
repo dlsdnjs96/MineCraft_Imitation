@@ -88,7 +88,7 @@ void MonsterManager::distinguishSectors()
 		for (auto& it2 : it.second)
 		{
 			if (Vector2::Distance({ float(it.first) * BLOCK_LENGTH * SECTOR_SIZE, float(it2.first) * BLOCK_LENGTH * SECTOR_SIZE },
-				{ Camera::main->GetWorldPos().x, Camera::main->GetWorldPos().z }) <= 3200.f)
+				{ Camera::main->GetWorldPos().x, Camera::main->GetWorldPos().z }) <= 1600.f)
 				activeMonster.push_back({ it.first, it2.first });
 		}
 	}

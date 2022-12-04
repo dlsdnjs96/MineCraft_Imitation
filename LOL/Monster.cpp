@@ -370,7 +370,7 @@ void Monster::ChangeState(MonsterState _state)
 	state = _state;
 	passedTime = 0.f;
 	AniReset();
-	if (_state == MonsterState::MOVE)
+	if (_state == MonsterState::MOVE && rand()%4 == 0)
 		SOUND->Play(kind, Vector3::Distance(GetWorldPos(), PlayerModel::user->GetWorldPos()));
 }
 

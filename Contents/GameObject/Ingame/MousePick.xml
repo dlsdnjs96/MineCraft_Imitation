@@ -1,4 +1,4 @@
-<Root Name="MousePick" Visible="true" ObType="4">
+<Root Name="MousePick" Visible="visible" ObType="4">
     <Mesh File="6.UI.mesh"/>
     <Shader File="6.Cube.hlsl"/>
     <Material File="Items/100.mtl"/>

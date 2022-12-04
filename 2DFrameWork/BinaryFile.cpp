@@ -71,6 +71,11 @@ void BinaryWriter::Int_4(Int4 data)
 	WriteFile(fileHandle, &data, sizeof(Int4), &size, NULL);
 }
 
+void BinaryWriter::Char_4(Char4 data)
+{
+	WriteFile(fileHandle, &data, sizeof(Char4), &size, NULL);
+}
+
 void BinaryWriter::UInt(UINT data)
 {
 	WriteFile(fileHandle, &data, sizeof(UINT), &size, NULL);
@@ -234,6 +239,14 @@ Int4 BinaryReader::Int_4()
 {
 	Int4 temp = {0,0,0,0};
 	ReadFile(fileHandle, &temp, sizeof(Int4), &size, NULL);
+
+	return temp;
+}
+
+Char4 BinaryReader::Char_4()
+{
+	Char4 temp = { 0,0,0,0 };
+	ReadFile(fileHandle, &temp, sizeof(Char4), &size, NULL);
 
 	return temp;
 }

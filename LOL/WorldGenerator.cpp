@@ -114,10 +114,10 @@ void WorldGenerator::ClimateMap()
 {
     printf("ClimateMap stage %d\r\n", loadingStage);
     loadingStage++;
-    stageName = "Making ClimateMap... (" + to_string(loadingStage) + "/7)";
+    stageName = "Making ClimateMap... (" + to_string(loadingStage) + "/9)";
     Int2 sectorSize = mapSize;
 
-    srand(time(NULL));
+    //srand(time(NULL));
 
     static int _x = rand(), _y = rand();
 
@@ -298,7 +298,7 @@ void WorldGenerator::HeightMap()
 {
     printf("HeightMap stage %d\r\n", loadingStage);
     loadingStage++;
-    stageName = "Making HeightMap... ("+to_string(loadingStage)+"/7)";
+    stageName = "Making HeightMap... ("+to_string(loadingStage)+"/11)";
     Int2 sectorSize = mapSize;
 
     //srand(time(NULL));
@@ -376,6 +376,8 @@ void WorldGenerator::HeightMap()
 
 void WorldGenerator::TreeMap()
 {
+    stageName = "Making TreeMap... ";
+
     treeMap.resize(mapSize.x);
     for (int i = 0; i < mapSize.x; i++)
         treeMap[i].resize(mapSize.y);
@@ -418,14 +420,18 @@ void WorldGenerator::TreeMap()
     }
 
     loadingStage = 0;
-    loadingFunction = &WorldGenerator::HeightMap;
+    loadingFunction = &WorldGenerator::TreeMap;
+    TreeToMesh(treeMap);
 
     MapToWorld();
 }
 
 void WorldGenerator::RiverMap()
 {
+    printf("RiverMap stage %d\r\n", loadingStage);
+    loadingStage++;
     stageName = "Making RiverMap... (" + to_string(loadingStage) + "/7)";
+    
 
      switch (loadingStage) {
         case 1:
@@ -459,7 +465,7 @@ void WorldGenerator::RiverMap()
         case 5:
         {
             riverMap[0] = ExtendMap(riverMap[1]);
-            RiverToMesh(riverMap[1]);
+            RiverToMesh(riverMap[0]);
             break;
         }
         case 7:
@@ -471,12 +477,13 @@ void WorldGenerator::RiverMap()
             break;
         }
      }
-    loadingStage++;
 }
 
 void WorldGenerator::RiverDepthMap()
 {
-    stageName = "Making RiverDepthMap... ";
+    printf("RiverDepthMap stage %d\r\n", loadingStage);
+    loadingStage++;
+    stageName = "Making RiverDepthMap...";
 
     riverDepthMap.resize(mapSize.x);
     for (int i = 0; i < mapSize.x; i++)
@@ -497,11 +504,12 @@ void WorldGenerator::RiverDepthMap()
                 for (int l = -1; l <= 1; l++)
                 {
                     if (i + k >= 0 && i + k < mapSize.x && j + l >= 0 && j + l < mapSize.y)
-                        riverDepthMap[i + k][j + l] += 1 - min(abs(k), abs(l));
+                        riverDepthMap[i + k][j + l] += 2 - min(abs(k), abs(l));
                 }
             }
         }
     }
+    RiverDepthToMesh(riverDepthMap);
     loadingFunction = &WorldGenerator::FlowerMap;
     loadingStage = 0;
 }
@@ -510,23 +518,22 @@ void WorldGenerator::FlowerMap()
 {
     stageName = "Making FlowerMap... ";
 
-    flowerMap.resize(mapSize.x);
-    for (int i = 0; i < mapSize.x; i++)
-        flowerMap[i].resize(mapSize.y);
+    flowerMap.resize(mapSize.x+1);
+    for (int i = 0; i < mapSize.x+1; i++)
+        flowerMap[i].resize(mapSize.y+1);
 
 
-
-    for (int i = 0; i < flowerMap.size(); i += SECTOR_SIZE)
+    for (int i = 0; i < flowerMap.size()-1; i += SECTOR_SIZE)
     {
-        for (int j = 0; j < flowerMap[0].size(); j += SECTOR_SIZE) {
+        for (int j = 0; j < flowerMap[0].size()-1; j += SECTOR_SIZE) {
 
             int count = 0, x = 0, y = 0, fType;
-            fType = rand() % 4;
+            fType = rand() % 2;
 
             while (count < 64)
             {
                 count++;
-                if (rand() % 128 > count + 64)
+                if (rand() % 80 > count + 64)
                     break;
                 x = rand() % 16;
                 y = rand() % 16;
@@ -538,10 +545,15 @@ void WorldGenerator::FlowerMap()
                         && BiomeType(climateMap[1][i + x][j + y]) != BiomeType::FOREST_BIRCH))
                     continue;
                 flowerMap[i + x][j + y] = 37 + fType;
+                flowerMap[i + x + 1][j + y] = 37 + fType;
+                flowerMap[i + x][j + y+1] = 37 + fType;
+                flowerMap[i + x+1][j + y+1] = 37 + fType;
             }                                                                               
                 
         }
     }
+
+    FlowerToMesh(flowerMap);
     loadingFunction = &WorldGenerator::GrassMap;
     loadingStage = 0;
 }
@@ -578,6 +590,7 @@ void WorldGenerator::GrassMap()
 
 void WorldGenerator::MapToWorld()
 {
+    stageName = "Making Mincraft World... ";
     //BlockType arr[100] = { BlockType::GRASS_DIRT,
     //    BlockType::DIRT,
     //    BlockType::STILL_WATER
@@ -626,11 +639,9 @@ void WorldGenerator::MapToWorld()
     //, BlockType::GRASS
     //, BlockType::DANDELION
     //, BlockType::ROSE
-    //, BlockType::BROWN_MUSHROOM
-    //, BlockType::RED_MUSHROOM
     //};
     //
-    //for (int i = 0;i < 50;i++)
+    //for (int i = 0;i < 48;i++)
     //    WORLD->SetBlockType({ i * 2, 10, 1 }, arr[i]);
     //
     //WORLD->CreateDumpBlocks();
@@ -650,20 +661,6 @@ void WorldGenerator::MapToWorld()
                     for (int k = heightMap[1][i][j]; k < WATER_HEIGHT; k++)
                         WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STILL_WATER);
                 }
-                //else if (oceanMap[1][i][j] < WATER_HEIGHT) {
-                //    for (int k = 0; k < oceanMap[1][i][j]; k++)
-                //        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::SAND);
-                //    for (int k = oceanMap[1][i][j]; k < WATER_HEIGHT; k++)
-                //        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STILL_WATER);
-                //}
-                //else if (riverDepthMap[i][j] > 0) {
-                //    for (int k = 0; k < WATER_HEIGHT - riverDepthMap[i][j] - 2; k++)
-                //        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STONE);
-                //    for (int k = WATER_HEIGHT - riverDepthMap[i][j] - 2; k < WATER_HEIGHT - riverDepthMap[i][j]; k++)
-                //        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::SAND);
-                //    for (int k = WATER_HEIGHT - riverDepthMap[i][j]; k < WATER_HEIGHT; k++)
-                //        WORLD->SetBlockType({ i - (mapSize.x / 2), k, j - (mapSize.y / 2) }, BlockType::STILL_WATER);
-                //}
                 else {
                     switch (BiomeType(biomeMap[i][j]))
                     {
@@ -841,6 +838,61 @@ void WorldGenerator::MapToWorld()
         }
     }
 
+
+    // Monster
+    printf("Monster Map to World\r\n");
+    {
+        for (int i = 0; i < mapSize.x; i += SECTOR_SIZE)
+        {
+            for (int j = 0; j < mapSize.y; j += SECTOR_SIZE) {
+
+                if (treeMap[i][j] <= 1 || heightMap[1][i][j] < WATER_HEIGHT)
+                    continue;
+                if (rand() % 10 < 1)
+                    continue;
+
+                float x = float(i - (mapSize.x / 2)) * 10.f;
+                float y = float(heightMap[1][i][j] * 10.f) + 10.f;
+                float z = float(j - (mapSize.y / 2)) * 10.f;
+
+                switch (BiomeType(biomeMap[i][j]))
+                {
+                case BiomeType::FOREST:
+                    MONSTER_MANAGER->Spawn(MonsterType::COW, Vector3{ x, y, z }, MonsterState::IDLE);
+                    MONSTER_MANAGER->Spawn(MonsterType::COW, Vector3{ x, y, z }, MonsterState::IDLE);
+                    MONSTER_MANAGER->Spawn(MonsterType::COW, Vector3{ x, y, z }, MonsterState::IDLE);
+                    MONSTER_MANAGER->Spawn(MonsterType::COW, Vector3{ x, y, z }, MonsterState::IDLE);
+                    break;
+                case BiomeType::PLAIN:
+                    MONSTER_MANAGER->Spawn(MonsterType::PIG, Vector3{ x, y, z }, MonsterState::IDLE);
+                    MONSTER_MANAGER->Spawn(MonsterType::PIG, Vector3{ x, y, z }, MonsterState::IDLE);
+                    MONSTER_MANAGER->Spawn(MonsterType::PIG, Vector3{ x, y, z }, MonsterState::IDLE);
+                    MONSTER_MANAGER->Spawn(MonsterType::PIG, Vector3{ x, y, z }, MonsterState::IDLE);
+                    break;
+                case BiomeType::FOREST_DARK:
+                    MONSTER_MANAGER->Spawn(MonsterType::SHEEP, Vector3{ x, y, z }, MonsterState::IDLE);
+                    MONSTER_MANAGER->Spawn(MonsterType::SHEEP, Vector3{ x, y, z }, MonsterState::IDLE);
+                    MONSTER_MANAGER->Spawn(MonsterType::SHEEP, Vector3{ x, y, z }, MonsterState::IDLE);
+                    MONSTER_MANAGER->Spawn(MonsterType::SHEEP, Vector3{ x, y, z }, MonsterState::IDLE);
+                    break;
+                case BiomeType::FOREST_BIRCH:
+                case BiomeType::JUNGLE:
+                    MONSTER_MANAGER->Spawn(MonsterType::CHICKEN, Vector3{ x, y, z }, MonsterState::IDLE);
+                    MONSTER_MANAGER->Spawn(MonsterType::CHICKEN, Vector3{ x, y, z }, MonsterState::IDLE);
+                    MONSTER_MANAGER->Spawn(MonsterType::CHICKEN, Vector3{ x, y, z }, MonsterState::IDLE);
+                    MONSTER_MANAGER->Spawn(MonsterType::CHICKEN, Vector3{ x, y, z }, MonsterState::IDLE);
+                    break;
+                default:
+                    continue;
+                }
+
+
+
+                
+            }
+        }
+    }
+
     oceanMap[0].clear();
     oceanMap[1].clear();
     climateMap[0].clear();;
@@ -930,13 +982,13 @@ void WorldGenerator::ClimateToMesh(vector<vector<char>>& map)
             if (map[i][j] == 0)
                 cc = { 1.f, 1.f, 1.f };
             else if (map[i][j] <= 1)
-                cc = { 0.f, 0.8666f, 1.f };
+                cc = { 0.5976f, 0.8632f, 1.f };
             else if (map[i][j] <= 2)
-                cc = { 6.f / 255.f, 54.f / 255.f, 146.f / 255.f };
+                cc = { 0.f, 0.5f, 1.f };
             else if (map[i][j] <= 3)
-                cc = { 103.f / 255.f, 93.f / 255.f, 19.f / 255.f };
+                cc = { 0.5039, 0.7539f, 0.2773f };
             else if (map[i][j] <= 4)
-                cc = { 1.f, 0.4392f, 0.f };
+                cc = { 1.f, 0.5f, 0.f };
             else if (map[i][j] <= 5)
                 cc = { 0.f, 0.f, 0.f };
 
@@ -969,8 +1021,8 @@ void WorldGenerator::ClimateToMesh(vector<vector<char>>& map)
 
 void WorldGenerator::BiomeToMesh(vector<vector<char>>& map)
 {
-    VertexPC* vertices = 0;
-    UINT* indicies = 0;
+    VertexPC*   vertices = 0;
+    UINT*       indicies = 0;
     UINT        vIndex = 0;
     UINT        iIndex = 0;
 
@@ -1071,6 +1123,8 @@ void WorldGenerator::HeightToMesh(vector<vector<char>>& map)
                 colorRGB = (static_cast<float>(map[i][j]) / (22.f)) + 0.5f;
                 cc = { 0.f, colorRGB, 0.f };
             }
+            colorRGB = (static_cast<float>(map[i][j]) / (160.f));
+            cc = { colorRGB, colorRGB, colorRGB };
 
             vertices[vIndex].position = { float(i - (mapSize.x / 2) + 1) / xSize, float(j - (mapSize.y / 2) + 1) / ySize, 0.f };
             vertices[vIndex].color = cc;
@@ -1120,13 +1174,177 @@ void WorldGenerator::RiverToMesh(vector<vector<bool>>& map)
     {
         for (int j = 0; j < mapSize.y; j++)
         {
-            //if (oceanMap[1][i][j] < 20)
-            //    cc = { 1.f, 1.f, 1.f };
-            //else 
+            if (oceanMap[1][i][j] < 20)
+                cc = { 1.f, 1.f, 1.f };
+            else 
                 if (map[i][j])
                 cc = { 0.5f, 0.5f, 0.5f };
             else
                 cc = { 0.f, 0.f, 0.f };
+
+
+            vertices[vIndex].position = { float(i - (mapSize.x / 2) + 1) / xSize, float(j - (mapSize.y / 2) + 1) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2) + 1) / xSize, float(j - (mapSize.y / 2)) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2)) / xSize, float(j - (mapSize.y / 2)) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2)) / xSize, float(j - (mapSize.y / 2) + 1) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+
+
+
+            for (int k = 0; k < 6; k++) {
+                indicies[iIndex] = arr[k] + vIndex - 4;
+                iIndex++;
+            }
+        }
+    }
+    ui->mesh = make_shared<Mesh>(vertices, vIndex, indicies, iIndex, VertexType::PC);
+}
+
+void WorldGenerator::RiverDepthToMesh(vector<vector<char>>& map)
+{
+    VertexPC* vertices = 0;
+    UINT* indicies = 0;
+    UINT        vIndex = 0;
+    UINT        iIndex = 0;
+
+    vertices = new VertexPC[map.size() * map[0].size() * 4];
+    indicies = new UINT[map.size() * map[0].size() * 6];
+
+    float xSize = float(mapSize.x / 2) / 4.f;
+    float ySize = float(mapSize.y / 2) / 4.f;
+
+    float colorRGB;
+    Color cc = { 1.f, 1.f, 1.f };
+    int arr[6] = { 0, 1, 2, 0, 2, 3 };
+
+
+    for (int i = 0; i < mapSize.x; i++)
+    {
+        for (int j = 0; j < mapSize.y; j++)
+        {
+            if (oceanMap[1][i][j] < 20)
+                cc = { 1.f, 1.f, 1.f };
+            else if (map[i][j] > 0)
+                cc = { 0.f, 0.f, (float(map[i][j]) / 10.f) };
+            else
+                cc = { 0.5f, 0.5f, 0.5f };
+
+
+            vertices[vIndex].position = { float(i - (mapSize.x / 2) + 1) / xSize, float(j - (mapSize.y / 2) + 1) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2) + 1) / xSize, float(j - (mapSize.y / 2)) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2)) / xSize, float(j - (mapSize.y / 2)) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2)) / xSize, float(j - (mapSize.y / 2) + 1) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+
+
+
+            for (int k = 0; k < 6; k++) {
+                indicies[iIndex] = arr[k] + vIndex - 4;
+                iIndex++;
+            }
+        }
+    }
+    ui->mesh = make_shared<Mesh>(vertices, vIndex, indicies, iIndex, VertexType::PC);
+}
+
+void WorldGenerator::TreeToMesh(vector<vector<char>>& map)
+{
+    VertexPC* vertices = 0;
+    UINT* indicies = 0;
+    UINT        vIndex = 0;
+    UINT        iIndex = 0;
+
+    vertices = new VertexPC[map.size() * map[0].size() * 4];
+    indicies = new UINT[map.size() * map[0].size() * 6];
+
+    float xSize = float(mapSize.x / 2) / 4.f;
+    float ySize = float(mapSize.y / 2) / 4.f;
+
+    float colorRGB;
+    Color cc = { 1.f, 1.f, 1.f };
+    int arr[6] = { 0, 1, 2, 0, 2, 3 };
+
+
+    for (int i = 0; i < mapSize.x; i++)
+    {
+        for (int j = 0; j < mapSize.y; j++)
+        {
+            if (oceanMap[1][i][j] < 20)
+                cc = { 1.f, 1.f, 1.f };
+            else if (map[i][j] > 0)
+                cc = { 0.f, 0.8f, 0.f };
+            else
+                cc = { 0.5f, 0.5f, 0.5f };
+
+
+            vertices[vIndex].position = { float(i - (mapSize.x / 2) + 1) / xSize, float(j - (mapSize.y / 2) + 1) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2) + 1) / xSize, float(j - (mapSize.y / 2)) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2)) / xSize, float(j - (mapSize.y / 2)) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+            vertices[vIndex].position = { float(i - (mapSize.x / 2)) / xSize, float(j - (mapSize.y / 2) + 1) / ySize, 0.f };
+            vertices[vIndex].color = cc;
+            vIndex++;
+
+
+
+            for (int k = 0; k < 6; k++) {
+                indicies[iIndex] = arr[k] + vIndex - 4;
+                iIndex++;
+            }
+        }
+    }
+    ui->mesh = make_shared<Mesh>(vertices, vIndex, indicies, iIndex, VertexType::PC);
+}
+
+void WorldGenerator::FlowerToMesh(vector<vector<char>>& map)
+{
+    VertexPC* vertices = 0;
+    UINT* indicies = 0;
+    UINT        vIndex = 0;
+    UINT        iIndex = 0;
+
+    vertices = new VertexPC[map.size() * map[0].size() * 4];
+    indicies = new UINT[map.size() * map[0].size() * 6];
+
+    float xSize = float(mapSize.x / 2) / 4.f;
+    float ySize = float(mapSize.y / 2) / 4.f;
+
+    float colorRGB;
+    Color cc = { 1.f, 1.f, 1.f };
+    int arr[6] = { 0, 1, 2, 0, 2, 3 };
+
+
+    for (int i = 0; i < mapSize.x; i++)
+    {
+        for (int j = 0; j < mapSize.y; j++)
+        {
+            if (oceanMap[1][i][j] < 20)
+                cc = { 1.f, 1.f, 1.f };
+            else if (map[i][j] == 37)
+                cc = { 1.f, 0.f, 0.f };
+            else if (map[i][j] == 38)
+                cc = { 1.f, 1.f, 0.f };
+            else
+                cc = { 0.5f, 0.5f, 0.5f };
 
 
             vertices[vIndex].position = { float(i - (mapSize.x / 2) + 1) / xSize, float(j - (mapSize.y / 2) + 1) / ySize, 0.f };
@@ -1183,17 +1401,13 @@ vector<vector<char>> WorldGenerator::LerpMapClimate(vector<vector<char>>& map)
             if (temp == 4)
             {
                 if (map[x + 1][y - 1] == 2 || map[x + 1][y] == 2
-                    || map[x + 1][y + 1] == 2 || map[x][y + 1] == 2
-                    || map[x][y - 1] == 2 || map[x - 1][y + 1] == 2
-                    || map[x - 1][y] == 2 || map[x - 1][y - 1] == 2)
+                    || map[x + 1][y + 1] == 2 || map[x][y + 1] == 2)
                     temp = 3;
             }
             else if (temp == 1)
             {
                 if (map[x + 1][y - 1] == 4 || map[x + 1][y] == 4
-                    || map[x + 1][y + 1] == 4 || map[x][y + 1] == 4
-                    || map[x][y - 1] == 4 || map[x - 1][y + 1] == 4
-                    || map[x - 1][y] == 4 || map[x - 1][y - 1] == 4)
+                    || map[x + 1][y + 1] == 4 || map[x][y + 1] == 4)
                     temp = 3;
             }
             if (rand()%13 == 0)
