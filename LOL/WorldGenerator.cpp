@@ -577,7 +577,7 @@ void WorldGenerator::GrassMap()
                 case BiomeType::FOREST_DARK:
                 case BiomeType::PLAIN:
                 case BiomeType::FOREST_BIRCH:
-                    if (rand() % 4 == 0)
+                    if (rand() % 12 == 0)
                         grassMap[i][j] = true;
             }
                 

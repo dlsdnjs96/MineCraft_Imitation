@@ -107,7 +107,7 @@ void InGameScene::Update()
     //static bool first_lock = Util::LockMouse();
 
     if (INPUT->KeyDown('T')) {
-        MONSTER_MANAGER->Spawn(MonsterType::COW, Camera::main->GetWorldPos());
+        MONSTER_MANAGER->Spawn(MonsterType::CHICKEN, Camera::main->GetWorldPos());
     }
     if (INPUT->KeyDown('Y')) {
         MONSTER_MANAGER->Spawn(MonsterType::SHEEP, Camera::main->GetWorldPos());

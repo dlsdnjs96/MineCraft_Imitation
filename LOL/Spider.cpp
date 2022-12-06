@@ -38,6 +38,9 @@ void Spider::Update()
 	case MonsterState::HIT:
 		Hit();
 		break;
+	case MonsterState::RUN_AWAY:
+		RunAway();
+		break;
 	case MonsterState::DEAD:
 		Dead();
 		break;
@@ -155,6 +158,13 @@ void Spider::Attack()
 		leftTime = 0.f;
 		return;
 	}
+}
+
+void Spider::RunAway()
+{
+	ChangeState(MonsterState::FOLLOW);
+	leftTime = 0.f;
+	return;
 }
 
 void Spider::AniReset()

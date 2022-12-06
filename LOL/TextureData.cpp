@@ -370,20 +370,20 @@ TextureData::TextureData()
 	blockUV[BlockType::GRASS][BLOCK_FACE_BEHIND]					= { 7.f / 16.f, 2.f / 16.f };
 
 
-	blockUV[BlockType::DANDELION][BLOCK_FACE_UP]						= { 12.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::DANDELION][BLOCK_FACE_DOWN]						= { 12.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::DANDELION][BLOCK_FACE_RIGHT]						= { 12.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::DANDELION][BLOCK_FACE_LEFT]						= { 12.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::DANDELION][BLOCK_FACE_FORWARD]					= { 12.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::DANDELION][BLOCK_FACE_BEHIND]					= { 12.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::ROSE][BLOCK_FACE_UP]						= { 12.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::ROSE][BLOCK_FACE_DOWN]						= { 12.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::ROSE][BLOCK_FACE_RIGHT]						= { 12.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::ROSE][BLOCK_FACE_LEFT]						= { 12.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::ROSE][BLOCK_FACE_FORWARD]					= { 12.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::ROSE][BLOCK_FACE_BEHIND]					= { 12.f / 16.f, 0.f / 16.f };
 
 
-	blockUV[BlockType::ROSE][BLOCK_FACE_UP]							= { 13.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::ROSE][BLOCK_FACE_DOWN]						= { 13.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::ROSE][BLOCK_FACE_RIGHT]						= { 13.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::ROSE][BLOCK_FACE_LEFT]						= { 13.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::ROSE][BLOCK_FACE_FORWARD]					= { 13.f / 16.f, 0.f / 16.f };
-	blockUV[BlockType::ROSE][BLOCK_FACE_BEHIND]						= { 13.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::DANDELION][BLOCK_FACE_UP]							= { 13.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::DANDELION][BLOCK_FACE_DOWN]						= { 13.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::DANDELION][BLOCK_FACE_RIGHT]						= { 13.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::DANDELION][BLOCK_FACE_LEFT]						= { 13.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::DANDELION][BLOCK_FACE_FORWARD]					= { 13.f / 16.f, 0.f / 16.f };
+	blockUV[BlockType::DANDELION][BLOCK_FACE_BEHIND]						= { 13.f / 16.f, 0.f / 16.f };
 
 
 	blockUV[BlockType::TULIP][BLOCK_FACE_UP]							= { 12.f / 16.f, 1.f / 16.f };

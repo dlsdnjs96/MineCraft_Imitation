@@ -133,18 +133,21 @@ bool Monster::DectectPlayer(float dis)
 
 void Monster::FollowPlayer()
 {
-	Vector3 forward = PlayerModel::user->GetWorldPos() - GetWorldPos();
+	Vector3 forward = PlayerModel::user->mainPerson->GetWorldPos() - GetWorldPos();
 	forward.y = 0.f;
 	forward.Normalize();
-	rotation.y = atan2f(-forward.z, forward.x);
+	rotation.y = atan2f(-forward.z, forward.x) + PI_DIV2;
 	moveForce += forward * DELTA * moveSpeed;
 }
 
 bool Monster::DectectWheet(float dis)
 {
-	if (INVENTORY->GetPickedItem().itemid == ITEM_MANAGER->GetItemId("wheet") 
-		and Vector3::Distance(PlayerModel::user->GetWorldPos(), GetWorldPos()) < dis)
-		return true;
+	int a = INVENTORY->GetPickedItem().itemid;
+	int b = ITEM_MANAGER->GetItemId("wheat");
+	if (INVENTORY->GetPickedItem().itemid == ITEM_MANAGER->GetItemId("wheat")) {
+		if (Vector3::Distance(PlayerModel::user->mainPerson->GetWorldPos(), GetWorldPos()) < dis)
+			return true;
+	}
 	return false;
 }
 

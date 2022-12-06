@@ -410,6 +410,8 @@ int FurnaceManager::IsBurnable(int _itemid)
 	{
 	case 319:
 		return 320;
+	case 363:
+		return 364;
 	case int(BlockType::SAND):
 		return int(BlockType::GLASS);
 	case int(BlockType::COBBLESTONE):

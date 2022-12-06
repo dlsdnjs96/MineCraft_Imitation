@@ -35,6 +35,9 @@ void Pig::Update()
 	case MonsterState::HIT_NO_REACT:
 		HitNoReact();
 		break;
+	case MonsterState::FOLLOW:
+		Follow();
+		break;
 	case MonsterState::RUN_AWAY:
 		RunAway();
 		break;
@@ -137,7 +140,18 @@ void Pig::Follow()
 		leftTime = 1.f;
 		return;
 	}
+	CheckFloor();
+
 	FollowPlayer();
+
+	CheckBlockHeight();
+
+	if (not DectectPlayer(100.f))
+	{
+		ChangeState(MonsterState::IDLE);
+		leftTime = 1.f;
+		return;
+	}
 }
 
 

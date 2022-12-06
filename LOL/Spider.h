@@ -17,6 +17,7 @@ public:
 	void	Fall();
 	void	Follow();
 	void	Attack();
+	void	RunAway();
 
 
 	void	AniReset() override;

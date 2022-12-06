@@ -9,8 +9,8 @@ Sector::Sector()
 	{
 		for (int z = 0; z < SECTOR_SIZE; z++)
 		{
-			for (int y = 0; y < 1; y++)
-				blocks[x][y][z].blockType = BlockType::BEDROCK;
+			for (int y = 0; y < WORLD_HEIGHT; y++)
+				blocks[x][y][z].blockType = BlockType::AIR;
 			for (int y = 1; y < 19; y++)
 				blocks[x][y][z].blockType = BlockType::DIRT;
 			for (int y = 19; y < 20; y++)

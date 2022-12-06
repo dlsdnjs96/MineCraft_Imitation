@@ -84,6 +84,8 @@ void World::LoadWorld()
 	DATABASE->LoadInventory();
 	DATABASE->LoadItemObject();
 	DATABASE->LoadMonster();
+	CreateDumpBlocks();
+	distinguishBlocks({ 0, 0, 0 }, 64);
 }
 
 void World::SaveWorld()
@@ -126,23 +128,17 @@ void World::SaveWorldBinary()
 	UINT sectorSize = 0;
 
 	sectorSize = 0;
-	for (auto& it : sector) { for (auto& it2 : it.second) sectorSize += it2.second.GetBlockSize(); }
+	for (auto& it : sector) { for (auto& it2 : it.second) sectorSize++; }
 	out.UInt(sectorSize);
 
 	for (auto& it : sector)
 	{
 		for (auto& it2 : it.second) {
-			for (int i = 0; i < SECTOR_SIZE; i++)
-			{
-				for (int j = 0; j < WORLD_HEIGHT; j++)
-				{
-					for (int k = 0; k < SECTOR_SIZE; k++)
-					{
-						if (it2.second.blocks[i][j][k].blockType != BlockType::AIR)
-							out.Int_4(Int4{ (it.first * 10) + i, j, (it2.first * 10) + k, int(it2.second.blocks[i][j][k].blockType) });
-					}
-				}
-			}
+			out.Int_2(Int2{ it.first, it2.first });
+			it2.second.Save(out);
+						//if (it2.second.blocks[i][j][k].blockType != BlockType::AIR)
+						//	out.Int_4(Int4{ (it.first * 10) + i, j, (it2.first * 10) + k, int(it2.second.blocks[i][j][k].blockType) });
+				
 		}
 	}
 	out.Close();

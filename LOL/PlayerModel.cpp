@@ -233,8 +233,8 @@ void PlayerModel::Fall()
     else if (int(WORLD->GetBlock(currentPos).blockType) >= 2)
     {
         moveForce.y = 0.f;
-        SetLocalPosY(static_cast<float>((currentPos.y + 1) * BLOCK_LENGTH));
-        state = PLAYER_STATE::WALK;
+        SetLocalPosY((static_cast<float>((currentPos.y + 1) * BLOCK_LENGTH) + 1.f));
+        state = PLAYER_STATE::IDLE;
     }
 }
 

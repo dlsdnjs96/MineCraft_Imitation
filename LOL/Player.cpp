@@ -85,6 +85,7 @@ void Player::Init()
             break;
         }
     }
+    DATABASE->LoadPlayer();
 }
 
 void Player::Update()

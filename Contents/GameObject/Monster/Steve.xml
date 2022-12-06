@@ -1,13 +1,13 @@
 <Root Name="Player" Visible="true" ObType="1">
     <Transform>
-        <Position X="100" Y="296.32056" Z="100"/>
+        <Position X="392.73938" Y="291" Z="573.78357"/>
         <Scale X="1" Y="1" Z="1"/>
         <Rotation X="0" Y="0" Z="0"/>
     </Transform>
     <Children Size="4"/>
     <Child0 Name="Collider" Visible="false" ObType="0">
         <Transform>
-            <Position X="-0.31228638" Y="-1.3205566" Z="-3.1162109"/>
+            <Position X="-2.7393799" Y="4" Z="-3.7835693"/>
             <Scale X="1" Y="1" Z="1"/>
             <Rotation X="0" Y="0" Z="0"/>
         </Transform>
@@ -16,7 +16,7 @@
             <Mesh File="6.blockCollider.mesh"/>
             <Shader File="1.Collider.hlsl"/>
             <Transform>
-                <Position X="-10" Y="30" Z="10"/>
+                <Position X="-80" Y="-10" Z="60"/>
                 <Scale X="5.0999999" Y="5.0999999" Z="5.0999999"/>
                 <Rotation X="0" Y="0" Z="0"/>
             </Transform>
@@ -93,7 +93,7 @@
                 <Transform>
                     <Position X="6" Y="0" Z="0"/>
                     <Scale X="1" Y="1" Z="1"/>
-                    <Rotation X="-2.1326575" Y="0" Z="0"/>
+                    <Rotation X="-2.4245198" Y="0" Z="0"/>
                 </Transform>
                 <Children Size="1"/>
                 <Child0 Name="armR" Visible="true" ObType="7">
@@ -176,7 +176,7 @@
         <Transform>
             <Position X="0" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
-            <Rotation X="-0.2574251" Y="5.2101259" Z="0"/>
+            <Rotation X="0.056734461" Y="11.577019" Z="0"/>
         </Transform>
         <Children Size="0"/>
     </Child2>
@@ -184,7 +184,7 @@
         <Transform>
             <Position X="0" Y="20" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
-            <Rotation X="-0.2574251" Y="5.2101259" Z="0"/>
+            <Rotation X="0.056734461" Y="11.577019" Z="0"/>
         </Transform>
         <Children Size="2"/>
         <Child0 Name="fHead" Visible="true" ObType="0">
@@ -208,7 +208,7 @@
             <Transform>
                 <Position X="3" Y="0" Z="0"/>
                 <Scale X="1" Y="1" Z="1"/>
-                <Rotation X="-2.1326575" Y="0" Z="0"/>
+                <Rotation X="-2.4245198" Y="0" Z="0"/>
             </Transform>
             <Children Size="1"/>
             <Child0 Name="theFirstPersonA" Visible="true" ObType="0">

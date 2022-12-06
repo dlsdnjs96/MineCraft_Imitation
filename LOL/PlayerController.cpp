@@ -204,8 +204,9 @@ bool PlayerController::FourWaysMoving()
     if (INPUT->KeyPress('D')) { model->moveForce += right * model->moveSpeed * DELTA; moved = true; }
     if (INPUT->KeyPress('A')) { model->moveForce -= right * model->moveSpeed * DELTA; moved = true; }
 
-    Int3 enterBlock = Int3((model->GetWorldPos() + model->moveForce) / BLOCK_LENGTH);
+    Int3 enterBlock = Int3((model->GetLocalPos() + model->moveForce) / BLOCK_LENGTH);
     //enterBlock.y++;
+    BlockType temp = WORLD->GetBlock(enterBlock).blockType;
     if (WORLD->GetBlock(enterBlock).blockType != BlockType::AIR)
     {
         model->moveForce.x = 0.f;

@@ -50,8 +50,8 @@ void WorldList::Update()
 	//	Find("scrollTab")->GetWorldPos().y - (Find("scrollTab")->scale.y / 2.f) + (Find("scrollBar")->scale.y / 2.f),
 	//	Find("scrollTab")->GetWorldPos().y + (Find("scrollTab")->scale.y / 2.f) - (Find("scrollBar")->scale.y / 2.f));
 	Find("scrollBar")->SetWorldPosY(scrollBarY);
-	Find("list")->SetWorldPosY(-scrollBarY * 2.f);
-	Find("list")->SetWorldPosY(0.f);
+	Find("list")->SetWorldPosY((-scrollBarY * 2.f) + 1.f);
+	//Find("list")->SetWorldPosY(0.f);
 
 }
 
@@ -74,7 +74,7 @@ void WorldList::LoadWorldList()
 
 
 				Find("list")->AddChild(UI::Create(worldName));
-				Find(worldName)->SetLocalPosY(2.f - (idx * 0.5f));
+				Find(worldName)->SetLocalPosY(0.f - (idx * 0.5f));
 				Find(worldName)->SetLocalPosZ(-0.05f);
 				Find(worldName)->scale = { 0.6f, 0.4f, 1.f };
 				Find(worldName)->material = RESOURCE->materials.Load("WorldIcon.mtl");

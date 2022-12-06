@@ -225,14 +225,15 @@ void Inventory::Init()
     //dynamic_cast<Text*>(invens->Find("oItemEa"))->ChangeText(to_string(10));
 
 
-    //SetPickedItem(1, Item{ 100, 10 });
-    //SetPickedItem(2, Item{ 102, 10 });
+    //SetPickedItem(1, Item{ 100, 100 });
+    //SetPickedItem(2, Item{ 319, 100 });
     //SetPickedItem(3, Item{ 260, 10 });
     //SetPickedItem(4, Item{ 275, 10 });
-    //SetPickedItem(5, Item{ int(BlockType::FURNACE), 100 });
+    //SetPickedItem(5, Item{ int(BlockType::FURNACE), 10 });
     //SetPickedItem(6, Item{ int(BlockType::CRAFTING_TABLE), 10 });
-    //SetPickedItem(7, Item{ 359, 1 });
-    //SetPickedItem(8, Item{ 319, 10 });
+    //SetPickedItem(7, Item{ int(BlockType::SAND), 100 });
+    //SetPickedItem(8, Item{ int(BlockType::COBBLESTONE), 100 });
+    //SetPickedItem(9, Item{ 296, 10 });
 
     quickSlots->Update();
     invens->Update();

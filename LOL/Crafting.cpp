@@ -140,6 +140,27 @@ void Crafting::LoadData()
 		}, Item{ GetItemId("wood_pickaxe"), 1 } });
 	
 	list3x1.push_back(Craft3x1{ {
+		{ int(BlockType::SPRUCE_WOOD_PLANK) },
+		{ int(BlockType::SPRUCE_WOOD_PLANK) },
+		{ GetItemId("stick") }
+		}, Item{ GetItemId("wood_sword"), 1 } });
+	list3x1.push_back(Craft3x1{ { 
+		{ int(BlockType::SPRUCE_WOOD_PLANK) },
+		{ GetItemId("stick")},
+		{ GetItemId("stick") }
+		}, Item{ GetItemId("wood_shovel"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK), 0 },
+		{ int(BlockType::SPRUCE_WOOD_PLANK), GetItemId("stick"), 0},
+		{ 0, GetItemId("stick"), 0 }
+		}, Item{ GetItemId("wood_axe"), 1 } });
+	list3x3.push_back(Craft3x3{ { 
+		{ int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK), int(BlockType::SPRUCE_WOOD_PLANK) },
+		{ 0, GetItemId("stick"), 0},
+		{ 0, GetItemId("stick"), 0 }
+		}, Item{ GetItemId("wood_pickaxe"), 1 } });
+	
+	list3x1.push_back(Craft3x1{ {
 		{ int(BlockType::STONE) },
 		{ int(BlockType::STONE) },
 		{ GetItemId("stick") }

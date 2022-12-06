@@ -48,9 +48,9 @@ class WorldGenerator : public Singleton<WorldGenerator>
 private:
 	//Int2 mapSize = { 4096, 4096 };
 	//Int2 mapSize = { 128, 128 };
-	//Int2 mapSize = { 256, 256 };
+	Int2 mapSize = { 256, 256 };
 	//Int2 mapSize = { 32, 32 };
-	Int2 mapSize = { 1024, 1024 };
+	//Int2 mapSize = { 1024, 1024 };
 	//Int2 mapSize = { 2048, 2048 };
 	vector<vector<char>> oceanMap[2];
 	vector<vector<char>> climateMap[2];
